@@ -1,12 +1,14 @@
-
 import sys
 import os
 
 cur_loc = os.getcwd()
 sys.path.append(os.path.join(cur_loc, 'scripts\\api_src'))
+sys.path.append(os.path.join(cur_loc, 'scripts'))
 
 from udpclient import RClient
+from R_func import R_Client_Extend
 import time
+import math
 
 import logging
 
@@ -22,11 +24,6 @@ global logger
 
 # time.sleep(2)
 # r.terminate()
-
-def some_fnc():
-    global logger
-
-    logger.info("Nested info")
 
 
 def main():
@@ -46,17 +43,30 @@ def main():
     logger = logging.getLogger(__name__)
 
     # basic logger usage
-    logger.debug('This message should go to the log file')
-    logger.info('So should this')
-    logger.warning('And this, too')
-    logger.error('error message')
-    logger.critical('critical message')
+    # logger.debug('This message should go to the log file')
+    # logger.info('So should this')
+    # logger.warning('And this, too')
+    # logger.error('error message')
+    # logger.critical('critical message')
 
 
+    angles = [angle * math.pi/180 for angle in [-45, 0, 45]]
+    final_loc = [1000, 1000] # X, Y of the final location
+
+    r = R_Client_Extend(host = "192.168.1.158", 
+                        port = 2777,
+                        angles = angles)
+
+
+
+
+    r.connect()
+    r.drive(400,200)
+    print(r.sense())
 
     print("hello")
-    some_fnc()
-
+    r.terminate()
+ 
 
 
 

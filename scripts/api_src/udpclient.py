@@ -44,14 +44,20 @@ class RClient(object):
         
     def connect(self):
         """ Connect to server and create processing thread """
-        try:
-            self.recv_thread=threading.Thread(target=self.recv_loop)
-            self.recv_thread.start()
-            return True
-        except socket.error as e:
-            reason=get_error_name(e.errno)
-            print("Socket Error: " + reason)
-        return False
+        # try:
+        #     self.recv_thread=threading.Thread(target=self.recv_loop)
+        #     self.recv_thread.start()
+        #     return True
+        # except socket.error as e:
+        #     reason=get_error_name(e.errno)
+        #     print("Socket Error: " + reason)
+        # return False
+
+        # the thread continuously returns socket error, which we can ignore.
+        # assume this code won't make problems
+        self.recv_thread=threading.Thread(target=self.recv_loop)
+        self.recv_thread.start()
+
             
     def recv_loop(self):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -72,11 +78,15 @@ class RClient(object):
                 errnum = e.errno
                 if errnum!=errno.EAGAIN:
                     reason=get_error_name(errnum)
-                    print("Socket Error ({}): {}".format(errnum,reason))
+                    # print("Socket Error ({}): {}".format(errnum,reason))
                 time.sleep(0.05)
                 
             
     def sendmsg(self,msg):
+
+        # convert the message to binary
+        msg = msg.encode('ascii')
+
         with self.lock:
             try:
                 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
