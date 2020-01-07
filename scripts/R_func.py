@@ -11,6 +11,7 @@ import time
 import logging
 import numpy as np
 import threading
+import math
 
 global logger
 
@@ -42,6 +43,7 @@ class R_Client_Extend(RClient):
         self.sensor_angles = angles
         self.cur_loc = []
         self.cur_dir = []
+        self.cur_angle = ''
         self.cur_readings = []
         self.status = 'idle'   # ['idle' / 'in_process']
         self.dest_reached = False
@@ -51,9 +53,32 @@ class R_Client_Extend(RClient):
     def get_data(self):
         """Use the 'sense' method, put data in appropriating struct"""
         sense_data = self.sense()
-        self.cur_loc = sense_data[0:1]
-        self.cur_dir = sense_data[2:3]
+        self.cur_loc = sense_data[0:2]
+        self.cur_dir = sense_data[2:4]
+        self.cur_angle = math.atan2(self.cur_dir[1], self.cur_dir[0]) * 180 / math.pi
         self.cur_readings = sense_data[4:]
+
+    def calc_metrics(self, target: Target):
+        """Calculate the distance and the angle towards the target"""
+
+        # find dist
+        trg = np.array((target.x, target.y))
+        origin = np.asarray(self.cur_loc)
+        dist = np.linalg.norm(trg - origin) # in [cm]
+
+
+        # find current angle of the robot
+        # angle_rad = math.atan2(self.cur_dir[1], self.cur_dir[0])
+        # angle_deg = angle_rad*180/math.pi
+
+        # find the angle between the current location and the target
+        y_diff =  target.y - self.cur_loc[1]
+        x_diff =  target.x - self.cur_loc[0]
+
+        angle_rad = math.atan2(y_diff, x_diff)
+        angle_deg = angle_rad*180/math.pi
+
+        return (dist, angle_deg)
 
 
     def goto(self, target : Target):
@@ -62,12 +87,24 @@ class R_Client_Extend(RClient):
         The path will be linear"""
 
         assert target.type == "POS"
+        goal_reached = False
+        max_absolute_encoder_val = 1000     # maximum value that can be given to encoder
+        max_absolute_dist = 32              # corresponds to max_encoder_val                - MEASURE!
+        reach_margin = 10                   # defines when we have reached the destination
+
+
+        convert_rate = 0.1                  # [encoder clicks / cm]                         - MEASURE!!!
+
+        max_dist_val = 20 # maximum allowed distance to travel at once
+        # max_encoder_val = max_dist_val * convert_rate
+        max_encoder_val = 500
+
 
         # This functin will implement intermediate 'targets' of rotational type to reach the goal
 
-        # 1. Using the current location values, and the target values, calculate initial values:
-        #       a. distance
-        #       b. angle to rotate to
+        # 1. Using the current location values, and the target values, 
+        # calculate distance and angle
+        distance, angle_deg = self.calc_metrics(target)
 
         # While the goal is not reached:
 
@@ -76,9 +113,23 @@ class R_Client_Extend(RClient):
 
             # 4. check if the goal was reached. If not - Do 2,3 again
 
+        while not goal_reached:
+
+            self.turn(angle_deg - self.cur_angle)
+            time.sleep(1) # long enough?
+            # calculate the required encoder value for the engines
+            encoder_val = min(distance * convert_rate, max_encoder_val)
+
+            self.drive(encoder_val, encoder_val)
+            time.sleep(1)
+
+            if distance <= reach_margin:
+                goal_reached = True
+            else:
+                # calculate new distance and angle. 
+                distance, angle_deg = self.calc_metrics(target)
 
         # when finished, clear the target, change the status
-        
         self.current_target = None
         self.status = 'idle'
 
@@ -94,6 +145,7 @@ class R_Client_Extend(RClient):
 
     def turn(self, angle: int):
         """Turn the robot by 'angle' [deg]"""
+        
         pass
 
     def moveincircle(self, radius : int, init_dir : str):

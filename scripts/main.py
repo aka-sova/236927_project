@@ -6,7 +6,7 @@ sys.path.append(os.path.join(cur_loc, 'scripts\\api_src'))
 sys.path.append(os.path.join(cur_loc, 'scripts'))
 
 from udpclient import RClient
-from R_func import R_Client_Extend
+from R_func import R_Client_Extend, Target
 import time
 import math
 
@@ -58,14 +58,10 @@ def main():
                         angles = angles)
 
 
-
-
     r.connect()
-    r.drive(400,200)
-    print(r.sense())
-
-    print("hello")
-    r.terminate()
+    
+    dummy_target = Target(target_type = "POS", target_vals = [100, 100])
+    r.goto(dummy_target)
  
 
 
