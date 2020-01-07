@@ -48,9 +48,9 @@ class RClient(object):
             self.recv_thread=threading.Thread(target=self.recv_loop)
             self.recv_thread.start()
             return True
-        except socket.error,e:
-            reason=get_error_name(e[0])
-            print "Socket Error: "+reason
+        except socket.error as e:
+            reason=get_error_name(e.errno)
+            print("Socket Error: " + reason)
         return False
             
     def recv_loop(self):
@@ -68,11 +68,11 @@ class RClient(object):
                         self.sensors=[float(s) for s in data.split()]
                     except ValueError:
                         pass
-            except socket.error,e:
-                errnum=e[0]
+            except socket.error as e:
+                errnum = e.errno
                 if errnum!=errno.EAGAIN:
                     reason=get_error_name(errnum)
-                    print "Socket Error ({}): {}".format(errnum,reason)
+                    print("Socket Error ({}): {}".format(errnum,reason))
                 time.sleep(0.05)
                 
             
@@ -131,16 +131,16 @@ def test():
                     try:
                         r.drive(int(s[0]),int(s[1]))
                     except ValueError:
-                        print "Invalid speeds"
+                        print("Invalid speeds")
             time.sleep(0.1)
             counter+=1
             #if (counter%10)==0:
-            print r.sense()
+            print(r.sense())
         r.terminate()
-        print "Done"
+        print("Done")
         kbd_thread.join()
     else:
-        print "Failed to connect"
+        print("Failed to connect")
 
 
 if __name__=='__main__':
