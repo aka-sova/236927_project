@@ -28,26 +28,18 @@ global logger
 
 def main():
 
-    global logger
+
+
 
     # create output/artifacts dirs
     os.makedirs(os.path.join(cur_loc, 'artifacts'), exist_ok=True)
     os.makedirs(os.path.join(cur_loc, 'output'), exist_ok=True)
 
-    # create a logger
-    logging.basicConfig(filename=os.path.join(cur_loc, 'artifacts','logger.log'), 
-                        level=logging.DEBUG,
-                        format='%(asctime)s - %(levelname)s - %(message)s',
-                        datefmt='%m/%d %I:%M:%S',
-                        filemode='w')
-    logger = logging.getLogger(__name__)
+    
+    calib_folder = os.path.join(cur_loc, 'scripts', 'calib')
+    logger_location = os.path.join(cur_loc, 'artifacts','logger.log')
 
-    # basic logger usage
-    # logger.debug('This message should go to the log file')
-    # logger.info('So should this')
-    # logger.warning('And this, too')
-    # logger.error('error message')
-    # logger.critical('critical message')
+
 
 
     angles = [angle * math.pi/180 for angle in [-45, 0, 45]]
@@ -55,13 +47,26 @@ def main():
 
     r = R_Client_Extend(host = "192.168.1.158", 
                         port = 2777,
-                        angles = angles)
+                        angles = angles,
+                        calib_folder = calib_folder,
+                        logger_location = logger_location)
 
 
-    r.connect()
-    
-    dummy_target = Target(target_type = "POS", target_vals = [100, 100])
-    r.goto(dummy_target)
+    try:
+
+        r.connect()
+        
+        # perform the calibration
+        # r.self_calib_pos(range_cmd = (300, 1000), step = 100)
+
+        r.self_calib_rot(range_cmd = (300, 1000), step = 100, direction='right')
+
+    finally:
+        r.terminate()
+
+
+    # dummy_target = Target(target_type = "POS", target_vals = [100, 100])
+    # r.goto(dummy_target)
  
 
 

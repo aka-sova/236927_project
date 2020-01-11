@@ -1,5 +1,6 @@
 import sys
 import os
+import traceback
 
 cur_loc = os.getcwd()
 sys.path.append(os.path.join(cur_loc, 'scripts\\api_src'))
@@ -14,6 +15,25 @@ import threading
 import math
 
 global logger
+
+def init_logger(logger_address : str):
+    # create a logger
+    logging.basicConfig(filename=logger_address, 
+                        level=logging.DEBUG,
+                        format='%(asctime)s - %(levelname)s - %(message)s',
+                        datefmt='%m/%d %I:%M:%S',
+                        filemode='w')
+    logger = logging.getLogger(__name__)
+
+    # basic logger usage
+    # logger.debug('This message should go to the log file')
+    # logger.info('So should this')
+    # logger.warning('And this, too')
+    # logger.error('error message')
+    # logger.critical('critical message')
+
+    return logger  
+
 
 class Target(object):
     def __init__(self, target_type : str, target_vals : list):
@@ -32,10 +52,11 @@ class Target(object):
             pass
         else:
             raise Exception("Invalid target type")
-        
+
+      
 
 class R_Client_Extend(RClient):
-    def __init__(self, host, angles : list, port,user_deprecate='',id_deprecate=''):
+    def __init__(self, host, calib_folder, angles : list, logger_location, port,user_deprecate='',id_deprecate=''):
         super().__init__(host,port,user_deprecate='',id_deprecate='')
         self.goto_margin = 10  # margin to know we have arrived 
         self.angle_margin = 5 # [deg] 
@@ -49,10 +70,20 @@ class R_Client_Extend(RClient):
         self.dest_reached = False
         self.next_target = None
         self.current_target = None
+        self.calib_folder = calib_folder
+        self.logger = init_logger(logger_location)
+
 
     def get_data(self):
         """Use the 'sense' method, put data in appropriating struct"""
         sense_data = self.sense()
+
+        while sense_data ==  [0.0,0.0,0.0,0.0,0.0]:
+            self.logger.info("Sense data is empty. Retrying")
+            time.sleep(1.0)
+            sense_data = self.sense()
+
+
         self.cur_loc = sense_data[0:2]
         self.cur_dir = sense_data[2:4]
         self.cur_angle = math.atan2(self.cur_dir[1], self.cur_dir[0]) * 180 / math.pi
@@ -201,3 +232,110 @@ class R_Client_Extend(RClient):
 
             time.sleep(0.1)
 
+
+
+
+    def self_calib_pos(self, range_cmd : tuple = (300, 1000) , step : int = 100):
+        """This method will calibrate the encoder commands to drive to the 
+        agent actual movement. Calibration is based on the measurements from the sensorts of the robot
+        Since the command to movement relations is not linear, we will rather
+        use the interpolation method to get the correct encoder command"""
+        
+        self.logger.info('Initializing the Position Command calibration')
+        self.logger.info('In range of ({0} - {1}) with a step of {2}'.format(range_cmd[0], range_cmd[1] + step, step))
+
+        os.makedirs(self.calib_folder, exist_ok=True)
+        output_fd = open(os.path.join(self.calib_folder, 'pos_calib.csv'), 'w')
+        output_fd.write('Encoder_cmd, Movement\n')
+        
+        try: 
+            for current_step in range(range_cmd[0], range_cmd[1] + step, step):
+                self.logger.info('Current step = {}'.format(current_step))
+                self.get_data()
+                init_pos = np.asarray(self.cur_loc)
+                print(init_pos)
+
+                self.drive(current_step, current_step)
+
+                time.sleep(2.0) # should be enough?
+
+
+                self.get_data()
+                final_pos = np.asarray(self.cur_loc)
+                print(final_pos)
+                # calculate the movement
+                dist = np.linalg.norm(final_pos - init_pos) # in [cm]
+                output_fd.write('{0}, {1}\n'.format(current_step, str(round(dist, 2))))
+                self.logger.info('\t\tCalculated distance: {}'.format(round(dist, 2)))
+        except:
+            var = traceback.format_exc()
+            self.logger.info('Encountered exception: ' + var)
+
+
+        finally:
+            output_fd.close()
+
+        self.logger.info('Calibration ended')
+
+
+    def self_calib_rot(self, range_cmd : tuple = (300, 1000) , step : int = 100, direction : str = 'right'):
+        """This method will calibrate the encoder commands to drive to the 
+        agent rotation. Calibration is based on the measurements from the sensorts of the robot
+        Since the command to movement relations is not linear, we will rather
+        use the interpolation method to get the correct encoder command
+        
+        direction can be one of ['left', 'right']"""
+
+        if direction == 'right':
+            mutiplier = 1
+        else:
+            mutiplier = -1
+
+        
+        
+        self.logger.info('Initializing the Rotation Command calibration')
+        self.logger.info('In range of ({0} - {1}) with a step of {2}'.format(range_cmd[0], range_cmd[1], step))
+
+        os.makedirs(self.calib_folder, exist_ok=True)
+        output_fd = open(os.path.join(self.calib_folder, 'rot_calib.csv'), 'w')
+        output_fd.write('Encoder_cmd, Rotation\n')
+        
+        try: 
+            for current_step in range(range_cmd[0], range_cmd[1] + step, step):
+                self.logger.info('Current step = {}'.format(current_step))
+                self.get_data()
+                init_angle = self.cur_angle
+                print('init angle : ' + str(init_angle))
+
+                # choosing a direction
+                self.drive(current_step * mutiplier, -current_step* mutiplier)
+
+                time.sleep(2.0) # should be enough?
+
+
+                self.get_data()
+                final_angle = self.cur_angle
+                print('final angle : ' + str(final_angle))
+                # calculate the rotation
+
+                # if direction is 'right', angle has to grow
+                if direction == 'right':
+                    if final_angle > init_angle:
+                        rotation = final_angle - init_angle
+                    else:
+                        final_angle = final_angle + 360
+                        rotation = final_angle - init_angle
+                else:
+                    pass
+
+                output_fd.write('{0}, {1}\n'.format(current_step, str(round(rotation, 2))))
+                self.logger.info('\t\tCalculated rotation: {}'.format(round(rotation, 2)))
+        except:
+            var = traceback.format_exc()
+            self.logger.info('Encountered exception: ' + var)
+
+
+        finally:
+            output_fd.close()
+
+        self.logger.info('Calibration ended')
