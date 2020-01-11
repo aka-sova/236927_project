@@ -51,15 +51,22 @@ def main():
                         calib_folder = calib_folder,
                         logger_location = logger_location)
 
+    # print(int(r.pos_interp(abs(20))))
+
+    # while(True):
+    #     r.turn(90)
+    #     time.sleep(3.0)
+    #     r.drive_distance(20)
+    #     time.sleep(3.0)
 
     try:
 
         r.connect()
         
         # perform the calibration
-        # r.self_calib_pos(range_cmd = (300, 1000), step = 100)
+        r.self_calib_pos(range_cmd = (350, 1000), step = 50)
 
-        r.self_calib_rot(range_cmd = (300, 1000), step = 100, direction='right')
+        r.self_calib_rot(range_cmd = (350, 1000), step = 50, direction='right')
 
     finally:
         r.terminate()

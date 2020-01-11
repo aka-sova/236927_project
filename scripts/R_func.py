@@ -13,6 +13,8 @@ import logging
 import numpy as np
 import threading
 import math
+from scipy import interpolate
+import csv
 
 global logger
 
@@ -73,6 +75,48 @@ class R_Client_Extend(RClient):
         self.calib_folder = calib_folder
         self.logger = init_logger(logger_location)
 
+        self.read_calib_tables()
+
+    def read_calib_tables(self):
+        """read the calibration tables for position and rotation and save them in the object"""
+
+
+        # First for position
+        pos_calib_file = os.path.join(self.calib_folder, 'pos_calib.csv')
+        if os.path.exists(pos_calib_file):
+            with open(pos_calib_file, mode='r') as infile:
+                reader = csv.reader(infile)
+                headers = next(reader, None) # read the headers so they won't be in dict
+                mydict = {rows[0]:rows[1] for rows in reader}
+
+            if len(mydict.keys()) > 0:
+                pos_movement_vals = np.fromiter(mydict.values(), dtype=float)
+                pos_encoder_vals = np.fromiter(mydict.keys(), dtype=float)
+
+                self.pos_interp = interpolate.interp1d(pos_movement_vals, pos_encoder_vals)
+
+            else:
+                self.logger.warning("THE POSITION CALIBRATION IS NOT PERFORMED!")
+        else:
+            self.logger.warning("THE POSITION CALIBRATION IS NOT YET PERFORMED!")
+
+        # Now for rotation
+        rot_calib_file = os.path.join(self.calib_folder, 'rot_calib.csv')
+        if os.path.exists(pos_calib_file):
+            with open(rot_calib_file, mode='r') as infile:
+                reader = csv.reader(infile)
+                headers = next(reader, None) # read the headers so they won't be in dict
+                mydict = {rows[0]:rows[1] for rows in reader}
+
+            if len(mydict.keys()) > 0:
+                rot_movement_vals = np.fromiter(mydict.values(), dtype=float)
+                rot_encoder_vals = np.fromiter(mydict.keys(), dtype=float)
+
+                self.rot_interp = interpolate.interp1d(rot_movement_vals, rot_encoder_vals)
+            else:
+                self.logger.warning("THE ROTATION CALIBRATION IS NOT YET PERFORMED!")
+        else:
+            self.logger.warning("THE ROTATION CALIBRATION IS NOT YET PERFORMED!")
 
     def get_data(self):
         """Use the 'sense' method, put data in appropriating struct"""
@@ -175,13 +219,30 @@ class R_Client_Extend(RClient):
         self.status = 'idle'
 
     def turn(self, angle: int):
-        """Turn the robot by 'angle' [deg]"""
+        """Turn the robot by 'angle' [deg]
+        We use the calibration data to interpolate the required encoder commands for the motors"""
         
-        pass
+        # interpolate the required command from the calibration information
+        command_value = int(self.rot_interp(abs(angle)))
+
+
+        if angle > 0 :
+            self.drive(command_value, -command_value)
+        elif angle < 0:
+            self.drive(-command_value, command_value)
+        else:
+            pass
+
+    def drive_distance(self, distance: int):
+        """Received distance in [cm] and make an appropriate command to move forward"""
+        command_value = int(self.pos_interp(abs(distance)))
+
+        self.drive(command_value, command_value)
 
     def moveincircle(self, radius : int, init_dir : str):
         """Move the robot in a circle starting from the initial location 
         the center of the circle will be generated to the left / right from the robot"""
+
         pass
 
     def make_decision(self):
@@ -207,7 +268,7 @@ class R_Client_Extend(RClient):
     def reach_destination(self, target):
         """The main function which will look for a path to find to reach the goal"""
 
-        logger.info('Initializing the Algorithm')
+        self.logger.info('Initializing the Algorithm')
 
         # start the mapping thread
         self.mapping_thread = threading.Thread(target=self.update_map)
