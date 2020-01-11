@@ -18,6 +18,15 @@ import csv
 
 global logger
 
+def normalize_angle(angle):
+    if angle > 180 :
+        return (angle - 360)
+    elif angle < -180:
+        return (angle + 360)
+    else:
+        return angle
+
+
 def init_logger(logger_address : str):
     # create a logger
     logging.basicConfig(filename=logger_address, 
@@ -141,7 +150,6 @@ class R_Client_Extend(RClient):
         origin = np.asarray(self.cur_loc)
         dist = np.linalg.norm(trg - origin) # in [cm]
 
-
         # find current angle of the robot
         # angle_rad = math.atan2(self.cur_dir[1], self.cur_dir[0])
         # angle_deg = angle_rad*180/math.pi
@@ -150,6 +158,7 @@ class R_Client_Extend(RClient):
         y_diff =  target.y - self.cur_loc[1]
         x_diff =  target.x - self.cur_loc[0]
 
+        # corrdinate system is flipped, but so are the axes, and the robot coordinate system has 0 degrees looking up
         angle_rad = math.atan2(y_diff, x_diff)
         angle_deg = angle_rad*180/math.pi
 
@@ -163,23 +172,20 @@ class R_Client_Extend(RClient):
 
         assert target.type == "POS"
         goal_reached = False
-        max_absolute_encoder_val = 1000     # maximum value that can be given to encoder
-        max_absolute_dist = 32              # corresponds to max_encoder_val                - MEASURE!
         reach_margin = 10                   # defines when we have reached the destination
-
-
-        convert_rate = 0.1                  # [encoder clicks / cm]                         - MEASURE!!!
-
-        max_dist_val = 20 # maximum allowed distance to travel at once
-        # max_encoder_val = max_dist_val * convert_rate
-        max_encoder_val = 500
-
 
         # This functin will implement intermediate 'targets' of rotational type to reach the goal
 
         # 1. Using the current location values, and the target values, 
         # calculate distance and angle
+
+        self.get_data()
+        self.logger.info("GOTO Target location received : [{0} {1}]".format(target.x, target.y))
+        self.logger.info("Current location : [{0} {1}]".format(self.cur_loc[0], self.cur_loc[1]))
+        self.logger.info("Current angle: {}".format(self.cur_angle))
+
         distance, angle_deg = self.calc_metrics(target)
+        self.logger.info("Calculated:\n\tdistance : {0}\n\tangle: {1}".format(distance, angle_deg))
 
         # While the goal is not reached:
 
@@ -190,21 +196,47 @@ class R_Client_Extend(RClient):
 
         while not goal_reached:
 
-            self.turn(angle_deg - self.cur_angle)
-            time.sleep(1) # long enough?
-            # calculate the required encoder value for the engines
-            encoder_val = min(distance * convert_rate, max_encoder_val)
+            # calculate the smallest angle required to perform
+            angle_to_rotate = normalize_angle(angle_deg - self.cur_angle)
 
-            self.drive(encoder_val, encoder_val)
-            time.sleep(1)
+
+            self.logger.info("Performing turn of {}".format(angle_to_rotate))
+            self.turn(angle_to_rotate)
+            
+            time.sleep(1.0) # long enough?
+            # calculate the angle discrepancy
+            self.get_data()
+            self.logger.info("Turn performed. current discrepancy: {}".format(angle_to_rotate))
+
+
+            
+            # calculate the required encoder value for the engines
+            self.drive_distance_long(distance)
+
+            # check if reached the target
+            self.get_data()
+            distance, angle_deg = self.calc_metrics(target)
+
+            self.logger.info("STEP FINISHED")
+            self.logger.info("Current location : [{0} {1}]".format(self.cur_loc[0], self.cur_loc[1]))
+            self.logger.info("Target location : [{0} {1}]".format(target.x, target.y))
+            self.logger.info("Calculated:\n\tdistance : {0}\n\tangle: {1}".format(distance, angle_deg))
 
             if distance <= reach_margin:
+                self.logger.info("Distance is less than a margin of {}. GOTO done".format(reach_margin))
                 goal_reached = True
             else:
-                # calculate new distance and angle. 
-                distance, angle_deg = self.calc_metrics(target)
+                self.logger.info("Distance is larger than a margin of {}. Performing additional steps".format(reach_margin))
+                
 
         # when finished, clear the target, change the status
+
+        self.get_data()
+        self.logger.info("GOTO FINISHED")
+        self.logger.info("Current location : [{0} {1}]".format(self.cur_loc[0], self.cur_loc[1]))
+        self.logger.info("Target location : [{0} {1}]".format(target.x, target.y))
+
+
         self.current_target = None
         self.status = 'idle'
 
@@ -218,10 +250,8 @@ class R_Client_Extend(RClient):
         self.current_target = None
         self.status = 'idle'
 
-    def turn(self, angle: int):
-        """Turn the robot by 'angle' [deg]
-        We use the calibration data to interpolate the required encoder commands for the motors"""
-        
+    def turn_small(self, angle: int):
+        """Turn only 1 time in boundaries of the interpolation"""
         # interpolate the required command from the calibration information
         command_value = int(self.rot_interp(abs(angle)))
 
@@ -233,10 +263,60 @@ class R_Client_Extend(RClient):
         else:
             pass
 
-    def drive_distance(self, distance: int):
-        """Received distance in [cm] and make an appropriate command to move forward"""
-        command_value = int(self.pos_interp(abs(distance)))
+    def turn(self, angle: int):
+        """Turn the robot by 'angle' [deg]
+        We use the calibration data to interpolate the required encoder commands for the motors"""
+        
+        max_rot_angle = max(self.rot_interp.x)
+        min_rot_angle = min(self.rot_interp.x)
 
+        if abs(angle) > max_rot_angle:
+            # drive in parts
+            turn_segments = (int)(abs(angle) / max_rot_angle) + 1
+
+            # make all segments of same angular distance
+            turn_amount = (float)(angle / turn_segments)
+
+            for _ in range(turn_segments):
+                self.turn_small(turn_amount)
+                time.sleep(1.0)
+        elif abs(angle) < min_rot_angle:
+            # do nothing. too small angle to move
+            return
+        else:
+            # within the interpolation boundaries
+            self.turn_small(angle)
+
+
+
+    def drive_distance_long(self, distance: int):
+        """Will drive any distance, even in parts"""
+        max_driving_dist = max(self.pos_interp.x)
+
+        if distance < max_driving_dist:
+            self.drive_distance_short(distance)
+            time.sleep(1.0)
+        else:
+            # drive in parts - we drive one segment less than needed on purpose!
+            drive_segments = (int)(distance / max_driving_dist)
+
+            # make all segments of same length
+            segment_path = (float)(distance / drive_segments)
+
+            for _ in range(drive_segments):
+                self.drive_distance_short(segment_path)
+                time.sleep(1.0)
+
+            
+
+
+    def drive_distance_short(self, distance: int):
+        """Received distance in [cm] and make an appropriate command to move forward"""
+
+        # will drive only the maximum distance from the interpolation values
+        distance = min(max(self.pos_interp.x), distance)
+
+        command_value = int(self.pos_interp(abs(distance)))
         self.drive(command_value, command_value)
 
     def moveincircle(self, radius : int, init_dir : str):

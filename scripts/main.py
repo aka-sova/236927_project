@@ -26,7 +26,7 @@ global logger
 # r.terminate()
 
 
-def main():
+def main(calibration: bool):
 
 
 
@@ -51,32 +51,50 @@ def main():
                         calib_folder = calib_folder,
                         logger_location = logger_location)
 
-    # print(int(r.pos_interp(abs(20))))
 
-    # while(True):
-    #     r.turn(90)
-    #     time.sleep(3.0)
-    #     r.drive_distance(20)
-    #     time.sleep(3.0)
+
 
     try:
 
         r.connect()
         
         # perform the calibration
-        r.self_calib_pos(range_cmd = (350, 1000), step = 50)
+        if calibration:
+            r.self_calib_pos(range_cmd = (350, 1000), step = 50)
+            r.self_calib_rot(range_cmd = (350, 1000), step = 50, direction='right')
+        else:
+            # r.turn(90)
+            # time.sleep(3.0)
+            # r.drive_distance(20)
+            # time.sleep(3.0)
 
-        r.self_calib_rot(range_cmd = (350, 1000), step = 50, direction='right')
+
+            target = Target(target_type = "POS", target_vals = [0, -200])
+            r.goto(target)
+            target = Target(target_type = "POS", target_vals = [100, -100])
+            r.goto(target)
+            target = Target(target_type = "POS", target_vals = [100 ,0])
+            r.goto(target)
+            target = Target(target_type = "POS", target_vals = [0 ,-200])
+            r.goto(target)
+            target = Target(target_type = "POS", target_vals = [0 ,0])
+            r.goto(target)
+
+            # while True:
+            #     r.get_data()
+            #     print("LOC : X [{}] Y [{}]  ANGLE [{}]".format(r.cur_loc[0], r.cur_loc[1], r.cur_angle))
+            #     time.sleep(0.3)
+            
+
 
     finally:
         r.terminate()
 
 
-    # dummy_target = Target(target_type = "POS", target_vals = [100, 100])
-    # r.goto(dummy_target)
+
  
 
 
 
 if __name__ == '__main__':
-    main()
+    main(calibration = False)
