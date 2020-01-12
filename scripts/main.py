@@ -68,7 +68,6 @@ def main(calibration: bool):
             # initialize the sockets, which will send the Location
             r.init_local_sockets(pose_socket = True, map_socket = True)
 
-
             # target = Target(target_type = "POS", target_vals = [0, -200])
             # r.goto(target)
             # target = Target(target_type = "POS", target_vals = [100, -100])

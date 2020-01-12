@@ -35,12 +35,31 @@ def normalize_angle(angle):
 
 def init_logger(logger_address : str):
     # create a logger
+
     logging.basicConfig(filename=logger_address, 
                         level=logging.DEBUG,
                         format='%(asctime)s - %(levelname)s - %(message)s',
                         datefmt='%m/%d %I:%M:%S',
                         filemode='w')
     logger = logging.getLogger(__name__)
+
+    # put debug msgs here
+    fh = logging.FileHandler(logger_address)
+    fh.setLevel(logging.DEBUG)
+
+    # put info messages in stream
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.INFO)
+
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')  
+    ch.setFormatter(formatter)
+    fh.setFormatter(formatter)
+
+    # add the handlers to logger
+    logger.addHandler(ch)
+    logger.addHandler(fh)
+
+    # only debug will go into file
 
     # basic logger usage
     # logger.debug('This message should go to the log file')
@@ -50,7 +69,6 @@ def init_logger(logger_address : str):
     # logger.critical('critical message')
 
     return logger  
-
 
 class Target(object):
     def __init__(self, target_type : str, target_vals : list):
@@ -187,11 +205,11 @@ class R_Client_Extend(RClient):
 
         self.get_data()
         self.logger.info("GOTO Target location received : [{0} {1}]".format(target.x, target.y))
-        self.logger.info("Current location : [{0} {1}]".format(self.cur_loc[0], self.cur_loc[1]))
-        self.logger.info("Current angle: {}".format(self.cur_angle))
+        self.logger.debug("Current location : [{0} {1}]".format(self.cur_loc[0], self.cur_loc[1]))
+        self.logger.debug("Current angle: {}".format(self.cur_angle))
 
         distance, angle_deg = self.calc_metrics(target)
-        self.logger.info("Calculated:\n\tdistance : {0}\n\tangle: {1}".format(distance, angle_deg))
+        self.logger.debug("Calculated:\n\tdistance : {0}\n\tangle: {1}".format(distance, angle_deg))
 
         # While the goal is not reached:
 
@@ -206,13 +224,13 @@ class R_Client_Extend(RClient):
             angle_to_rotate = normalize_angle(angle_deg - self.cur_angle)
 
 
-            self.logger.info("Performing turn of {}".format(angle_to_rotate))
+            self.logger.debug("Performing turn of {}".format(angle_to_rotate))
             self.turn(angle_to_rotate)
             
             time.sleep(1.0) # long enough?
             # calculate the angle discrepancy
             self.get_data()
-            self.logger.info("Turn performed. current discrepancy: {}".format(angle_to_rotate))
+            self.logger.debug("Turn performed. current discrepancy: {}".format(angle_to_rotate))
 
 
             
@@ -223,24 +241,24 @@ class R_Client_Extend(RClient):
             self.get_data()
             distance, angle_deg = self.calc_metrics(target)
 
-            self.logger.info("STEP FINISHED")
-            self.logger.info("Current location : [{0} {1}]".format(self.cur_loc[0], self.cur_loc[1]))
-            self.logger.info("Target location : [{0} {1}]".format(target.x, target.y))
-            self.logger.info("Calculated:\n\tdistance : {0}\n\tangle: {1}".format(distance, angle_deg))
+            self.logger.debug("STEP FINISHED")
+            self.logger.debug("Current location : [{0} {1}]".format(self.cur_loc[0], self.cur_loc[1]))
+            self.logger.debug("Target location : [{0} {1}]".format(target.x, target.y))
+            self.logger.debug("Calculated:\n\tdistance : {0}\n\tangle: {1}".format(distance, angle_deg))
 
             if distance <= reach_margin:
-                self.logger.info("Distance is less than a margin of {}. GOTO done".format(reach_margin))
+                self.logger.debug("Distance is less than a margin of {}. GOTO done".format(reach_margin))
                 goal_reached = True
             else:
-                self.logger.info("Distance is larger than a margin of {}. Performing additional steps".format(reach_margin))
+                self.logger.debug("Distance is larger than a margin of {}. Performing additional steps".format(reach_margin))
                 
 
         # when finished, clear the target, change the status
 
         self.get_data()
-        self.logger.info("GOTO FINISHED")
-        self.logger.info("Current location : [{0} {1}]".format(self.cur_loc[0], self.cur_loc[1]))
-        self.logger.info("Target location : [{0} {1}]".format(target.x, target.y))
+        self.logger.debug("\nGOTO FINISHED")
+        self.logger.debug("Current location : [{0} {1}]".format(self.cur_loc[0], self.cur_loc[1]))
+        self.logger.debug("Target location : [{0} {1}]".format(target.x, target.y))
 
 
         self.current_target = None
@@ -400,7 +418,7 @@ class R_Client_Extend(RClient):
                 self.logger.info('Current step = {}'.format(current_step))
                 self.get_data()
                 init_pos = np.asarray(self.cur_loc)
-                print(init_pos)
+                logger.info("INIT POS : {}".format(str(init_pos)))
 
                 self.drive(current_step, current_step)
 
@@ -409,7 +427,7 @@ class R_Client_Extend(RClient):
 
                 self.get_data()
                 final_pos = np.asarray(self.cur_loc)
-                print(final_pos)
+                logger.info("END  POS : {}".format(str(final_pos)))
                 # calculate the movement
                 dist = np.linalg.norm(final_pos - init_pos) # in [cm]
                 output_fd.write('{0}, {1}\n'.format(current_step, str(round(dist, 2))))
@@ -452,7 +470,7 @@ class R_Client_Extend(RClient):
                 self.logger.info('Current step = {}'.format(current_step))
                 self.get_data()
                 init_angle = self.cur_angle
-                print('init angle : ' + str(init_angle))
+                logger.info('INIT  ANGLE: {}'.format(str(init_angle)))
 
                 # choosing a direction
                 self.drive(current_step * mutiplier, -current_step* mutiplier)
@@ -462,7 +480,7 @@ class R_Client_Extend(RClient):
 
                 self.get_data()
                 final_angle = self.cur_angle
-                print('final angle : ' + str(final_angle))
+                logger.info('FINAL ANGLE: {}'.format(str(final_angle)))
                 # calculate the rotation
 
                 # if direction is 'right', angle has to grow
@@ -506,7 +524,7 @@ class R_Client_Extend(RClient):
 
 
     def local_pose_loop(self):
-        print("Opening a server")
+        print("Opening a server for pose transmission")
 
         HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
         PORT = 65432        # Port to listen on (non-privileged ports are > 1023)
