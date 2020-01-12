@@ -1,3 +1,5 @@
+from struct import *
+
 import sys
 import os
 import traceback
@@ -15,6 +17,10 @@ import threading
 import math
 from scipy import interpolate
 import csv
+
+from tkinter import *
+
+import socket
 
 global logger
 
@@ -480,3 +486,42 @@ class R_Client_Extend(RClient):
             output_fd.close()
 
         self.logger.info('Calibration ended')
+
+    
+    def open_controller(self):
+        """Open the GUI controller, which will let me control the car"""
+
+
+        pass
+
+    def init_local_sockets(self, pose_socket : bool, map_socket : bool):
+        """Initialize the local sockets which will send the data to the visualizer"""
+
+        if pose_socket:
+            self.local_pose_thread=threading.Thread(target=self.local_pose_loop)
+            self.local_pose_thread.start()
+
+        if map_socket:
+            pass
+
+
+    def local_pose_loop(self):
+        print("Opening a server")
+
+        HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
+        PORT = 65432        # Port to listen on (non-privileged ports are > 1023)
+
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.bind((HOST, PORT))
+        sock.listen() #  enables a server to accept() connections.
+        conn, addr = sock.accept()
+
+        with conn:
+            print('Connected by', addr)
+            while True:
+                # data_to_send = self.cur_loc.append(self.cur_angle)
+                data_to_send_bytes = pack('lll', 5, 0, 50)
+                # data_to_send_bytes =  data_to_send.encode('utf-8')
+                conn.sendall(data_to_send_bytes)
+                time.sleep(1)
+                 

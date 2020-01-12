@@ -1,5 +1,7 @@
 
 import numpy as np
+from tkinter import *
+
 
 class Map(object):
     def __init__(self, size_x : int = 10000, size_y :int = 10000):
@@ -20,3 +22,12 @@ class Map(object):
     def gen_binary(self):
         """By using the probabilities map, the binary map will be generated"""
         pass
+
+    def generate_gui(self):
+        """Will create the Visualisation of the current map in a separate canvas,
+        and from now on, will update this canvas every period of time"""
+
+
+
+        pass
+
