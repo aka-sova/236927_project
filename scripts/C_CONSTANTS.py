@@ -1,0 +1,6 @@
+
+# put constants here 
+
+SENSE_UPDATE_FREQ = 0.1
+VIS_LOC_SEND_FREQ = 0.5
+VIS_MAP_SEND_FREQ = 1

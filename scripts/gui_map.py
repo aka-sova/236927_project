@@ -9,6 +9,8 @@ from tkinter import Tk
 from tkinter import filedialog
 from tkinter import messagebox
 
+import copy
+
 import threading
 
 import sys
@@ -26,8 +28,9 @@ class GUI_MAP(tk.Tk):
         super().__init__()
         self.title(name)
         self.map_bg_loc = map_bg_loc
-        self.x = 0
-        self.y = 0
+        self.x = -9999
+        self.y = -9999
+        self.angle = -9999
         self.cur_loc_shape = None
 
         self.create_menus()
@@ -67,38 +70,29 @@ class GUI_MAP(tk.Tk):
     def create_canvas_frame(self):
         """The main frame with a mao on it, which will be updated in real time"""
 
-        img_size = [500, 500]
+        self.img_size = [500, 500]
 
         self.canvas_frame = tk.Frame(master = self)
         self.canvas_frame.pack(side = tk.RIGHT, padx = 20, pady = 20)
 
         # create the canvas
-        self.map_cvs = tk.Canvas(master = self.canvas_frame, width=img_size[0], height=img_size[1])
+        self.map_cvs = tk.Canvas(master = self.canvas_frame, width=self.img_size[0], height=self.img_size[1])
         self.map_cvs.pack()
 
         # bring the background image
         from PIL import Image
 
         img = Image.open(self.map_bg_loc)
-        img = img.resize((img_size[0],img_size[1]), Image.ANTIALIAS)
+        img = img.resize((self.img_size[0],self.img_size[1]), Image.ANTIALIAS)
         photoImg =  ImageTk.PhotoImage(img)
 
         self.img = photoImg
         self.map_cvs.create_image((0, 0), anchor=tk.NW, image=self.img)
 
-        #  we assume the map is correct and that the coordinate system origin is at [0, 0]
-
-        # try to draw a shape of circle
-
-        # delete and change its location 
-        self.x = img_size[0]/2
-        self.y = img_size[1]/2
-
-
-        self.cur_loc_shape = self.map_cvs.create_rectangle( 
+        self.cur_origin_shape = self.map_cvs.create_rectangle( 
                          -5, -5, 5, 5, fill = "blue")
 
-        self.map_cvs.move(self.cur_loc_shape, self.x, self.y)  # first move will move to the x, y args
+        self.cur_loc_object = None
 
         self.pose_thread = threading.Thread(target=self.update_pose_thread)
         self.pose_thread.start()
@@ -124,10 +118,14 @@ class GUI_MAP(tk.Tk):
                     time.sleep(0.05)
                 else:
                     data = unpack('lll', data)
-                    print("Received data='{}'\n".format(data))
+                    print("Received data={}".format(data))
 
-                    self.x += data[0]
-                    self.movement(x = data[0])
+                    self.x = data[1] + self.img_size[1]/2 # receive the updated position
+                    self.y = - data[0] + self.img_size[0]/2 # receive the updated position
+                    self.angle = data[2] # receive the updated angle
+
+                    if self.x != -9999 and self.y != -9999 and self.angle != -9999:
+                        self.create_cur_shape()
 
             except socket.error as e:
                 errnum = e.errno
@@ -140,6 +138,15 @@ class GUI_MAP(tk.Tk):
         #     time.sleep(1)
         #     self.movement(x = 5)
 
+    def create_cur_shape(self):
+        """Delete the current location shape, and create new one at x,y"""
+
+        if self.cur_loc_object != None:
+            self.map_cvs.delete(self.cur_loc_object)
+
+        self.cur_loc_object = self.map_cvs.create_rectangle( 
+                         -5, -5, 5, 5, fill = "blue")
+        self.map_cvs.move(self.cur_loc_object, self.x, self.y)
 
     def movement(self, x = 0, y = 0):
         """Change the location of the object on canvas to the actual location"""

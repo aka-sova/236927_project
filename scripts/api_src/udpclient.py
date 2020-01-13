@@ -54,9 +54,11 @@ class RClient(object):
         # return False
 
         # the thread continuously returns socket error, which we can ignore.
-        # assume this code won't make problems
+        # assume this shortened code won't make problems
+        print("Establishing a connection with an agent")
         self.recv_thread=threading.Thread(target=self.recv_loop)
         self.recv_thread.start()
+        return True
 
             
     def recv_loop(self):

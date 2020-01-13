@@ -9,6 +9,7 @@ sys.path.append(os.path.join(cur_loc, 'scripts\\api_src'))
 
 from udpclient import RClient
 from map_func import Map
+import C_CONSTANTS
 
 import time
 import logging
@@ -97,9 +98,9 @@ class R_Client_Extend(RClient):
         self.angle_margin = 5 # [deg] 
         self.map = Map()
         self.sensor_angles = angles
-        self.cur_loc = []
+        self.cur_loc = [-9999, -9999] # values mean location is not set 
         self.cur_dir = []
-        self.cur_angle = ''
+        self.cur_angle = -9999 # means angle is not set
         self.cur_readings = []
         self.status = 'idle'   # ['idle' / 'in_process']
         self.dest_reached = False
@@ -155,8 +156,16 @@ class R_Client_Extend(RClient):
         """Use the 'sense' method, put data in appropriating struct"""
         sense_data = self.sense()
 
-        while sense_data ==  [0.0,0.0,0.0,0.0,0.0]:
-            self.logger.info("Sense data is empty. Retrying")
+        while sense_data ==  [0.0,0.0,0.0,0.0,0.0] or (sense_data[0] == -9999 or sense_data[1] == -9999):
+            self.logger.info("Sense data is erroneous. Retrying")
+
+            if (sense_data ==  [0.0,0.0,0.0,0.0,0.0]):
+                self.logger.info("Sense data is empty")
+                
+            if  (sense_data[0] == -9999 or sense_data[1] == -9999):
+                self.logger.info("Sense data is -9999")
+
+
             time.sleep(1.0)
             sense_data = self.sense()
 
@@ -230,6 +239,7 @@ class R_Client_Extend(RClient):
             time.sleep(1.0) # long enough?
             # calculate the angle discrepancy
             self.get_data()
+            angle_to_rotate = normalize_angle(angle_deg - self.cur_angle)
             self.logger.debug("Turn performed. current discrepancy: {}".format(angle_to_rotate))
 
 
@@ -512,6 +522,17 @@ class R_Client_Extend(RClient):
 
         pass
 
+    def init_sense_thread(self):
+        """Initialize the sensors thread that will operate always"""
+        self.local_pose_thread=threading.Thread(target=self.sense_thread)
+        self.local_pose_thread.start()
+
+    def sense_thread(self):
+        while True:
+            self.get_data()
+            time.sleep(C_CONSTANTS.SENSE_UPDATE_FREQ)
+
+
     def init_local_sockets(self, pose_socket : bool, map_socket : bool):
         """Initialize the local sockets which will send the data to the visualizer"""
 
@@ -526,6 +547,9 @@ class R_Client_Extend(RClient):
     def local_pose_loop(self):
         print("Opening a server for pose transmission")
 
+        max_tries_reconnect = 5
+        current_tries_am = 0
+
         HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
         PORT = 65432        # Port to listen on (non-privileged ports are > 1023)
 
@@ -537,9 +561,25 @@ class R_Client_Extend(RClient):
         with conn:
             print('Connected by', addr)
             while True:
-                # data_to_send = self.cur_loc.append(self.cur_angle)
-                data_to_send_bytes = pack('lll', 5, 0, 50)
+
+                if (current_tries_am > max_tries_reconnect):
+                    # end current socket and thread, and wait for new connection
+                    sock.close()
+                    self.local_pose_thread=threading.Thread(target=self.local_pose_loop)
+                    self.local_pose_thread.start()
+                    break
+
+                self.get_data()
+                data_to_send_bytes = pack('lll', (int)(self.cur_loc[0]), (int)(self.cur_loc[1]), (int)(self.cur_angle))
                 # data_to_send_bytes =  data_to_send.encode('utf-8')
-                conn.sendall(data_to_send_bytes)
-                time.sleep(1)
+                try:
+                    conn.sendall(data_to_send_bytes)
+                    time.sleep(C_CONSTANTS.VIS_LOC_SEND_FREQ)
+                    current_tries_am = 0 # succeeded to reconnect, set counter to 0
+                except:
+                    print("Transmission to Visualizer failed. Retrying ({}/{})".format(current_tries_am, max_tries_reconnect))
+                    current_tries_am += 1
+                    time.sleep(1.0)
+
+
                  

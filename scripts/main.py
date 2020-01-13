@@ -56,7 +56,7 @@ def main(calibration: bool):
 
     try:
 
-        # r.connect()
+        r.connect()
         
         # perform the calibration
         if calibration:
@@ -64,20 +64,23 @@ def main(calibration: bool):
             r.self_calib_rot(range_cmd = (350, 1000), step = 50, direction='right')
         else:
             
+            r.init_sense_thread()
 
-            # initialize the sockets, which will send the Location
+            # initialize the sockets, which will send the Location to the visualizer
             r.init_local_sockets(pose_socket = True, map_socket = True)
 
-            # target = Target(target_type = "POS", target_vals = [0, -200])
-            # r.goto(target)
-            # target = Target(target_type = "POS", target_vals = [100, -100])
-            # r.goto(target)
-            # target = Target(target_type = "POS", target_vals = [100 ,0])
-            # r.goto(target)
-            # target = Target(target_type = "POS", target_vals = [0 ,-200])
-            # r.goto(target)
-            # target = Target(target_type = "POS", target_vals = [0 ,0])
-            # r.goto(target)
+
+
+            target = Target(target_type = "POS", target_vals = [0, -200])
+            r.goto(target)
+            target = Target(target_type = "POS", target_vals = [100, -100])
+            r.goto(target)
+            target = Target(target_type = "POS", target_vals = [100 ,0])
+            r.goto(target)
+            target = Target(target_type = "POS", target_vals = [0 ,-200])
+            r.goto(target)
+            target = Target(target_type = "POS", target_vals = [0 ,0])
+            r.goto(target)
 
             # while True:
             #     r.get_data()
