@@ -104,7 +104,6 @@ class R_Client_Extend(RClient):
         self.cur_readings = []
         self.status = 'idle'   # ['idle' / 'in_process']
         self.dest_reached = False
-        self.next_target = None
         self.current_target = None
         self.calib_folder = calib_folder
         self.logger = init_logger(logger_location)
@@ -212,6 +211,7 @@ class R_Client_Extend(RClient):
         # 1. Using the current location values, and the target values, 
         # calculate distance and angle
 
+        self.current_target = target
         self.get_data()
         self.logger.info("GOTO Target location received : [{0} {1}]".format(target.x, target.y))
         self.logger.debug("Current location : [{0} {1}]".format(self.cur_loc[0], self.cur_loc[1]))
@@ -570,14 +570,35 @@ class R_Client_Extend(RClient):
                     break
 
                 self.get_data()
-                data_to_send_bytes = pack('lll', (int)(self.cur_loc[0]), (int)(self.cur_loc[1]), (int)(self.cur_angle))
-                # data_to_send_bytes =  data_to_send.encode('utf-8')
+
+                send_data_tuple = ((int)(self.cur_loc[0]), (int)(self.cur_loc[1]), (int)(self.cur_angle))
+
+                # pack the target object. If exists
+                if self.current_target != None:
+                    if self.current_target.type == "POS":
+                        target_tuple = ((int)(self.current_target.x), (int)(self.current_target.y))
+                    else:
+                        target_tuple = (-9999, -9999)
+                else:
+                    target_tuple = (-9999, -9999)
+
+                total_tuple = send_data_tuple + target_tuple
+
+                # a = calcsize('iiiii')
+                # print("Sending " + str(a))
+                data_to_send_bytes = pack('iiiii', total_tuple[0], 
+                                                    total_tuple[1],
+                                                    total_tuple[2],
+                                                    total_tuple[3],
+                                                    total_tuple[4])
                 try:
                     conn.sendall(data_to_send_bytes)
+                    # print("Sending data")
                     time.sleep(C_CONSTANTS.VIS_LOC_SEND_FREQ)
                     current_tries_am = 0 # succeeded to reconnect, set counter to 0
                 except:
                     print("Transmission to Visualizer failed. Retrying ({}/{})".format(current_tries_am, max_tries_reconnect))
+                    # print(total_tuple)
                     current_tries_am += 1
                     time.sleep(1.0)
 

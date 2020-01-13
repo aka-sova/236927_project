@@ -1,3 +1,4 @@
+import math
 from struct import *
 import socket
 import time
@@ -31,6 +32,11 @@ class GUI_MAP(tk.Tk):
         self.x = -9999
         self.y = -9999
         self.angle = -9999
+
+        self.connected = False
+
+        self.target_x = -9999
+        self.target_y = -9999
         self.cur_loc_shape = None
 
         self.create_menus()
@@ -76,23 +82,49 @@ class GUI_MAP(tk.Tk):
         self.canvas_frame.pack(side = tk.RIGHT, padx = 20, pady = 20)
 
         # create the canvas
-        self.map_cvs = tk.Canvas(master = self.canvas_frame, width=self.img_size[0], height=self.img_size[1])
+        self.map_cvs = tk.Canvas(master = self.canvas_frame, width=self.img_size[0], height=self.img_size[1], bg="white")
         self.map_cvs.pack()
 
-        # bring the background image
-        from PIL import Image
+        # # create background from an image
 
-        img = Image.open(self.map_bg_loc)
-        img = img.resize((self.img_size[0],self.img_size[1]), Image.ANTIALIAS)
-        photoImg =  ImageTk.PhotoImage(img)
+        # from PIL import Image
 
-        self.img = photoImg
-        self.map_cvs.create_image((0, 0), anchor=tk.NW, image=self.img)
+        # img = Image.open(self.map_bg_loc)
+        # img = img.resize((self.img_size[0],self.img_size[1]), Image.ANTIALIAS)
+        # photoImg =  ImageTk.PhotoImage(img)
 
-        self.cur_origin_shape = self.map_cvs.create_rectangle( 
-                         -5, -5, 5, 5, fill = "blue")
+        # self.img = photoImg
+        # self.map_cvs.create_image((0, 0), anchor=tk.NW, image=self.img)
+
+
+        # draw the origin and coordinate system with arrows
+        # the X arrow - this is '-Y' in the canvas plane
+        self.origin_X = self.map_cvs.create_line(self.img_size[1]/2, 
+                                                       self.img_size[0]/2,
+                                                       self.img_size[1]/2, 
+                                                       self.img_size[0]/2 - 60, 
+                                                       arrow=tk.LAST)
+
+        self.map_cvs.create_text(self.img_size[1]/2,
+                                self.img_size[0]/2 - 80, 
+                                fill="darkblue",font="Arial 14 bold",
+                                text="X")
+                                
+        # the Y arrow - this is '-Y' in the canvas plane
+        self.origin_Y = self.map_cvs.create_line(self.img_size[1]/2, 
+                                                       self.img_size[0]/2,
+                                                       self.img_size[1]/2 + 60, 
+                                                       self.img_size[0]/2, 
+                                                       arrow=tk.LAST)           
+
+        self.map_cvs.create_text(self.img_size[1]/2 + 80,
+                                self.img_size[0]/2 , 
+                                fill="darkblue",font="Arial 14 bold",
+                                text="Y")
 
         self.cur_loc_object = None
+        self.cur_dir_object = None
+        self.cur_trg_object = None
 
         self.pose_thread = threading.Thread(target=self.update_pose_thread)
         self.pose_thread.start()
@@ -106,23 +138,37 @@ class GUI_MAP(tk.Tk):
         PORT = 65432        # The port used by the server
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect((HOST,PORT))
-        sock.setblocking(0)
+
+        # trying to connect until the server listens
+        while not self.connected:
+            try:
+                sock.connect((HOST,PORT))
+                sock.setblocking(0)
+                self.connected = True
+            except socket.error as e:
+                errnum = e.errno
+                reason=get_error_name(errnum)
+                print("Server not found. Reason: " + reason)
 
         print("Client socket established")
 
         while True:
             try:
-                data, addr = sock.recvfrom(1024)
+                data, addr = sock.recvfrom(20)
                 if len(data)==0:
                     time.sleep(0.05)
                 else:
-                    data = unpack('lll', data)
+                    # data = data[-20:]
+                    # print("Received : " + str(len(data)))
+                    data = unpack('iiiii', data)
                     print("Received data={}".format(data))
 
                     self.x = data[1] + self.img_size[1]/2 # receive the updated position
                     self.y = - data[0] + self.img_size[0]/2 # receive the updated position
                     self.angle = data[2] # receive the updated angle
+
+                    self.target_x = data[4] + self.img_size[1]/2
+                    self.target_y = - data[3] + self.img_size[0]/2
 
                     if self.x != -9999 and self.y != -9999 and self.angle != -9999:
                         self.create_cur_shape()
@@ -132,11 +178,8 @@ class GUI_MAP(tk.Tk):
                 if errnum!=errno.EAGAIN:
                     reason=get_error_name(errnum)
                     # print("Socket Error ({}): {}".format(errnum,reason))
-                time.sleep(0.05)
+                # time.sleep(1.0)
 
-        # while True:
-        #     time.sleep(1)
-        #     self.movement(x = 5)
 
     def create_cur_shape(self):
         """Delete the current location shape, and create new one at x,y"""
@@ -144,9 +187,36 @@ class GUI_MAP(tk.Tk):
         if self.cur_loc_object != None:
             self.map_cvs.delete(self.cur_loc_object)
 
+        if self.cur_dir_object != None:
+            self.map_cvs.delete(self.cur_dir_object)   
+            
+        if self.cur_trg_object != None:
+            self.map_cvs.delete(self.cur_trg_object)   
+
+        # create ab object which symbolizes the current agent location
         self.cur_loc_object = self.map_cvs.create_rectangle( 
                          -5, -5, 5, 5, fill = "blue")
         self.map_cvs.move(self.cur_loc_object, self.x, self.y)
+
+        # create an arrow which shows its direction
+        arrow_length = 70 # px
+        self.cur_dir_object = self.map_cvs.create_line(self.x, 
+                                                       self.y,
+                                                       self.x + arrow_length*math.sin(self.angle*math.pi/180), 
+                                                       self.y - arrow_length*math.cos(self.angle*math.pi/180), 
+                                                       arrow=tk.LAST,
+                                                       fill="blue")
+
+        if self.target_x != -9999 and self.target_y != -9999:
+            # meaning we have a POS target
+            # draw it with a red dot
+            r = 5
+            self.cur_trg_object = self.map_cvs.create_oval(self.target_x-r,
+                                                           self.target_y-r,
+                                                           self.target_x+r,
+                                                           self.target_y+r, 
+                                                           fill="#5E5E5E")
+
 
     def movement(self, x = 0, y = 0):
         """Change the location of the object on canvas to the actual location"""

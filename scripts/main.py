@@ -71,16 +71,16 @@ def main(calibration: bool):
 
 
 
-            target = Target(target_type = "POS", target_vals = [0, -200])
-            r.goto(target)
-            target = Target(target_type = "POS", target_vals = [100, -100])
-            r.goto(target)
-            target = Target(target_type = "POS", target_vals = [100 ,0])
-            r.goto(target)
-            target = Target(target_type = "POS", target_vals = [0 ,-200])
-            r.goto(target)
-            target = Target(target_type = "POS", target_vals = [0 ,0])
-            r.goto(target)
+            # target = Target(target_type = "POS", target_vals = [0, -200])
+            # r.goto(target)
+            # target = Target(target_type = "POS", target_vals = [100, -100])
+            # r.goto(target)
+            # target = Target(target_type = "POS", target_vals = [100 ,0])
+            # r.goto(target)
+            # target = Target(target_type = "POS", target_vals = [0 ,-200])
+            # r.goto(target)
+            # target = Target(target_type = "POS", target_vals = [0 ,0])
+            # r.goto(target)
 
             # while True:
             #     r.get_data()
