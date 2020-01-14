@@ -1,33 +1,91 @@
 
 import numpy as np
 from tkinter import *
-
+import math
+import timeit
+import shutil
 
 class Map(object):
-    def __init__(self, size_x : int = 10000, size_y :int = 10000):
-        self.probs = np.zeros((size_x,size_y)) # 10 by 10 meters. Each pixel is cm^2
-        self.bin_map = np.zeros((size_x,size_y))
+    def __init__(self, logger, size_x : int = 1000, size_y :int = 1000, sensor_angles : list = [-45, 0, 45], output_loc: str = '', output_temp_loc : str = ''):
+        
+        self.x = size_x
+        self.y = size_y
 
-    def update(self, loc : list, dir : list, meas : list, sensor_angles : list):
+        self.bin_map = np.zeros((size_x,size_y), dtype=np.bool)
+        self.output_loc = output_loc
+        self.output_temp_loc = output_temp_loc
+        self.sensor_angles = sensor_angles
+        self.logger = logger
+
+    def update(self, cur_loc : list, dir_angle, meas : list):
         """This function will update the map based on the recieived parameters:
-        loc : Location of the agent 
-        dir : Direction of the agent (dx, dy)
+        cur_loc : Location of the agent (list of x, y)
+        dir_angle : Direction of the agent (float) (deg)
         meas : List of measurements
-        sensor_angles : list of angles corresponding to the measurements
         
         As output, the probs of the map will be updated
         """
+
+        # for now, implement the binary map directly
+        # perhaps will be good enough
+
+        for meas_data, sensor_angle in zip(meas, self.sensor_angles):
+            sensor_true_angle = dir_angle + sensor_angle
+
+            # if sensor_angle != -45:
+            #     continue
+
+            if meas_data > 0:
+                # print("Current X {} Y {}".format(cur_loc[0], cur_loc[1]))
+                # print("Meas data : " + str(meas_data))
+                # print("sensor_true_angle : " + str(sensor_true_angle))
+
+                # those are x, y in the camera frame
+                x = int(meas_data * math.cos(sensor_true_angle*math.pi/180) + cur_loc[0])
+                y = int(meas_data * math.sin(sensor_true_angle*math.pi/180) + cur_loc[1])
+
+                # camera frame
+                # print("Obstacle at X : {}  Y : {} : ".format(x,y))
+
+                # csv frame
+                col, row = self.to_csv_coords(x, y)
+
+                # print("CSV ROW {} COL {}".format(row,col))
+
+                # mark the map in this location as obstacle
+                self.bin_map[row][col] = 1
+
+    def to_csv_coords(self, x, y):
+        """Change to csv coordinate system (only absolute values)"""
+
+
+        csv_col = int(self.y/2 + y)
+        csv_row = int(self.x/2 - x)
+
+        return csv_col, csv_row
+
+    def save_clear_output(self):
+        """Will save the output in a specified format"""
+
+        # it takes 3.5 seconds to do it,
+        # so perhaps is not the best option to work online
+
+        start = timeit.default_timer()
+
+        output_fd = open(self.output_temp_loc, 'w')
+        for row in range(self.bin_map.shape[0]):
+            for col in range(self.bin_map.shape[1]):
+                output_fd.write(str(int(self.bin_map[row][col])) + ",")
+            output_fd.write('\n')
+
+        output_fd.close()
+
+        shutil.copy(self.output_temp_loc, self.output_loc)
+
+        stop = timeit.default_timer()
+
+        self.logger.info('Saving the map. Time elapsed :  {}'.format(stop - start))  
+        
+    def save_temp_output(self):
+        """Save only the new data that was received"""
         pass
-
-    def gen_binary(self):
-        """By using the probabilities map, the binary map will be generated"""
-        pass
-
-    def generate_gui(self):
-        """Will create the Visualisation of the current map in a separate canvas,
-        and from now on, will update this canvas every period of time"""
-
-
-
-        pass
-

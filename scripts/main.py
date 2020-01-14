@@ -38,24 +38,26 @@ def main(calibration: bool):
     
     calib_folder = os.path.join(cur_loc, 'scripts', 'calib')
     logger_location = os.path.join(cur_loc, 'artifacts','logger.log')
+    map_output_loc = os.path.join(cur_loc, 'output','map.csv')
+    map_output_temp_loc = os.path.join(cur_loc, 'output','map_temp.csv')
 
 
 
-
-    angles = [angle * math.pi/180 for angle in [-45, 0, 45]]
+    # angles = [angle * math.pi/180 for angle in [-45, 0, 45]]
+    angles = [45, 0, -45]
     final_loc = [1000, 1000] # X, Y of the final location
 
     r = R_Client_Extend(host = "192.168.1.158", 
                         port = 2777,
                         angles = angles,
                         calib_folder = calib_folder,
-                        logger_location = logger_location)
+                        logger_location = logger_location,
+                        map_output_loc = map_output_loc,
+                        map_output_temp_loc = map_output_temp_loc)
 
-
-
+    # r.map.save_clear_output()
 
     try:
-
         r.connect()
         
         # perform the calibration
@@ -63,24 +65,27 @@ def main(calibration: bool):
             r.self_calib_pos(range_cmd = (350, 1000), step = 50)
             r.self_calib_rot(range_cmd = (350, 1000), step = 50, direction='right')
         else:
-            
+
             r.init_sense_thread()
+            r.init_mapping_thread()
 
             # initialize the sockets, which will send the Location to the visualizer
-            r.init_local_sockets(pose_socket = True, map_socket = True)
+            r.init_local_sockets(pose_socket = True)
 
+            
 
+            target = Target(target_type = "POS", target_vals = [0, -200])
+            r.goto(target)
+            target = Target(target_type = "POS", target_vals = [100, -100])
+            r.goto(target)
+            target = Target(target_type = "POS", target_vals = [100 ,0])
+            r.goto(target)
+            target = Target(target_type = "POS", target_vals = [0 ,-200])
+            r.goto(target)
+            target = Target(target_type = "POS", target_vals = [0 ,0])
+            r.goto(target)
 
-            # target = Target(target_type = "POS", target_vals = [0, -200])
-            # r.goto(target)
-            # target = Target(target_type = "POS", target_vals = [100, -100])
-            # r.goto(target)
-            # target = Target(target_type = "POS", target_vals = [100 ,0])
-            # r.goto(target)
-            # target = Target(target_type = "POS", target_vals = [0 ,-200])
-            # r.goto(target)
-            # target = Target(target_type = "POS", target_vals = [0 ,0])
-            # r.goto(target)
+            # r.map.save_clear_output()
 
             # while True:
             #     r.get_data()

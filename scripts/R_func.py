@@ -92,12 +92,11 @@ class Target(object):
       
 
 class R_Client_Extend(RClient):
-    def __init__(self, host, calib_folder, angles : list, logger_location, port,user_deprecate='',id_deprecate=''):
+    def __init__(self, host, calib_folder, angles : list, logger_location, map_output_loc, map_output_temp_loc, port, user_deprecate='',id_deprecate=''):
         super().__init__(host,port,user_deprecate='',id_deprecate='')
         self.goto_margin = 10  # margin to know we have arrived 
         self.angle_margin = 5 # [deg] 
-        self.map = Map()
-        self.sensor_angles = angles
+
         self.cur_loc = [-9999, -9999] # values mean location is not set 
         self.cur_dir = []
         self.cur_angle = -9999 # means angle is not set
@@ -107,6 +106,13 @@ class R_Client_Extend(RClient):
         self.current_target = None
         self.calib_folder = calib_folder
         self.logger = init_logger(logger_location)
+
+        self.map = Map(logger = self.logger,
+                       sensor_angles = angles, 
+                       output_loc = map_output_loc,
+                       output_temp_loc=map_output_temp_loc,
+                       size_x = 500,
+                       size_y = 500)
 
         self.read_calib_tables()
 
@@ -167,6 +173,8 @@ class R_Client_Extend(RClient):
 
             time.sleep(1.0)
             sense_data = self.sense()
+
+            print(sense_data)
 
 
         self.cur_loc = sense_data[0:2]
@@ -234,13 +242,23 @@ class R_Client_Extend(RClient):
 
 
             self.logger.debug("Performing turn of {}".format(angle_to_rotate))
-            self.turn(angle_to_rotate)
-            
-            time.sleep(1.0) # long enough?
-            # calculate the angle discrepancy
-            self.get_data()
-            angle_to_rotate = normalize_angle(angle_deg - self.cur_angle)
-            self.logger.debug("Turn performed. current discrepancy: {}".format(angle_to_rotate))
+
+            turn_acceptable = False
+
+            while not turn_acceptable:
+                self.turn(angle_to_rotate)
+                
+                time.sleep(1.0) # long enough?
+                # calculate the angle discrepancy
+                self.get_data()
+                angle_to_rotate = normalize_angle(angle_deg - self.cur_angle)
+                discrepancy = abs(angle_to_rotate)
+                self.logger.debug("Turn performed. current angle {},  discrepancy: {}".format(self.cur_angle, discrepancy))
+                if discrepancy < 5:
+                    turn_acceptable = True
+                else:
+                    self.logger.debug("Turn has too big discrepancy. Trying again")
+                    self.logger.debug("Performing turn of {}".format(angle_to_rotate))
 
 
             
@@ -316,7 +334,19 @@ class R_Client_Extend(RClient):
                 time.sleep(1.0)
         elif abs(angle) < min_rot_angle:
             # do nothing. too small angle to move
-            return
+            # perform 2 big turns, which will eventually bring the robot to correct angle
+
+            # with base_turn = 30, and min_rot_angle ~= 20,  we won't rotate more than 50 deg, which is ok
+            if angle > 0:
+                base_turn = 30
+            else:
+                base_turn = -30
+
+            self.turn_small(-base_turn)
+            time.sleep(1.0)
+
+            self.turn_small(angle + base_turn)
+            time.sleep(1.0)
         else:
             # within the interpolation boundaries
             self.turn_small(angle)
@@ -365,28 +395,10 @@ class R_Client_Extend(RClient):
 
         self.current_target = None
 
-    def update_map(self):
-        """This is the function for a thread to update the map"""
-        while not self.dest_reached:
-            # 1. Update the cur data
-            self.get_data()
-
-            # 2. Update the Map
-            self.map.update(loc = self.cur_loc,
-                            dir = self.cur_dir,
-                            meas = self.cur_readings,
-                            sensor_angles = self.sensor_angles)
-
-            time.sleep(0.1)
-
     def reach_destination(self, target):
         """The main function which will look for a path to find to reach the goal"""
 
         self.logger.info('Initializing the Algorithm')
-
-        # start the mapping thread
-        self.mapping_thread = threading.Thread(target=self.update_map)
-        self.mapping_thread.start()
 
         while not self.dest_reached:
 
@@ -532,16 +544,38 @@ class R_Client_Extend(RClient):
             self.get_data()
             time.sleep(C_CONSTANTS.SENSE_UPDATE_FREQ)
 
+    def init_mapping_thread(self):
+        """Initialize the sensors thread that will operate always"""
+        self.local_pose_thread=threading.Thread(target=self.mapping_update_thread)
+        self.local_pose_thread.start()  
 
-    def init_local_sockets(self, pose_socket : bool, map_socket : bool):
+        self.mapping_thread=threading.Thread(target=self.mapping_save_thread)
+        self.mapping_thread.start()  
+
+
+
+    def mapping_update_thread(self):
+        """This is the function for a thread to update the map"""
+        while True:
+            self.map.update(cur_loc = self.cur_loc,
+                            dir_angle = self.cur_angle,
+                            meas = self.cur_readings)
+
+            time.sleep(C_CONSTANTS.MAP_UPDATE_FREQ)
+
+    def mapping_save_thread(self):
+        """This is the function for a thread to update the map"""
+        while True:
+            self.map.save_clear_output()
+
+            time.sleep(C_CONSTANTS.MAP_SAVE_FREQ)        
+
+    def init_local_sockets(self, pose_socket : bool):
         """Initialize the local sockets which will send the data to the visualizer"""
 
         if pose_socket:
             self.local_pose_thread=threading.Thread(target=self.local_pose_loop)
             self.local_pose_thread.start()
-
-        if map_socket:
-            pass
 
 
     def local_pose_loop(self):
