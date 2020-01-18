@@ -96,7 +96,7 @@ def main(calibration: bool):
 
     finally:
         pass
-        # r.terminate()
+        r.terminate()
 
 
 

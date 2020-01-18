@@ -59,8 +59,8 @@ class Map(object):
         """Change to csv coordinate system (only absolute values)"""
 
 
-        csv_col = int(self.y/2 + y)
         csv_row = int(self.x/2 - x)
+        csv_col = int(self.y/2 + y)
 
         return csv_col, csv_row
 
