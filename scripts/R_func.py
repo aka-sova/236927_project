@@ -92,7 +92,7 @@ class Target(object):
       
 
 class R_Client_Extend(RClient):
-    def __init__(self, host, calib_folder, angles : list, logger_location, map_output_loc, map_output_temp_loc, port, user_deprecate='',id_deprecate=''):
+    def __init__(self, host, calib_folder, angles : list, logger_location, map_output_loc, map_output_temp_loc, artifacts_loc, port, user_deprecate='',id_deprecate=''):
         super().__init__(host,port,user_deprecate='',id_deprecate='')
         self.goto_margin = 10  # margin to know we have arrived 
         self.angle_margin = 5 # [deg] 
@@ -106,14 +106,17 @@ class R_Client_Extend(RClient):
         self.current_target = None
         self.calib_folder = calib_folder
         self.logger = init_logger(logger_location)
+        self.artifacts_loc = artifacts_loc
 
         self.map = Map(logger = self.logger,
                        sensor_angles = angles, 
                        output_loc = map_output_loc,
                        output_temp_loc=map_output_temp_loc,
+                       artifacts_loc = artifacts_loc,
                        size_x = 500,
                        size_y = 500)
 
+        # calib tables indicate which commands to give to achieve certain poses
         self.read_calib_tables()
 
     def read_calib_tables(self):
@@ -552,6 +555,16 @@ class R_Client_Extend(RClient):
         self.mapping_thread=threading.Thread(target=self.mapping_save_thread)
         self.mapping_thread.start()  
 
+        if C_CONSTANTS.DEBUG == True:
+            self.debug_map_save_thread=threading.Thread(target=self.mapping_save_png_thread)
+            self.debug_map_save_thread.start()  
+
+
+    def mapping_save_png_thread(self):
+        """This is the function for a thread to save the maps as PNG files"""
+        while True:
+            self.map.save_maps_debug()
+            time.sleep(C_CONSTANTS.MAP_SAVE_DEBUG_FREQ)
 
 
     def mapping_update_thread(self):
