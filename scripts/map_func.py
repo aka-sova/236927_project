@@ -12,6 +12,7 @@ import timeit
 import shutil
 from scipy import ndimage
 import matplotlib
+from matplotlib import image
 
 import C_CONSTANTS
 
@@ -99,16 +100,19 @@ class Map(object):
 
         filter_kernel = self.generate_bin_filter(row, col)
 
-        # use the elementwise multiplication to 
+        # use the elementwise multiplication to mark only the pixels with obstacles
         filtered_img = np.multiply(self.bin_map, filter_kernel)
+
+        # remove the original pixel itself from the image
+        filtered_img[row][col] = 0
 
         # indexes of non-zero elements
         out_ind = np.transpose(np.nonzero(filtered_img))
 
         # for each non zero element, mark all the elements in between as occupied
-        for non_zero_idx in out_ind:
-            nonzero_row = non_zero_idx[out_ind][0]
-            nonzero_col = non_zero_idx[out_ind][1]
+        for non_zero_arr in out_ind:
+            nonzero_row = non_zero_arr[0]
+            nonzero_col = non_zero_arr[1]
 
             # find a slope
             d_row = row - nonzero_row
@@ -120,7 +124,7 @@ class Map(object):
             x_end = max(col, nonzero_col)
             num_points = x_end - x_start
             x_arr = np.linspace(x_start, x_end, num_points)
-            y0 = row
+            y0 = row - slope * col
 
             y_arr = x_arr * slope + y0
 
@@ -129,8 +133,8 @@ class Map(object):
                 # x is col
                 try:
                     # putting try so won't be out of boundaries
-                    self.filled_map[np.floor(y)][x] = 1
-                    self.filled_map[np.ceil(y)][x] = 1
+                    self.filled_map[(int)(np.floor(y))][(int)(x)] = 1
+                    self.filled_map[(int)(np.ceil(y))][(int)(x)] = 1
                 except:
                     pass
 
@@ -141,7 +145,7 @@ class Map(object):
         iterations = C_CONSTANTS.MAP_CONNECT_RANGE-1
 
         # generate filter of the size of the image
-        filt = np.zeros(self.x, self.y) 
+        filt = np.zeros((self.x, self.y))
          
         # filter is always of uneven size, thus we know for sure there's a center pixel
         filt[row, col] = 1
@@ -189,3 +193,21 @@ class Map(object):
         matplotlib.image.imsave(os.path.join(self.artifacts_loc, 'bin_map.png'), self.bin_map)
         matplotlib.image.imsave(os.path.join(self.artifacts_loc, 'filles_map.png'), self.filled_map)
         matplotlib.image.imsave(os.path.join(self.artifacts_loc, 'inflated_map.png'), self.inflated_map)
+
+
+    def generate_the_graph(self):
+        """The initialization of the graph"""
+        pass
+
+    def generate_path_to_goal(self):
+        """The main function for the path generation.
+
+        Input : the 'inflated' map, which is the occupancy grid with the resolution of 1 cm^2
+        Output : a list of Targets, which will lead to the goal
+        
+        We use a graph which is generated and updated all the time as new information comes in"""
+        
+
+
+
+        pass

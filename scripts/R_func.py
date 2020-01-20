@@ -383,6 +383,10 @@ class R_Client_Extend(RClient):
         # will drive only the maximum distance from the interpolation values
         distance = min(max(self.pos_interp.x), distance)
 
+        if distance < min(self.pos_interp.x):
+            # don't drive if the distance is too small
+            return
+
         command_value = int(self.pos_interp(abs(distance)))
         self.drive(command_value, command_value)
 
@@ -534,7 +538,7 @@ class R_Client_Extend(RClient):
     def open_controller(self):
         """Open the GUI controller, which will let me control the car"""
 
-
+        # TODO fill this function
         pass
 
     def init_sense_thread(self):
