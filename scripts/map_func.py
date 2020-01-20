@@ -72,7 +72,7 @@ class Map(object):
                 # print("Obstacle at X : {}  Y : {} : ".format(x,y))
 
                 # csv frame
-                col, row = self.to_csv_coords(x, y)
+                col, row = self.to_csv_coords(rows = self.x, cols = self.y, x = x, y = y)
 
                 # print("CSV ROW {} COL {}".format(row,col))
 
@@ -184,12 +184,13 @@ class Map(object):
 
         return filt
 
-    def to_csv_coords(self, x, y):
+    @staticmethod
+    def to_csv_coords(rows, cols, x, y):
         """Change to csv coordinate system (only absolute values)"""
 
 
-        csv_row = int(self.x/2 - x)
-        csv_col = int(self.y/2 + y)
+        csv_row = int(rows/2 - x)
+        csv_col = int(cols/2 + y)
 
         return csv_col, csv_row
 
@@ -222,10 +223,12 @@ class Map(object):
 
         shutil.copy(self.output_temp_loc, self.output_loc)
 
-        with open(self.output_inflated_temp_loc, "wb") as f:
-            pickle.dump(self.inflated_map, f)
-            
-        shutil.copy(self.output_inflated_temp_loc, self.output_inflated_loc)   
+        # We currently don't use this method. I use inflated obstacles as background image
+
+        # with open(self.output_inflated_temp_loc, "wb") as f:
+        #     pickle.dump(self.inflated_map, f)
+
+        # shutil.copy(self.output_inflated_temp_loc, self.output_inflated_loc)   
 
         stop = timeit.default_timer()
 

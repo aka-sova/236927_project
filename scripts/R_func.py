@@ -10,6 +10,7 @@ sys.path.append(os.path.join(cur_loc, 'scripts\\api_src'))
 from udpclient import RClient
 from map_func import Map
 import C_CONSTANTS
+from RRT import RRTStar
 
 import time
 import logging
@@ -92,16 +93,16 @@ class Target(object):
       
 
 class R_Client_Extend(RClient):
-    def __init__(self, host, calib_folder, angles : list, logger_location, map_output_loc, map_output_temp_loc, map_inflated_output_loc, map_inflated_output_temp_loc, artifacts_loc, port, user_deprecate='',id_deprecate=''):
+    def __init__(self, host, calib_folder, angles : list, logger_location, planner_logger_location, map_output_loc, map_output_temp_loc, map_inflated_output_loc, map_inflated_output_temp_loc, artifacts_loc, port, user_deprecate='',id_deprecate=''):
         super().__init__(host,port,user_deprecate='',id_deprecate='')
         self.goto_margin = 10  # margin to know we have arrived 
         self.angle_margin = 5 # [deg] 
 
-        self.cur_loc = [-9999, -9999] # values mean location is not set 
-        self.cur_dir = []
-        self.cur_angle = -9999 # means angle is not set
+        self.cur_loc = [-9999, -9999]   # values mean location is not set 
+        self.cur_dir = []               # direction 
+        self.cur_angle = -9999          # means angle is not set
         self.cur_readings = []
-        self.status = 'idle'   # ['idle' / 'in_process']
+        self.status = 'idle'            # ['idle' / 'in_process']
         self.dest_reached = False
         self.current_target = None
         self.calib_folder = calib_folder
@@ -117,6 +118,14 @@ class R_Client_Extend(RClient):
                        artifacts_loc = artifacts_loc,
                        size_x = 500,
                        size_y = 500)
+        
+        planner_logger = init_logger(planner_logger_location)
+        self.planner = RRTStar(logger = planner_logger,
+                               max_iter = 300,
+                               expand_dis = 50,
+                               path_resolution = 5.0,
+                               connect_circle_dist = 50.0,
+                               goal_sample_rate=20)
 
         # calib tables indicate which commands to give to achieve certain poses
         self.read_calib_tables()

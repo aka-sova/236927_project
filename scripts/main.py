@@ -38,6 +38,7 @@ def main(calibration: bool):
     
     calib_folder = os.path.join(cur_loc, 'scripts', 'calib')
     logger_location = os.path.join(cur_loc, 'artifacts','logger.log')
+    planner_logger_location = os.path.join(cur_loc, 'artifacts','planner_logger.log')
 
     map_output_loc = os.path.join(cur_loc, 'output','map.p')
     map_output_temp_loc = os.path.join(cur_loc, 'output','map_temp.p')
@@ -58,6 +59,7 @@ def main(calibration: bool):
                         angles = angles,
                         calib_folder = calib_folder,
                         logger_location = logger_location,
+                        planner_logger_location = planner_logger_location,
                         map_output_loc = map_output_loc,
                         map_output_temp_loc = map_output_temp_loc,
                         map_inflated_output_loc = map_inflated_output_loc,
