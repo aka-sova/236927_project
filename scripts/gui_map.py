@@ -1,3 +1,6 @@
+import traceback
+
+import pickle
 import math
 from struct import *
 import socket
@@ -8,6 +11,8 @@ from PIL import ImageTk
 import numpy as np
 from numpy import genfromtxt
 
+from R_func import init_logger
+import timeit
 
 import tkinter as tk
 from tkinter import Tk
@@ -31,14 +36,20 @@ from errnames import get_error_name
 import C_CONSTANTS
 
 class GUI_MAP(tk.Tk):
-    def __init__(self, name, map_bg_loc = '', map_input_loc = ''):
+    def __init__(self, name, map_bg_loc = '', map_input_loc = '', logger_location = ''):
         super().__init__()
         self.title(name)
         self.map_bg_loc = map_bg_loc
         self.map_input_loc = map_input_loc
 
-        self.img_size = [500, 500]
-        self.obstacle_drawn_map = np.zeros((500,500), dtype=np.bool)
+        self.logger = init_logger(logger_location)
+
+        self.size_x = 500
+        self.size_y = 500
+        self.obstacle_drawn_map = np.zeros((self.size_x,self.size_y), dtype=np.bool)
+        self.bin_map = np.zeros((self.size_x,self.size_y), dtype=np.bool)         # original sensors data
+        self.filled_map = np.zeros((self.size_x,self.size_y), dtype=np.bool)      # map with 'filled' gaps between measuremenets
+        self.inflated_map = np.zeros((self.size_x,self.size_y), dtype=np.bool)    # map with 'inflated' obstacle
 
         self.x = -9999
         self.y = -9999
@@ -56,6 +67,8 @@ class GUI_MAP(tk.Tk):
 
     def create_menus(self):
 
+        self.logger.info("Creating MENUS")
+
         Main_menu = tk.Menu(master = self)
 
         Program_options_menu = tk.Menu(master = Main_menu, tearoff = 0)
@@ -71,6 +84,8 @@ class GUI_MAP(tk.Tk):
         self.config(menu = Main_menu)
 
     def add_frames(self):
+
+        self.logger.info("Creating FRAMES")
 
         self.create_side_frame()
         self.create_canvas_frame()
@@ -124,13 +139,13 @@ class GUI_MAP(tk.Tk):
     def create_canvas_frame(self):
         """The main frame with a mao on it, which will be updated in real time"""
 
-
+        self.logger.info("Creating CANVAS")    
 
         self.canvas_frame = tk.Frame(master = self)
         self.canvas_frame.pack(side = tk.RIGHT, padx = 20, pady = 20)
 
         # create the canvas
-        self.map_cvs = tk.Canvas(master = self.canvas_frame, width=self.img_size[0], height=self.img_size[1], bg="white")
+        self.map_cvs = tk.Canvas(master = self.canvas_frame, width=self.size_x, height=self.size_y, bg="white")
         self.map_cvs.pack()
 
         # # create background from an image
@@ -138,7 +153,7 @@ class GUI_MAP(tk.Tk):
         # from PIL import Image
 
         # img = Image.open(self.map_bg_loc)
-        # img = img.resize((self.img_size[0],self.img_size[1]), Image.ANTIALIAS)
+        # img = img.resize((self.size_x,self.size_y), Image.ANTIALIAS)
         # photoImg =  ImageTk.PhotoImage(img)
 
         # self.img = photoImg
@@ -147,26 +162,26 @@ class GUI_MAP(tk.Tk):
 
         # draw the origin and coordinate system with arrows
         # the X arrow - this is '-Y' in the canvas plane
-        self.origin_X = self.map_cvs.create_line(self.img_size[1]/2, 
-                                                       self.img_size[0]/2,
-                                                       self.img_size[1]/2, 
-                                                       self.img_size[0]/2 - 60, 
+        self.origin_X = self.map_cvs.create_line(self.size_y/2, 
+                                                       self.size_x/2,
+                                                       self.size_y/2, 
+                                                       self.size_x/2 - 60, 
                                                        arrow=tk.LAST)
 
-        self.map_cvs.create_text(self.img_size[1]/2,
-                                self.img_size[0]/2 - 80, 
+        self.map_cvs.create_text(self.size_y/2,
+                                self.size_x/2 - 80, 
                                 fill="darkblue",font="Arial 14 bold",
                                 text="X")
                                 
         # the Y arrow - this is '-Y' in the canvas plane
-        self.origin_Y = self.map_cvs.create_line(self.img_size[1]/2, 
-                                                       self.img_size[0]/2,
-                                                       self.img_size[1]/2 + 60, 
-                                                       self.img_size[0]/2, 
+        self.origin_Y = self.map_cvs.create_line(self.size_y/2, 
+                                                       self.size_x/2,
+                                                       self.size_y/2 + 60, 
+                                                       self.size_x/2, 
                                                        arrow=tk.LAST)           
 
-        self.map_cvs.create_text(self.img_size[1]/2 + 80,
-                                self.img_size[0]/2 , 
+        self.map_cvs.create_text(self.size_y/2 + 80,
+                                self.size_x/2 , 
                                 fill="darkblue",font="Arial 14 bold",
                                 text="Y")
 
@@ -179,16 +194,19 @@ class GUI_MAP(tk.Tk):
         self.cur_trg_object = None
         self.cur_obstacles_map = None
 
+        self.logger.info("Initializing the agent pose + go drawing thread")
         self.pose_thread = threading.Thread(target=self.update_pose_thread)
         self.pose_thread.start()
 
+        self.logger.info("Initializing the obstacles drawing thread")
         self.map_draw_thread = threading.Thread(target=self.draw_map_proc)
         self.map_draw_thread.start()
 
     def update_pose_thread(self):
         """thread for updating the location"""
 
-        print("Opening a pose thread")
+        self.logger.info("Opening a pose thread")
+        
 
         HOST = '127.0.0.1'  # The server's hostname or IP address
         PORT = 65432        # The port used by the server
@@ -204,9 +222,9 @@ class GUI_MAP(tk.Tk):
             except socket.error as e:
                 errnum = e.errno
                 reason=get_error_name(errnum)
-                print("Server not found. Reason: " + reason)
+                self.logger.info("Server not found. Reason: " + reason)
 
-        print("Client socket established")
+        self.logger.info("Client socket established")
         self.status_var.set("CONNECTED")
 
         while True:
@@ -218,14 +236,14 @@ class GUI_MAP(tk.Tk):
                     # data = data[-20:]
                     # print("Received : " + str(len(data)))
                     data = unpack('iiiii', data)
-                    # print("Received data={}".format(data))
+                    self.logger.debug("Received data={}".format(data))
 
-                    self.x = data[1] + self.img_size[1]/2 # receive the updated position
-                    self.y = - data[0] + self.img_size[0]/2 # receive the updated position
+                    self.x = data[1] + self.size_y/2 # receive the updated position
+                    self.y = - data[0] + self.size_x/2 # receive the updated position
                     self.angle = data[2] # receive the updated angle
 
-                    self.target_x = data[4] + self.img_size[1]/2
-                    self.target_y = - data[3] + self.img_size[0]/2
+                    self.target_x = data[4] + self.size_y/2
+                    self.target_y = - data[3] + self.size_x/2
 
                     self.update_labels()
 
@@ -253,14 +271,16 @@ class GUI_MAP(tk.Tk):
     def to_cam_coords(self, col, row):
         """Change to csv coordinate system (only absolute values)"""
 
-        x = self.img_size[0]/2 - row 
-        y = - self.img_size[1]/2 + col 
+        x = self.size_x/2 - row 
+        y = - self.size_y/2 + col 
 
         return x, y
 
 
     def create_cur_shape(self):
         """Delete the current location shape, and create new one at x,y"""
+
+        start = timeit.default_timer()
 
         if self.cur_loc_object != None:
             self.map_cvs.delete(self.cur_loc_object)
@@ -295,24 +315,27 @@ class GUI_MAP(tk.Tk):
                                                            self.target_y+r, 
                                                            fill="#5E5E5E")
 
+        stop = timeit.default_timer()
+        self.logger.info('[DRAWING] Drawing self + GOTO. Time elapsed :  {}'.format(stop - start)) 
+
     def create_gridlines(self, line_distance):
         """Add gridlines to canvas"""
 
-        x0 = (self.img_size[0]/2) % 100
-        y0 = (self.img_size[1]/2) % 100
+        x0 = (self.size_x/2) % 100
+        y0 = (self.size_y/2) % 100
 
         if x0 != 0:
-            self.map_cvs.create_line(x0, 0, x0, self.img_size[1], fill="#476042")
+            self.map_cvs.create_line(x0, 0, x0, self.size_y, fill="#476042")
 
         if y0 != 0:
-            self.map_cvs.create_line(0, y0, self.img_size[0], y0, fill="#476042")
+            self.map_cvs.create_line(0, y0, self.size_x, y0, fill="#476042")
 
         # vertical lines at an interval of "line_distance" pixel
-        for x in range(line_distance, self.img_size[0] ,line_distance):
-            self.map_cvs.create_line(x0 + x, 0, x0 + x, self.img_size[1], fill="#476042")
+        for x in range(line_distance, self.size_x ,line_distance):
+            self.map_cvs.create_line(x0 + x, 0, x0 + x, self.size_y, fill="#476042")
         # horizontal lines at an interval of "line_distance" pixel
-        for y in range(line_distance,self.img_size[1],line_distance):
-            self.map_cvs.create_line(0, y0 + y, self.img_size[0], y0 + y, fill="#476042")
+        for y in range(line_distance,self.size_y,line_distance):
+            self.map_cvs.create_line(0, y0 + y, self.size_x, y0 + y, fill="#476042")
 
 
     def draw_map_proc(self):
@@ -325,22 +348,39 @@ class GUI_MAP(tk.Tk):
         """Main method to draw the obstacles
         from the input csv format"""
 
+        start = timeit.default_timer()
+
+
         # if self.cur_obstacles_map != None:
         #     self.map_cvs.delete(self.cur_dir_object)  
 
         if not os.path.exists(self.map_input_loc):
             return
 
-        # print("csv loc: " + self.map_input_loc)
-        obstacles_cvs = np.genfromtxt(self.map_input_loc, delimiter=',')
-        # print("Obstacles data received! Shape = [{} on {}]".format(obstacles_cvs.shape[0], obstacles_cvs.shape[1]))
+        with open(self.map_input_loc, "rb" ) as f:
+            self.bin_map = pickle.load(f)
 
-        for row in range(obstacles_cvs.shape[0]):
-            for col in range(obstacles_cvs.shape[1]):
+        # FOR CSV:
+        
+        # try:
+        #     bin_map = np.genfromtxt(self.map_input_loc, delimiter=',')
+        #     # print("Obstacles data received! Shape = [{} on {}]".format(bin_map.shape[0], bin_map.shape[1]))
+        # except:
+        #     var = traceback.format_exc()
+        #     self.logger.WARNING('Reading from CSV not successful. exception: ' + var)
+        #     return
+
+        stop = timeit.default_timer()
+        self.logger.info('[DRAWING] Reading obstacles PICKLE file. Time elapsed :  {}'.format(stop - start)) 
+
+        start = timeit.default_timer()
+
+        for row in range(self.bin_map.shape[0]):
+            for col in range(self.bin_map.shape[1]):
                 # check that obstacle wasn't drawn yet
-                if obstacles_cvs[row][col] == 1 and self.obstacle_drawn_map[row][col] == False:
+                if self.bin_map[row][col] == 1 and self.obstacle_drawn_map[row][col] == False:
                     # print("Found obstacle at row {} col {}".format(row,col))
-                    # print("Placing at {}".format(row + self.img_size[0]/2 - 10))
+                    # print("Placing at {}".format(row + self.size_x/2 - 10))
 
                     # print("Obstacle at ROW {} COL {}".format(row,col))
                     self.obstacle_drawn_map[row][col] = True # mark that this obstacle is drawn already
@@ -356,6 +396,9 @@ class GUI_MAP(tk.Tk):
 
         # if will be too slow - i will consider using some binary file format
         # like feather, or pickle
+
+        stop = timeit.default_timer()
+        self.logger.info('[DRAWING] Drawing obstacles themselves. Time elapsed :  {}'.format(stop - start)) 
 
 
     def movement(self, x = 0, y = 0):
@@ -401,9 +444,10 @@ class GUI_MAP(tk.Tk):
 
 cur_loc = os.getcwd()
 bg_src = os.path.join(cur_loc, 'scripts', 'map_src', 'map_clean.png')
-map_input_loc = os.path.join(cur_loc, 'output','map.csv')
+map_input_loc = os.path.join(cur_loc, 'output','map.p')
+logger_location = os.path.join(cur_loc, 'artifacts','logger_vizual.log')
 
-master = GUI_MAP(name = "MAP", map_bg_loc=bg_src, map_input_loc = map_input_loc)
+master = GUI_MAP(name = "MAP", map_bg_loc=bg_src, map_input_loc = map_input_loc, logger_location = logger_location)
 
 # This will bind arrow keys to the tkinter 
 # toplevel which will navigate the image or drawing 

@@ -38,8 +38,8 @@ def main(calibration: bool):
     
     calib_folder = os.path.join(cur_loc, 'scripts', 'calib')
     logger_location = os.path.join(cur_loc, 'artifacts','logger.log')
-    map_output_loc = os.path.join(cur_loc, 'output','map.csv')
-    map_output_temp_loc = os.path.join(cur_loc, 'output','map_temp.csv')
+    map_output_loc = os.path.join(cur_loc, 'output','map.p')
+    map_output_temp_loc = os.path.join(cur_loc, 'output','map_temp.p')
     artifacts_loc = os.path.join(cur_loc, 'artifacts')
 
 

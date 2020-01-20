@@ -583,7 +583,7 @@ class R_Client_Extend(RClient):
     def mapping_save_thread(self):
         """This is the function for a thread to update the map"""
         while True:
-            self.map.save_clear_output()
+            self.map.save_clear_output_pickle()
 
             time.sleep(C_CONSTANTS.MAP_SAVE_FREQ)        
 

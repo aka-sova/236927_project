@@ -1,4 +1,5 @@
 
+import pickle
 import os
 import sys
 cur_loc = os.getcwd()
@@ -83,17 +84,24 @@ class Map(object):
 
     def inflate_obstacles(self):
         """mark all the nearest pixels within the range as 'occupied'"""
+
+        start = timeit.default_timer()
         
         # we inflate the 'filled_map' by using the moorphological 'dilation' operation
         iterations = C_CONSTANTS.MAP_INFLATE_RANGE - 1
 
         self.inflated_map = ndimage.binary_dilation(self.filled_map, iterations=iterations).astype(self.filled_map.dtype)
+
+        stop = timeit.default_timer()
+        self.logger.info('[MAPPING] Inflating map. Time elapsed :  {}'.format(stop - start)) 
         
 
     def connect_nearby_obstacles(self, row, col):
         """Analyze the pixels around within a certain range. If a pixel is 'occupied', 
         mark all the pixels in between as 'occupied'. Robot cannot pass in between those pixels.
         row, col - indexes of the pixel to analyze """
+
+        start = timeit.default_timer()
 
         # first, mark the required pixel as occupied
         self.filled_map[row][col] = 1
@@ -138,10 +146,13 @@ class Map(object):
                 except:
                     pass
 
+        stop = timeit.default_timer()
+        self.logger.info('[MAPPING] Connecting obstacles in map. Time elapsed :  {}'.format(stop - start))            
 
 
     def generate_bin_filter(self, row, col):
         """ use the morphological 'dilation' operation to create a filter """
+        
         iterations = C_CONSTANTS.MAP_CONNECT_RANGE-1
 
         # generate filter of the size of the image
@@ -165,9 +176,6 @@ class Map(object):
     def save_clear_output(self):
         """Will save the output in a specified format - CSV"""
 
-        # it takes 3.5 seconds to do it,
-        # so perhaps is not the best option to work online
-
         start = timeit.default_timer()
 
         output_fd = open(self.output_temp_loc, 'w')
@@ -182,17 +190,34 @@ class Map(object):
 
         stop = timeit.default_timer()
 
-        self.logger.info('Saving the map. Time elapsed :  {}'.format(stop - start))  
+        self.logger.info('[MAPPING] Saving the map as CSV. Time elapsed :  {}'.format(stop - start))  
         
+
+    def save_clear_output_pickle(self):
+        """Will save the output in a specified format - PICKLE"""
+
+        start = timeit.default_timer()
+
+        pickle.dump(self.bin_map, open(self.output_temp_loc, "wb"))
+        shutil.copy(self.output_temp_loc, self.output_loc)
+
+        stop = timeit.default_timer()
+
+        self.logger.info('[MAPPING] Saving the map as PICKLE. Time elapsed :  {}'.format(stop - start))  
+            
 
     def save_maps_debug(self):
         """Save maps as images for debug & further analysis"""
 
-        self.logger.info("Saving the maps as images for debug")
+        start = timeit.default_timer()
 
         matplotlib.image.imsave(os.path.join(self.artifacts_loc, 'bin_map.png'), self.bin_map)
         matplotlib.image.imsave(os.path.join(self.artifacts_loc, 'filles_map.png'), self.filled_map)
         matplotlib.image.imsave(os.path.join(self.artifacts_loc, 'inflated_map.png'), self.inflated_map)
+
+        stop = timeit.default_timer()
+
+        self.logger.info('[MAPPING] Saving the maps as PNG IMAGES. Time elapsed :  {}'.format(stop - start))  
 
 
     def generate_the_graph(self):
@@ -211,3 +236,5 @@ class Map(object):
 
 
         pass
+
+
