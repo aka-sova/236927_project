@@ -18,7 +18,7 @@ from matplotlib import image
 import C_CONSTANTS
 
 class Map(object):
-    def __init__(self, logger, size_x : int = 1000, size_y :int = 1000, sensor_angles : list = [-45, 0, 45], output_loc: str = '', output_temp_loc : str = '', artifacts_loc : str = ''):
+    def __init__(self, logger, size_x : int = 1000, size_y :int = 1000, sensor_angles : list = [-45, 0, 45], output_loc: str = '', output_temp_loc : str = '', output_inflated_loc : str = '', output_inflated_temp_loc : str = '', artifacts_loc : str = ''):
         
         self.x = size_x # rows
         self.y = size_y # cols
@@ -31,6 +31,11 @@ class Map(object):
         # locations on disk
         self.output_loc = output_loc
         self.output_temp_loc = output_temp_loc
+
+
+        self.output_inflated_loc = output_inflated_loc
+        self.output_inflated_temp_loc = output_inflated_temp_loc
+
         self.artifacts_loc = artifacts_loc
 
         self.sensor_angles = sensor_angles
@@ -212,9 +217,15 @@ class Map(object):
         """Will save the output in a specified format - PICKLE"""
 
         start = timeit.default_timer()
+        with open(self.output_temp_loc, "wb") as f:
+            pickle.dump(self.bin_map, f)
 
-        pickle.dump(self.bin_map, open(self.output_temp_loc, "wb"))
         shutil.copy(self.output_temp_loc, self.output_loc)
+
+        with open(self.output_inflated_temp_loc, "wb") as f:
+            pickle.dump(self.inflated_map, f)
+            
+        shutil.copy(self.output_inflated_temp_loc, self.output_inflated_loc)   
 
         stop = timeit.default_timer()
 

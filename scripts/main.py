@@ -38,8 +38,13 @@ def main(calibration: bool):
     
     calib_folder = os.path.join(cur_loc, 'scripts', 'calib')
     logger_location = os.path.join(cur_loc, 'artifacts','logger.log')
+
     map_output_loc = os.path.join(cur_loc, 'output','map.p')
     map_output_temp_loc = os.path.join(cur_loc, 'output','map_temp.p')
+
+    map_inflated_output_loc = os.path.join(cur_loc, 'output','map_inflated.p')
+    map_inflated_output_temp_loc = os.path.join(cur_loc, 'output','map_inflated_temp.p')
+
     artifacts_loc = os.path.join(cur_loc, 'artifacts')
 
 
@@ -55,6 +60,8 @@ def main(calibration: bool):
                         logger_location = logger_location,
                         map_output_loc = map_output_loc,
                         map_output_temp_loc = map_output_temp_loc,
+                        map_inflated_output_loc = map_inflated_output_loc,
+                        map_inflated_output_temp_loc = map_inflated_output_temp_loc,
                         artifacts_loc = artifacts_loc)
 
     # r.map.save_clear_output()

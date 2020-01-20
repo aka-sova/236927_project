@@ -92,7 +92,7 @@ class Target(object):
       
 
 class R_Client_Extend(RClient):
-    def __init__(self, host, calib_folder, angles : list, logger_location, map_output_loc, map_output_temp_loc, artifacts_loc, port, user_deprecate='',id_deprecate=''):
+    def __init__(self, host, calib_folder, angles : list, logger_location, map_output_loc, map_output_temp_loc, map_inflated_output_loc, map_inflated_output_temp_loc, artifacts_loc, port, user_deprecate='',id_deprecate=''):
         super().__init__(host,port,user_deprecate='',id_deprecate='')
         self.goto_margin = 10  # margin to know we have arrived 
         self.angle_margin = 5 # [deg] 
@@ -112,6 +112,8 @@ class R_Client_Extend(RClient):
                        sensor_angles = angles, 
                        output_loc = map_output_loc,
                        output_temp_loc=map_output_temp_loc,
+                       output_inflated_loc = map_inflated_output_loc,
+                       output_inflated_temp_loc = map_inflated_output_temp_loc,
                        artifacts_loc = artifacts_loc,
                        size_x = 500,
                        size_y = 500)

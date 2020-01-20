@@ -12,6 +12,8 @@ import numpy as np
 from numpy import genfromtxt
 
 from R_func import init_logger
+from map_func import Map
+
 import timeit
 
 import tkinter as tk
@@ -36,17 +38,22 @@ from errnames import get_error_name
 import C_CONSTANTS
 
 class GUI_MAP(tk.Tk):
-    def __init__(self, name, map_bg_loc = '', map_input_loc = '', logger_location = ''):
+    def __init__(self, name, map_bg_loc = '', map_input_loc = '', map_input_inflated_loc = '', logger_location = ''):
         super().__init__()
         self.title(name)
         self.map_bg_loc = map_bg_loc
         self.map_input_loc = map_input_loc
+        self.map_input_inflated_loc = map_input_inflated_loc
 
         self.logger = init_logger(logger_location)
 
         self.size_x = 500
         self.size_y = 500
         self.obstacle_drawn_map = np.zeros((self.size_x,self.size_y), dtype=np.bool)
+        self.obstacle_inflated_drawn_map = np.zeros((self.size_x,self.size_y), dtype=np.bool)
+        self.obstacles_cvs_list = [] # list of obstacles objects - rectangles of size of pixel
+
+
         self.bin_map = np.zeros((self.size_x,self.size_y), dtype=np.bool)         # original sensors data
         self.filled_map = np.zeros((self.size_x,self.size_y), dtype=np.bool)      # map with 'filled' gaps between measuremenets
         self.inflated_map = np.zeros((self.size_x,self.size_y), dtype=np.bool)    # map with 'inflated' obstacle
@@ -148,18 +155,32 @@ class GUI_MAP(tk.Tk):
         self.map_cvs = tk.Canvas(master = self.canvas_frame, width=self.size_x, height=self.size_y, bg="white")
         self.map_cvs.pack()
 
-        # # create background from an image
-
-        # from PIL import Image
-
-        # img = Image.open(self.map_bg_loc)
-        # img = img.resize((self.size_x,self.size_y), Image.ANTIALIAS)
-        # photoImg =  ImageTk.PhotoImage(img)
-
-        # self.img = photoImg
-        # self.map_cvs.create_image((0, 0), anchor=tk.NW, image=self.img)
+        self.create_grid_graphics()
 
 
+
+        self.cur_loc_object = None
+        self.cur_dir_object = None
+        self.cur_trg_object = None
+        self.cur_obstacles_map = None
+        self.cvs_bg_img = None
+
+        self.logger.info("Initializing the agent pose + go drawing thread")
+        self.pose_thread = threading.Thread(target=self.update_pose_thread)
+        self.pose_thread.start()
+
+        self.logger.info("Initializing the obstacles drawing threads")
+
+        if C_CONSTANTS.DRAW_REGULAR_OBSTACLES :
+            self.map_draw_thread = threading.Thread(target=self.draw_map_proc)
+            self.map_draw_thread.start()
+
+        if C_CONSTANTS.DRAW_INFLATED_OBSTACLES :     
+            self.map_bg_draw_thread = threading.Thread(target=self.draw_map_bg_proc)
+            self.map_bg_draw_thread.start()
+
+    def create_grid_graphics(self):
+        """Create origin, grid, etc"""
         # draw the origin and coordinate system with arrows
         # the X arrow - this is '-Y' in the canvas plane
         self.origin_X = self.map_cvs.create_line(self.size_y/2, 
@@ -187,20 +208,6 @@ class GUI_MAP(tk.Tk):
 
         self.create_gridlines(line_distance = 100)   
 
-        self.draw_the_obstacles_from_csv()                     
-
-        self.cur_loc_object = None
-        self.cur_dir_object = None
-        self.cur_trg_object = None
-        self.cur_obstacles_map = None
-
-        self.logger.info("Initializing the agent pose + go drawing thread")
-        self.pose_thread = threading.Thread(target=self.update_pose_thread)
-        self.pose_thread.start()
-
-        self.logger.info("Initializing the obstacles drawing thread")
-        self.map_draw_thread = threading.Thread(target=self.draw_map_proc)
-        self.map_draw_thread.start()
 
     def update_pose_thread(self):
         """thread for updating the location"""
@@ -344,11 +351,65 @@ class GUI_MAP(tk.Tk):
             self.draw_the_obstacles_from_csv()
             time.sleep(C_CONSTANTS.VIS_MAP_OBSTACLES_UPDATE)
 
+    def draw_map_bg_proc(self):
+        """Thread process to draw the obstacles from csv"""
+        while True:
+            self.draw_inflated_obstacles()
+            time.sleep(C_CONSTANTS.VIS_MAP_BG_UPDATE)
+
+    def draw_inflated_obstacles(self):
+        """Draw the inflated obstacles from the output PNG file from main process"""
+
+        start = timeit.default_timer()
+
+        from PIL import Image
+
+        if os.path.isfile(self.map_bg_loc):
+
+
+            self.clear_obstacle_pixels()
+            
+            if self.cvs_bg_img != None:
+                self.map_cvs.delete(self.cvs_bg_img)   
+
+
+            img = Image.open(self.map_bg_loc)
+            img = img.resize((self.size_x,self.size_y), Image.ANTIALIAS)
+            photoImg =  ImageTk.PhotoImage(img)
+
+            self.img = photoImg
+            self.cvs_bg_img = self.map_cvs.create_image((0, 0), anchor=tk.NW, image=self.img)
+            self.update_idletasks()
+
+        self.create_grid_graphics()
+        
+        # clear the drawn obstacles, they have to be redrawn
+        self.obstacle_drawn_map = np.zeros((self.size_x,self.size_y), dtype=np.bool)
+        self.draw_the_obstacles_from_csv()
+
+        stop = timeit.default_timer()
+        self.logger.info('[DRAWING] Changing background and all connected. Time elapsed :  {}'.format(stop - start)) 
+
+
+
+        
+    def clear_obstacle_pixels(self):
+        """remove all the drawn obstacle pixels"""
+        for obstacle in self.obstacles_cvs_list:
+            self.map_cvs.delete(obstacle)
+
+        self.obstacles_cvs_list = []
+
+
+
     def draw_the_obstacles_from_csv(self):
         """Main method to draw the obstacles
         from the input csv format"""
 
         start = timeit.default_timer()
+
+
+
 
 
         # if self.cur_obstacles_map != None:
@@ -357,8 +418,14 @@ class GUI_MAP(tk.Tk):
         if not os.path.exists(self.map_input_loc):
             return
 
+        # if not os.path.exists(self.map_input_inflated_loc):
+        #     return
+
         with open(self.map_input_loc, "rb" ) as f:
             self.bin_map = pickle.load(f)
+
+        # with open(self.map_input_inflated_loc, "rb" ) as f:
+        #     self.inflated_map = pickle.load(f)      
 
         # FOR CSV:
         
@@ -371,7 +438,9 @@ class GUI_MAP(tk.Tk):
         #     return
 
         stop = timeit.default_timer()
-        self.logger.info('[DRAWING] Reading obstacles PICKLE file. Time elapsed :  {}'.format(stop - start)) 
+        self.logger.info('[DRAWING] Reading raw obstacles PICKLE file. Time elapsed :  {}'.format(stop - start)) 
+
+        # Drawingt the RAW obstacles data
 
         start = timeit.default_timer()
 
@@ -385,20 +454,25 @@ class GUI_MAP(tk.Tk):
                     # print("Obstacle at ROW {} COL {}".format(row,col))
                     self.obstacle_drawn_map[row][col] = True # mark that this obstacle is drawn already
 
-                    self.map_cvs.create_rectangle(col - 1, row-1, 
-                                                  col + 1, row+1, fill = "blue")
+                    new_obstacle_pixel = self.map_cvs.create_rectangle(col - 1, row-1, 
+                                                  col + 1, row+1, fill = "#000538")
+                    self.obstacles_cvs_list.append(new_obstacle_pixel)
+
+                # if self.inflated_map[row][col] == 1 and self.obstacle_inflated_drawn_map[row][col] == False and self.bin_map[row][col] == 0:
+                #     self.obstacle_inflated_drawn_map[row][col] = True # mark that this obstacle is drawn already
+
+                #     self.map_cvs.create_rectangle(col - 1, row-1, 
+                #                                   col + 1, row+1, outline = "red")
+
 
         self.update_idletasks()
 
-        # obstacles will be created from the outside file
-        # The format is still under consideration, but i think csv will do
-        # it is easy to read and is readable for a user 
 
-        # if will be too slow - i will consider using some binary file format
-        # like feather, or pickle
 
         stop = timeit.default_timer()
-        self.logger.info('[DRAWING] Drawing obstacles themselves. Time elapsed :  {}'.format(stop - start)) 
+        self.logger.info('[DRAWING] Drawing raw obstacles. Time elapsed :  {}'.format(stop - start)) 
+
+
 
 
     def movement(self, x = 0, y = 0):
@@ -443,11 +517,12 @@ class GUI_MAP(tk.Tk):
 
 
 cur_loc = os.getcwd()
-bg_src = os.path.join(cur_loc, 'scripts', 'map_src', 'map_clean.png')
+bg_src = os.path.join(cur_loc, 'artifacts', 'inflated_map.png')
 map_input_loc = os.path.join(cur_loc, 'output','map.p')
+map_input_inflated_loc = os.path.join(cur_loc, 'output','map_inflated.p')
 logger_location = os.path.join(cur_loc, 'artifacts','logger_vizual.log')
 
-master = GUI_MAP(name = "MAP", map_bg_loc=bg_src, map_input_loc = map_input_loc, logger_location = logger_location)
+master = GUI_MAP(name = "MAP", map_bg_loc=bg_src, map_input_loc = map_input_loc, map_input_inflated_loc = map_input_inflated_loc, logger_location = logger_location)
 
 # This will bind arrow keys to the tkinter 
 # toplevel which will navigate the image or drawing 
