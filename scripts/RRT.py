@@ -15,6 +15,7 @@ from map_func import Map
 import C_CONSTANTS
 
 import numpy as np
+import math
 import random
 import copy
 import pickle
@@ -118,29 +119,32 @@ class RRTStar(object):
 
                 rnd = self.get_random_node()
                 nearest_ind = self.get_nearest_node_index(self.node_list, rnd)
-                new_node = self.steer(self.node_list[nearest_ind], rnd, self.expand_dis)
+                new_node = self.steer(from_node = self.node_list[nearest_ind], to_node =  rnd, extend_length = self.expand_dis)
 
-                if self.check_collision(new_node, self.obstacle_list):
+                if self.check_static_collision(new_node):
                     near_inds = self.find_near_nodes(new_node)
                     new_node = self.choose_parent(new_node, near_inds)
                     if new_node:
                         self.node_list.append(new_node)
                         self.rewire(new_node, near_inds)
 
-                if animation and i % 5 == 0:
-                    self.draw_graph(rnd)
 
-                if (not search_until_max_iter) and new_node:  # check reaching the goal
-                    last_index = self.search_best_goal_node()
-                    if last_index:
-                        return self.generate_final_course(last_index)
+            self.logger.info("Tree construction completed")
 
-                print("reached max iteration")
+            # 2.3 Choose the closest node to the target
+            self.logger.info("Finding a route") 
+            self.output_togo_list = self.find_route()
 
+            if self.output_togo_list is not []:
+                # remove nodes with no collision
+                self.optimize_path()
+            else:
+                self.logger.WARNING("Route was not found! ")                         
 
             # 2.2 Optimize the path, connect nodes which have no obstacles in between
 
-        print("Finito")
+        self.logger.info("Path generation successful")     
+        return self.output_togo_list
 
     
     def check_static_collision(self, node):
@@ -204,3 +208,114 @@ class RRTStar(object):
         minind = dlist.index(min(dlist))
 
         return minind
+
+
+    @staticmethod
+    def calc_distance_and_angle(from_node, to_node):
+        dx = to_node.col - from_node.col
+        dy = to_node.row - from_node.row
+        d = math.hypot(dx, dy)
+        theta = math.atan2(dy, dx)
+        return d, theta
+
+
+    def steer(self, from_node, to_node, extend_length=float("inf")):
+
+        """If the node is further than the 'extend_length', bring it closer, but in same direction"""
+
+        new_node = self.Node(to_node.x, to_node.y)
+        new_node.parent = from_node
+        d, theta = self.calc_distance_and_angle(from_node, to_node)
+
+        if d < extend_length:
+            # no need to steer
+            new_node.parent = from_node
+            return new_node
+
+        else: 
+            # steer to a length of the increment
+            new_node.x = from_node.x + extend_length * math.cos(theta)
+            new_node.y = from_node.y + extend_length * math.sin(theta)
+
+            return new_node
+
+    def find_near_nodes(self, new_node):
+        """Find nearby nodes in a certain radius - return INDIXES of those nodes"""
+
+        nnode = len(self.node_list) + 1
+        r = self.connect_circle_dist * math.sqrt((math.log(nnode) / nnode))  # check this value
+        dist_list = [(node.col - new_node.col) ** 2 + (node.row - new_node.row) ** 2 for node in self.node_list]
+        near_inds = [dist_list.index(i) for i in dist_list if i <= r ** 2]
+        return near_inds
+
+
+    def choose_parent(self, new_node, near_inds):
+        """From all the nodes nearby, choose the node, upon connecting to which, the cost will be MININAL"""
+        if not near_inds:
+            return None
+
+        # search nearest cost in near_inds
+        costs = []
+        for i in near_inds:
+            near_node = self.node_list[i]
+
+            if self.check_line_collision(near_node, new_node):
+
+                # t_node = self.steer(near_node, new_node)
+                # if t_node and self.check_collision(t_node, self.obstacle_list):
+                costs.append(self.calc_new_cost(near_node, new_node))
+            else:
+                costs.append(float("inf"))  # the cost of collision node
+
+        min_cost = min(costs)
+
+        if min_cost == float("inf"):
+            print("There is no good path.(min_cost is inf)")
+            return None
+
+        min_ind = near_inds[costs.index(min_cost)]
+        # new_node = self.steer(self.node_list[min_ind], new_node)
+        new_node.parent = self.node_list[min_ind]
+        new_node.cost = min_cost
+
+        return new_node        
+
+    def calc_new_cost(self, from_node, to_node):
+        """Calculate the cost of the to_node, if it connects to 'from_node'"""
+        d, _ = self.calc_distance_and_angle(from_node, to_node)
+        return from_node.cost + d
+
+
+    def rewire(self, new_node, near_inds):
+        """Recalculate whether connecting nearby nodes to the 'new_node' will improve their cost"""
+
+        for i in near_inds:
+            near_node = self.node_list[i]
+
+            no_collision = self.check_line_collision(near_node, new_node)
+
+            if no_collision:
+                new_cost = self.calc_new_cost(from_node = new_node, to_node = near_node)
+                improved_cost = near_node.cost > new_cost
+
+                if improved_cost:
+                    near_node.parent = new_node
+                    self.propagate_cost_to_leaves(new_node)        
+
+
+    def propagate_cost_to_leaves(self, parent_node):
+        """after updating the cost of a node, update cost of all the nodes depending on this node"""
+        for node in self.node_list:
+            if node.parent == parent_node:
+                node.cost = self.calc_new_cost(parent_node, node)
+                self.propagate_cost_to_leaves(node)               
+
+    def find_route(self):
+        """Find a route starting from the closest node to the targer"""  
+        pass
+
+    def optimize_path(self):
+        """Optimize path upon the visibility constraint. For every node in the path,
+        if the path is obstacle free, connect the nodes directly"""
+
+        pass         
