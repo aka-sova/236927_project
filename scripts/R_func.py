@@ -1,4 +1,3 @@
-from struct import *
 
 import sys
 import os
@@ -7,10 +6,10 @@ import traceback
 cur_loc = os.getcwd()
 sys.path.append(os.path.join(cur_loc, 'scripts\\api_src'))
 
-from udpclient import RClient
+from api_src.udpclient import RClient
 from map_func import Map
 import C_CONSTANTS
-from RRT import RRTStar
+from RRT import RRTStar, Target
 
 import time
 import logging
@@ -19,8 +18,6 @@ import threading
 import math
 from scipy import interpolate
 import csv
-
-from tkinter import *
 
 import socket
 
@@ -72,23 +69,7 @@ def init_logger(logger_address : str):
 
     return logger  
 
-class Target(object):
-    def __init__(self, target_type : str, target_vals : list):
-        self.type = target_type
 
-        self.x = ''
-        self.y = ''
-        self.angle = ''
-
-        if self.type == "POS":
-            self.x = target_vals[0]
-            self.y = target_vals[1]
-        elif self.type == "ROT":
-            self.angle = target_vals[0]
-        elif self.type == "POPULATE_MAP":
-            pass
-        else:
-            raise Exception("Invalid target type")
 
       
 

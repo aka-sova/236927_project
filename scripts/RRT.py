@@ -8,15 +8,35 @@ sys.path.append(os.path.join(cur_loc, 'scripts\\api_src'))
 sys.path.append(os.path.join(cur_loc, 'scripts'))
 
 
-from udpclient import RClient
+from api_src.udpclient import RClient
 from map_func import Map
-from R_func import Target
+
+
 import C_CONSTANTS
 
 import numpy as np
 import random
 import copy
 import pickle
+
+class Target(object):
+    def __init__(self, target_type : str, target_vals : list):
+        self.type = target_type
+
+        self.x = ''
+        self.y = ''
+        self.angle = ''
+
+        if self.type == "POS":
+            self.x = target_vals[0]
+            self.y = target_vals[1]
+        elif self.type == "ROT":
+            self.angle = target_vals[0]
+        elif self.type == "POPULATE_MAP":
+            pass
+        else:
+            raise Exception("Invalid target type")
+
 
 class RRTStar(object):
 
@@ -123,7 +143,7 @@ class RRTStar(object):
         print("Finito")
 
     
-    def check_static_collision(self, node : RRTStar.Node):
+    def check_static_collision(self, node):
         """Check is the node is inside the 'occupied' pixel
         return TRUE if no collision takes place"""
 
@@ -131,7 +151,7 @@ class RRTStar(object):
             return True
         return False
 
-    def check_line_collision(self, node_start : RRTStar.Node, node_finish : RRTStar.Node):
+    def check_line_collision(self, node_start, node_finish):
         """Check if the line between the nodes crosses any of the occupied pixels
         return TRUE if path is collision FREE"""
 
@@ -176,3 +196,11 @@ class RRTStar(object):
         return rnd
 
 
+    @staticmethod
+    def get_nearest_node_index(node_list, rnd_node):
+        """Calculate minimum distance node. Return the INDEX of the Node with minimal distance"""
+
+        dlist = [(node.row - rnd_node.row) ** 2 + (node.col - rnd_node.col)  ** 2 for node in node_list]
+        minind = dlist.index(min(dlist))
+
+        return minind
