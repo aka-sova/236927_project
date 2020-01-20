@@ -23,5 +23,5 @@ VIS_MAP_OBSTACLES_UPDATE = 0.5
 
 
 ### ALGO PARAMS
-MAP_CONNECT_RANGE = 20      # connect the dots in between as containing an obstacle
+MAP_CONNECT_RANGE = 30      # connect the dots in between as containing an obstacle
 MAP_INFLATE_RANGE = 10      # 'inflate' the obstacle by this amount to make the routes more safe

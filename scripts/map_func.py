@@ -1,4 +1,4 @@
-
+import copy
 import pickle
 import os
 import sys
@@ -77,12 +77,13 @@ class Map(object):
                 # 1. Analyze the pixels around within a certain range. If a pixel is 'occupied', 
                 # mark all the pixels in between as 'occupied'. Robot cannot pass in between those pixels.
 
-                self.connect_nearby_obstacles(row, col)
+                self.filled_map = Map.connect_nearby_obstacles(input_map = self.bin_map, filled_map = self.filled_map, row = row, col = col, logger=self.logger)
 
         # 2. mark also all the nearest pixels within the range as 'occupied'
-        self.inflate_obstacles()
+        self.inflated_map = Map.inflate_obstacles(input_map = self.filled_map, logger = self.logger)
 
-    def inflate_obstacles(self):
+    @staticmethod
+    def inflate_obstacles(input_map : np.ndarray, logger = None):
         """mark all the nearest pixels within the range as 'occupied'"""
 
         start = timeit.default_timer()
@@ -90,26 +91,37 @@ class Map(object):
         # we inflate the 'filled_map' by using the moorphological 'dilation' operation
         iterations = C_CONSTANTS.MAP_INFLATE_RANGE - 1
 
-        self.inflated_map = ndimage.binary_dilation(self.filled_map, iterations=iterations).astype(self.filled_map.dtype)
+        inflated_map = ndimage.binary_dilation(input_map, iterations=iterations).astype(input_map.dtype)
 
         stop = timeit.default_timer()
-        self.logger.info('[MAPPING] Inflating map. Time elapsed :  {}'.format(stop - start)) 
-        
+        if logger is not None:
+            logger.info('[MAPPING] Inflating map. Time elapsed :  {}'.format(stop - start)) 
 
-    def connect_nearby_obstacles(self, row, col):
+        return inflated_map
+        
+    @staticmethod
+    def connect_nearby_obstacles(input_map: np.ndarray, filled_map: np.ndarray, row : int, col : int, logger = None):
         """Analyze the pixels around within a certain range. If a pixel is 'occupied', 
         mark all the pixels in between as 'occupied'. Robot cannot pass in between those pixels.
         row, col - indexes of the pixel to analyze """
 
+        # we input filled_map, but check the nearest occupied pixels in input_map, 
+        # so that we won't increase the size of the obstacles in region where they don't exist
+
+        map_size_x = input_map.shape[0]
+        map_size_y = input_map.shape[1]
+
+        # filled_map = copy.deepcopy(input_map)
+
         start = timeit.default_timer()
 
         # first, mark the required pixel as occupied
-        self.filled_map[row][col] = 1
+        filled_map[row][col] = 1
 
-        filter_kernel = self.generate_bin_filter(row, col)
+        filter_kernel = Map.generate_bin_filter(map_size_x, map_size_y, row, col)
 
         # use the elementwise multiplication to mark only the pixels with obstacles
-        filtered_img = np.multiply(self.bin_map, filter_kernel)
+        filtered_img = np.multiply(input_map, filter_kernel)
 
         # remove the original pixel itself from the image
         filtered_img[row][col] = 0
@@ -141,22 +153,25 @@ class Map(object):
                 # x is col
                 try:
                     # putting try so won't be out of boundaries
-                    self.filled_map[(int)(np.floor(y))][(int)(x)] = 1
-                    self.filled_map[(int)(np.ceil(y))][(int)(x)] = 1
+                    filled_map[(int)(np.floor(y))][(int)(x)] = 1
+                    filled_map[(int)(np.ceil(y))][(int)(x)] = 1
                 except:
                     pass
 
         stop = timeit.default_timer()
-        self.logger.info('[MAPPING] Connecting obstacles in map. Time elapsed :  {}'.format(stop - start))            
+        if logger is not None:
+            logger.info('[MAPPING] Connecting obstacles in map. Time elapsed :  {}'.format(stop - start))            
 
+        return filled_map
 
-    def generate_bin_filter(self, row, col):
+    @staticmethod
+    def generate_bin_filter(map_size_x, map_size_y, row, col):
         """ use the morphological 'dilation' operation to create a filter """
         
         iterations = C_CONSTANTS.MAP_CONNECT_RANGE-1
 
         # generate filter of the size of the image
-        filt = np.zeros((self.x, self.y))
+        filt = np.zeros((map_size_x, map_size_y))
          
         # filter is always of uneven size, thus we know for sure there's a center pixel
         filt[row, col] = 1
@@ -212,7 +227,7 @@ class Map(object):
         start = timeit.default_timer()
 
         matplotlib.image.imsave(os.path.join(self.artifacts_loc, 'bin_map.png'), self.bin_map)
-        matplotlib.image.imsave(os.path.join(self.artifacts_loc, 'filles_map.png'), self.filled_map)
+        matplotlib.image.imsave(os.path.join(self.artifacts_loc, 'filled_map.png'), self.filled_map)
         matplotlib.image.imsave(os.path.join(self.artifacts_loc, 'inflated_map.png'), self.inflated_map)
 
         stop = timeit.default_timer()
