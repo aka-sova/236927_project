@@ -91,16 +91,18 @@ class Map(object):
     def inflate_obstacles(input_map : np.ndarray, logger = None):
         """mark all the nearest pixels within the range as 'occupied'"""
 
-        start = timeit.default_timer()
+        if C_CONSTANTS.PRINT_TIMES_MAP:
+            start = timeit.default_timer()
         
         # we inflate the 'filled_map' by using the moorphological 'dilation' operation
         iterations = C_CONSTANTS.MAP_INFLATE_RANGE - 1
 
         inflated_map = ndimage.binary_dilation(input_map, iterations=iterations).astype(input_map.dtype)
 
-        stop = timeit.default_timer()
-        if logger is not None:
-            logger.info('[MAPPING] Inflating map. Time elapsed :  {}'.format(stop - start)) 
+        if C_CONSTANTS.PRINT_TIMES_MAP:
+            stop = timeit.default_timer()
+            if logger is not None:
+                logger.info('[MAPPING] Inflating map. Time elapsed :  {}'.format(stop - start)) 
 
         return inflated_map
         
@@ -117,8 +119,8 @@ class Map(object):
         map_size_y = input_map.shape[1]
 
         # filled_map = copy.deepcopy(input_map)
-
-        start = timeit.default_timer()
+        if C_CONSTANTS.PRINT_TIMES_MAP:
+            start = timeit.default_timer()
 
         # first, mark the required pixel as occupied
         filled_map[row][col] = 1
@@ -162,10 +164,10 @@ class Map(object):
                     filled_map[(int)(np.ceil(y))][(int)(x)] = 1
                 except:
                     pass
-
-        stop = timeit.default_timer()
-        if logger is not None:
-            logger.info('[MAPPING] Connecting obstacles in map. Time elapsed :  {}'.format(stop - start))            
+        if C_CONSTANTS.PRINT_TIMES_MAP:
+            stop = timeit.default_timer()
+            if logger is not None:
+                logger.info('[MAPPING] Connecting obstacles in map. Time elapsed :  {}'.format(stop - start))            
 
         return filled_map
 
@@ -207,7 +209,8 @@ class Map(object):
     def save_clear_output(self):
         """Will save the output in a specified format - CSV"""
 
-        start = timeit.default_timer()
+        if C_CONSTANTS.PRINT_TIMES_MAP:
+            start = timeit.default_timer()
 
         output_fd = open(self.output_temp_loc, 'w')
         for row in range(self.bin_map.shape[0]):
@@ -219,15 +222,16 @@ class Map(object):
 
         shutil.copy(self.output_temp_loc, self.output_loc)
 
-        stop = timeit.default_timer()
-
-        self.logger.info('[MAPPING] Saving the map as CSV. Time elapsed :  {}'.format(stop - start))  
-        
+        if C_CONSTANTS.PRINT_TIMES_MAP:
+            stop = timeit.default_timer()
+            self.logger.info('[MAPPING] Saving the map as CSV. Time elapsed :  {}'.format(stop - start))  
+            
 
     def save_clear_output_pickle(self):
         """Will save the output in a specified format - PICKLE"""
 
-        start = timeit.default_timer()
+        if C_CONSTANTS.PRINT_TIMES_MAP:
+            start = timeit.default_timer()
         with open(self.output_temp_loc, "wb") as f:
             pickle.dump(self.bin_map, f)
 
@@ -240,23 +244,23 @@ class Map(object):
 
         # shutil.copy(self.output_inflated_temp_loc, self.output_inflated_loc)   
 
-        stop = timeit.default_timer()
-
-        self.logger.info('[MAPPING] Saving the map as PICKLE. Time elapsed :  {}'.format(stop - start))  
-            
+        if C_CONSTANTS.PRINT_TIMES_MAP:
+            stop = timeit.default_timer()
+            self.logger.info('[MAPPING] Saving the map as PICKLE. Time elapsed :  {}'.format(stop - start))  
+                
 
     def save_maps_debug(self):
         """Save maps as images for debug & further analysis"""
-
-        start = timeit.default_timer()
+        if C_CONSTANTS.PRINT_TIMES_MAP:
+            start = timeit.default_timer()
 
         matplotlib.image.imsave(os.path.join(self.artifacts_loc, 'bin_map.png'), self.bin_map)
         matplotlib.image.imsave(os.path.join(self.artifacts_loc, 'filled_map.png'), self.filled_map)
         matplotlib.image.imsave(os.path.join(self.artifacts_loc, 'inflated_map.png'), self.inflated_map)
 
-        stop = timeit.default_timer()
-
-        self.logger.info('[MAPPING] Saving the maps as PNG IMAGES. Time elapsed :  {}'.format(stop - start))  
+        if C_CONSTANTS.PRINT_TIMES_MAP:
+            stop = timeit.default_timer()
+            self.logger.info('[MAPPING] Saving the maps as PNG IMAGES. Time elapsed :  {}'.format(stop - start))  
 
 
     def create_obstacles(self):

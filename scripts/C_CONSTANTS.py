@@ -4,6 +4,7 @@
 
 ### General
 DEBUG = True
+PRINT_TIMES_MAP = False
 PRINT_TIMES_RRT = False
 
 

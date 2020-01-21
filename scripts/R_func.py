@@ -418,6 +418,11 @@ class R_Client_Extend(RClient):
     def reach_destination(self, target):
         """The main function which will look for a path to find to reach the goal"""
 
+        while self.cur_loc == [-9999, -9999]:
+            self.logger.info("Current location is invalid. Retry")
+            time.sleep(1.0)
+
+
         self.logger.info('Initializing the Algorithm')
         self.dest_reached = False
 

@@ -69,7 +69,7 @@ def main(calibration: bool):
     # r.map.save_clear_output()
 
     try:
-        # r.connect()
+        r.connect()
         
         # perform the calibration
         if calibration:
@@ -77,9 +77,9 @@ def main(calibration: bool):
             r.self_calib_rot(range_cmd = (350, 1000), step = 50, direction='right')
         else:
 
-            # r.init_sense_thread()           # get info from the sensors
-            # r.init_mapping_thread()         # update & save map
-            # r.init_local_sockets()          # send the Pose to the visualizer
+            r.init_sense_thread()           # get info from the sensors
+            r.init_mapping_thread()         # update & save map
+            r.init_local_sockets()          # send the Pose to the visualizer
 
             
             destination_location = [100, 100]
@@ -118,8 +118,7 @@ def main(calibration: bool):
 
 
     finally:
-        pass
-        # r.terminate()
+        r.terminate()
 
 
 
