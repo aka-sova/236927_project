@@ -28,6 +28,7 @@ VIS_MAP_BG_UPDATE = 5               # update the background - inflated obstacles
 
 ### DYNAMICS_PARAMS
 REACH_MARGIN = 10
+MAP_UPDATE_WAIT_TIME = 1
 
 
 ### ALGO PARAMS

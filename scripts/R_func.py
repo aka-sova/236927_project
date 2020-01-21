@@ -1,4 +1,4 @@
-
+import struct
 import sys
 import os
 import traceback
@@ -114,6 +114,7 @@ class R_Client_Extend(RClient):
         self.read_calib_tables()
 
         self.collision_margin = 3
+        self.first_destination = True
 
     def read_calib_tables(self):
         """read the calibration tables for position and rotation and save them in the object"""
@@ -396,10 +397,21 @@ class R_Client_Extend(RClient):
     def check_clear_path(self, distance):
         """Check that the path from the current angle for this distance is clear of obstacles"""
 
-        end_x = int(distance * math.cos(self.cur_angle*math.pi/180) + cur_loc[0])
-        end_y = int(distance * math.sin(self.cur_angle*math.pi/180) + cur_loc[1])
+        distance = distance * 2 
 
+        end_x = int(distance * math.cos(self.cur_angle*math.pi/180) + self.cur_loc[0])
+        end_y = int(distance * math.sin(self.cur_angle*math.pi/180) + self.cur_loc[1])
+
+        # wait for the map to update
+        time.sleep(C_CONSTANTS.MAP_UPDATE_WAIT_TIME)
+
+        self.logger.info("Verifying path is clear before initializing movement")
+        self.logger.info("Current loc: [{} {}], dest loc : [{} {}]".format(self.cur_loc[0], self.cur_loc[1], end_x, end_y))
+
+        self.map.save_maps_debug()
         path_clear = self.check_line_collision_cross(self.cur_loc, [end_x, end_y])
+        self.logger.info("Path is clear: {}".format(path_clear))
+        
 
         return path_clear
 
@@ -422,6 +434,10 @@ class R_Client_Extend(RClient):
             self.logger.info("Current location is invalid. Retry")
             time.sleep(1.0)
 
+        # get the map. Rotate 360 degrees with a small pace
+        if self.first_destination : 
+            self.rotate_around(rotate_step = 45)
+            self.first_destination = False
 
         self.logger.info('Initializing the Algorithm')
         self.dest_reached = False
@@ -431,6 +447,7 @@ class R_Client_Extend(RClient):
 
             success_code = self.follow_goto_list(goto_list)   # 0 is success
             
+            self.logger.info('Algorithm completed')
             if success_code == 0:
                 # check that the destination was indeed reached
                 distance, _ = self.calc_metrics(target)
@@ -438,6 +455,12 @@ class R_Client_Extend(RClient):
                     self.dest_reached = True
                     self.logger.info('Reached the destination')
   
+    def rotate_around(self, rotate_step):
+        """Rotate to build a first map"""
+        for _ in range((int)(360 / rotate_step)):
+            self.turn(rotate_step)
+            time.sleep(0.5)
+
 
     def follow_goto_list(self, goto_list):
         
@@ -658,7 +681,7 @@ class R_Client_Extend(RClient):
 
                 # a = calcsize('iiiii')
                 # print("Sending " + str(a))
-                data_to_send_bytes = pack('iiiii', total_tuple[0], 
+                data_to_send_bytes = struct.pack('iiiii', total_tuple[0], 
                                                     total_tuple[1],
                                                     total_tuple[2],
                                                     total_tuple[3],
@@ -693,10 +716,15 @@ class R_Client_Extend(RClient):
         min_y = min(init_loc[1], final_loc[1])
         max_y = max(init_loc[1], final_loc[1])
 
+        map_size_x = self.map.bin_map.shape[0]
+        map_size_y = self.map.bin_map.shape[1]
+
 
         for obstacle in obstacles:
-            x_obs = obstacle[0]
-            y_obs = obstacle[1]
+            row = obstacle[0]
+            col = obstacle[1]
+
+            x_obs, y_obs = Map.to_x_y_coords(rows = map_size_x, cols = map_size_y, row = row, col = col)
 
             # 1. check if the obstacle is outside of the region
             if x_obs < min_x or x_obs > max_x or y_obs < min_y or y_obs > max_y:
@@ -710,6 +738,7 @@ class R_Client_Extend(RClient):
             distance = np.linalg.norm(np.cross(p2-p1, p1-p3))/np.linalg.norm(p2-p1)
 
             if distance < self.collision_margin:
+                self.logger.info("Distance : {}".format(distance))
                 return False
 
         return True                 

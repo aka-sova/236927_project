@@ -94,6 +94,10 @@ class RRTStar(object):
         Output:
         list of GOTO Target objects defining the required path
         """
+        self.map = map
+        self.map_size_x = map.bin_map.shape[0]
+        self.map_size_y = map.bin_map.shape[1]
+        self.output_togo_list = []
 
         init_col, init_row = Map.to_csv_coords(rows = self.map_size_x, 
                                     cols = self.map_size_y, 
@@ -106,12 +110,9 @@ class RRTStar(object):
                                     y=target.y)                        
 
 
-        self.logger.info("Finding a path from [{} {}] to [{} {}]".format(init_loc[0], init_loc[1], dest_loc[0], dest_loc[1]))
+        self.logger.info("Finding a path from [{} {}] to [{} {}]".format(init_loc[0], init_loc[1], target.x, target.y))
 
-        self.map = map
-        self.map_size_x = map.bin_map.shape[0]
-        self.map_size_y = map.bin_map.shape[1]
-        self.output_togo_list = []
+
 
         # 1. Check if the path is obstacle free
         self.start = RRTStar.Node(init_row, init_col)
@@ -660,8 +661,8 @@ class RRTStar(object):
         centers_list = [[100,100], [250,250]]
 
 
-        for radius, center_coords in zip(rad_list, centers_list):
-            self.plot_circle(center_coords[0], center_coords[1], radius)
+        # for radius, center_coords in zip(rad_list, centers_list):
+        #     self.plot_circle(center_coords[0], center_coords[1], radius)
 
         plt.plot(self.start.col, self.start.row, "xr")
         plt.plot(self.end.col, self.end.row, "xr")
@@ -669,7 +670,12 @@ class RRTStar(object):
         plt.axis([0, self.map_size_x, 0, self.map_size_y])
         plt.grid(True)
 
+        obstacles = np.transpose(np.nonzero(self.map.inflated_map))
 
+        for obstacle in obstacles:
+            nonzero_row = obstacle[0]
+            nonzero_col = obstacle[1]
+            plt.plot(nonzero_col, nonzero_row, ",k")
 
         for node in self.path_nodes_list:
             if node.parent:

@@ -82,11 +82,15 @@ def main(calibration: bool):
             r.init_local_sockets()          # send the Pose to the visualizer
 
             
-            destination_location = [100, 100]
+            destination_location = [100, 0]
 
             target = Target(target_type = "POS", target_vals = destination_location)
             r.reach_destination(target = target)
 
+            # while True:
+            #     path_clear = r.check_line_collision_cross(r.cur_loc, [100,0])
+            #     r.logger.info("Path Clear: {}".format(path_clear))
+            #     time.sleep(1.0)
 
             # target = Target(target_type = "POS", target_vals = [0, -200])
             # r.goto(target)
