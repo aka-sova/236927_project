@@ -112,8 +112,8 @@ def main(calibration: bool):
             # r.map.create_obstacles()
             # r.map.save_maps_debug()
 
-            targets_path = r.planner.find_path(r.cur_loc, dest_loc = [50, 450], map = r.map)
-            print("hello")
+            # targets_path = r.planner.find_path(r.cur_loc, dest_loc = [50, 450], map = r.map)
+            # print("hello")
             
 
 

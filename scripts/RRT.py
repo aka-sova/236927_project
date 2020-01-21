@@ -95,12 +95,12 @@ class RRTStar(object):
         list of GOTO Target objects defining the required path
         """
 
-        init_loc = Map.to_csv_coords(rows = self.map_size_x, 
+        init_col, init_row = Map.to_csv_coords(rows = self.map_size_x, 
                                     cols = self.map_size_y, 
                                     x=init_loc[0], 
                                     y=init_loc[1])
 
-        dest_loc = Map.to_csv_coords(rows = self.map_size_x, 
+        dest_col, dest_row = Map.to_csv_coords(rows = self.map_size_x, 
                                     cols = self.map_size_y, 
                                     x=target.x, 
                                     y=target.y)                        
@@ -114,8 +114,8 @@ class RRTStar(object):
         self.output_togo_list = []
 
         # 1. Check if the path is obstacle free
-        self.start = RRTStar.Node(init_loc[0], init_loc[1])
-        self.end = RRTStar.Node(dest_loc[0], dest_loc[1])
+        self.start = RRTStar.Node(init_row, init_col)
+        self.end = RRTStar.Node(dest_row, dest_col)
 
         
         if self.check_line_collision(self.start, self.end):

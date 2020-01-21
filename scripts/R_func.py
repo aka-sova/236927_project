@@ -113,6 +113,8 @@ class R_Client_Extend(RClient):
         # calib tables indicate which commands to give to achieve certain poses
         self.read_calib_tables()
 
+        self.collision_margin = 3
+
     def read_calib_tables(self):
         """read the calibration tables for position and rotation and save them in the object"""
 
@@ -239,6 +241,7 @@ class R_Client_Extend(RClient):
 
             self.logger.debug("Performing turn of {}".format(angle_to_rotate))
 
+            # Fix the angle by whatever we can to make precise rotation
             turn_acceptable = False
 
             while not turn_acceptable:
@@ -373,15 +376,32 @@ class R_Client_Extend(RClient):
     def drive_distance_short(self, distance: int):
         """Received distance in [cm] and make an appropriate command to move forward"""
 
+
+
         # will drive only the maximum distance from the interpolation values
         distance = min(max(self.pos_interp.x), distance)
 
-        if distance < min(self.pos_interp.x):
-            # don't drive if the distance is too small
-            return
+        # CHECK THE CLEAR PATH FOR THIS DISTANCE
+        if self.check_clear_path(distance):
+            if distance < min(self.pos_interp.x):
+                # don't drive if the distance is too small
+                return
 
-        command_value = int(self.pos_interp(abs(distance)))
-        self.drive(command_value, command_value)
+            command_value = int(self.pos_interp(abs(distance)))
+            self.drive(command_value, command_value)
+        
+        else:
+            raise Obstacle_Interference
+
+    def check_clear_path(self, distance):
+        """Check that the path from the current angle for this distance is clear of obstacles"""
+
+        end_x = int(distance * math.cos(self.cur_angle*math.pi/180) + cur_loc[0])
+        end_y = int(distance * math.sin(self.cur_angle*math.pi/180) + cur_loc[1])
+
+        path_clear = self.check_line_collision_cross(self.cur_loc, [end_x, end_y])
+
+        return path_clear
 
     def moveincircle(self, radius : int, init_dir : str):
         """Move the robot in a circle starting from the initial location 
@@ -408,7 +428,7 @@ class R_Client_Extend(RClient):
             
             if success_code == 0:
                 # check that the destination was indeed reached
-                distance, angle_deg = self.calc_metrics(target)
+                distance, _ = self.calc_metrics(target)
                 if distance < C_CONSTANTS.REACH_MARGIN:
                     self.dest_reached = True
                     self.logger.info('Reached the destination')
@@ -650,4 +670,41 @@ class R_Client_Extend(RClient):
                     time.sleep(1.0)
 
 
-                 
+    def check_line_collision_cross(self, init_loc : list, final_loc : list):
+        """Check if the line between the nodes crosses any of the occupied pixels
+        return TRUE if path is collision FREE"""
+
+        # collision check is performed using the 'cross' operator
+
+        # for each obstacle pixel, check if it intercepts the line between 2 nodes
+        obstacles = np.transpose(np.nonzero(self.map.inflated_map))
+
+        # build a line function describing the path from start to finish
+        # X = col
+        # Y = row
+
+        min_x = min(init_loc[0], final_loc[0])
+        max_x = max(init_loc[0], final_loc[0])
+        min_y = min(init_loc[1], final_loc[1])
+        max_y = max(init_loc[1], final_loc[1])
+
+
+        for obstacle in obstacles:
+            x_obs = obstacle[0]
+            y_obs = obstacle[1]
+
+            # 1. check if the obstacle is outside of the region
+            if x_obs < min_x or x_obs > max_x or y_obs < min_y or y_obs > max_y:
+                continue
+        
+            # 2. check what is the discrepancy of it if we put it into the line function
+            p1 = np.array([init_loc[0], init_loc[1]])
+            p2 = np.array([final_loc[0], final_loc[1]])
+            p3 = np.array([x_obs, y_obs])
+
+            distance = np.linalg.norm(np.cross(p2-p1, p1-p3))/np.linalg.norm(p2-p1)
+
+            if distance < self.collision_margin:
+                return False
+
+        return True                 
