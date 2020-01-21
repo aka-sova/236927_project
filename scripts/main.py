@@ -69,7 +69,7 @@ def main(calibration: bool):
     # r.map.save_clear_output()
 
     try:
-        r.connect()
+        # r.connect()
         
         # perform the calibration
         if calibration:
@@ -77,23 +77,23 @@ def main(calibration: bool):
             r.self_calib_rot(range_cmd = (350, 1000), step = 50, direction='right')
         else:
 
-            r.init_sense_thread()           # get info from the sensors
-            r.init_mapping_thread()         # update & save map
-            r.init_local_sockets()          # send the Pose to the visualizer
+            # r.init_sense_thread()           # get info from the sensors
+            # r.init_mapping_thread()         # update & save map
+            # r.init_local_sockets()          # send the Pose to the visualizer
 
             
-            
 
-            target = Target(target_type = "POS", target_vals = [0, -200])
-            r.goto(target)
-            target = Target(target_type = "POS", target_vals = [100, -100])
-            r.goto(target)
-            target = Target(target_type = "POS", target_vals = [100 ,0])
-            r.goto(target)
-            target = Target(target_type = "POS", target_vals = [0 ,-200])
-            r.goto(target)
-            target = Target(target_type = "POS", target_vals = [0 ,0])
-            r.goto(target)
+
+            # target = Target(target_type = "POS", target_vals = [0, -200])
+            # r.goto(target)
+            # target = Target(target_type = "POS", target_vals = [100, -100])
+            # r.goto(target)
+            # target = Target(target_type = "POS", target_vals = [100 ,0])
+            # r.goto(target)
+            # target = Target(target_type = "POS", target_vals = [0 ,-200])
+            # r.goto(target)
+            # target = Target(target_type = "POS", target_vals = [0 ,0])
+            # r.goto(target)
 
             # r.map.save_clear_output()
 
@@ -101,12 +101,21 @@ def main(calibration: bool):
             #     r.get_data()
             #     print("LOC : X [{}] Y [{}]  ANGLE [{}]".format(r.cur_loc[0], r.cur_loc[1], r.cur_angle))
             #     time.sleep(0.3)
+
+
+            # debug the RRTtree
+
+            r.map.create_obstacles()
+            # r.map.save_maps_debug()
+
+            targets_path = r.planner.find_path(init_loc = [450, 50], dest_loc = [50, 450], map = r.map)
+            print("hello")
             
 
 
     finally:
         pass
-        r.terminate()
+        # r.terminate()
 
 
 

@@ -259,21 +259,20 @@ class Map(object):
         self.logger.info('[MAPPING] Saving the maps as PNG IMAGES. Time elapsed :  {}'.format(stop - start))  
 
 
-    def generate_the_graph(self):
-        """The initialization of the graph"""
-        pass
+    def create_obstacles(self):
+        """ For RRT debug, create obstacle/s in the 'inflated_map' object"""
 
-    def generate_path_to_goal(self):
-        """The main function for the path generation.
+        # objects are in the rows/cols coords
+        # obstacles will be circles
 
-        Input : the 'inflated' map, which is the occupancy grid with the resolution of 1 cm^2
-        Output : a list of Targets, which will lead to the goal
-        
-        We use a graph which is generated and updated all the time as new information comes in"""
-        
+        rad_list = [50, 80]
+        centers_list = [[100,100], [250,250]]
 
-
-
-        pass
-
+        for row in range(self.inflated_map.shape[0]):
+            for col in range(self.inflated_map.shape[1]):
+                for radius, center_coords in zip(rad_list, centers_list):
+                    # calculate if this pixel is inside this circle
+                    distance_from_center = np.sqrt((row - center_coords[0]) ** 2 + (col - center_coords[1]) ** 2)
+                    if distance_from_center < radius:
+                        self.inflated_map[row][col] = 1
 
