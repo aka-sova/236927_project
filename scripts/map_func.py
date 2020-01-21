@@ -194,6 +194,16 @@ class Map(object):
 
         return csv_col, csv_row
 
+
+    @staticmethod
+    def to_x_y_coords(rows, cols, row, col):
+        """Change from CVS coords to X-Y coords of the camera"""
+
+        x = int(rows/2 - row)
+        y = - int(cols/2 - col)
+
+        return x, y 
+
     def save_clear_output(self):
         """Will save the output in a specified format - CSV"""
 

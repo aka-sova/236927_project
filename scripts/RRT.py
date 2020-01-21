@@ -74,6 +74,7 @@ class RRTStar(object):
         self.map = None
         self.map_size_x = None
         self.map_size_y = None
+        self.path_nodes_list = []
         self.output_togo_list = []
 
         self.collision_margin = 1
@@ -133,15 +134,20 @@ class RRTStar(object):
 
             # 2.3 Choose the closest node to the target
             self.logger.info("Finding a route") 
-            self.output_togo_list = self.find_route()
 
-            if self.output_togo_list is not []:
+
+            last_index = self.search_best_goal_node()
+            if last_index:
+                self.path_nodes_list =  self.generate_final_course(last_index)
+
+            if self.path_nodes_list is not []:
                 # remove nodes with no collision
-                self.optimize_path()
+                # 2.2 Optimize the path, connect nodes which have no obstacles in between
+                self.optimize_path(self.path_nodes_list)
             else:
                 self.logger.WARNING("Route was not found! ")                         
 
-            # 2.2 Optimize the path, connect nodes which have no obstacles in between
+        self.output_togo_list = self.transform_nodes_into_targets(self.path_nodes_list)
 
         self.logger.info("Path generation successful")     
         return self.output_togo_list
@@ -218,6 +224,13 @@ class RRTStar(object):
         theta = math.atan2(dy, dx)
         return d, theta
 
+
+    @staticmethod
+    def calc_distance(from_node, to_node):
+        dx = to_node.col - from_node.col
+        dy = to_node.row - from_node.row
+        d = math.hypot(dx, dy)
+        return d
 
     def steer(self, from_node, to_node, extend_length=float("inf")):
 
@@ -310,12 +323,85 @@ class RRTStar(object):
                 node.cost = self.calc_new_cost(parent_node, node)
                 self.propagate_cost_to_leaves(node)               
 
-    def find_route(self):
-        """Find a route starting from the closest node to the targer"""  
-        pass
+    def generate_final_course(self, goal_ind):
 
-    def optimize_path(self):
+        path = [[self.end.row, self.end.col]]
+        node = self.node_list[goal_ind]
+        while node.parent is not None:
+            path.append([node.row, node.col])
+            node = node.parent
+        path.append([node.row, node.col])
+
+        # REVERSE THE LIST
+        return path.reverse()
+
+    def search_best_goal_node(self):
+
+         # dist_to_goal_list = [self.calc_distance(n, self.end) for n in self.node_list]
+
+        # goal_inds = [dist_to_goal_list.index(i) for i in dist_to_goal_list if i <= self.expand_dis]
+
+        # from all the nodes, take the one which will:
+        #   1.  give the smallest cost 
+        #   2.  collision free
+
+        safe_node_idsx = []
+
+        for node_idx, node in enumerate(self.node_list):
+            if self.check_line_collision(node_start = node, node_finish = self.end):
+                safe_node_idsx.append(node_idx)
+
+        if safe_node_idsx == []:
+            return None
+
+        # calculate the costs, get the index of the node with MINIMUM added cost
+        min_cost = np.inf
+        min_index = None
+        for i in safe_node_idsx:
+            new_cost =  self.calc_new_cost(from_node = self.node_list[i], to_node = self.end) 
+
+            if new_cost < min_cost:
+                min_cost = new_cost
+                min_index = i
+
+        if min_index == None:
+            raise Exception("Should not happen!")
+
+        return self.node_list[min_index]
+
+
+    def optimize_path(self, path_list):
         """Optimize path upon the visibility constraint. For every node in the path,
-        if the path is obstacle free, connect the nodes directly"""
+        if the path is obstacle free, connect the nodes directly
+        input - list of NODES"""
 
-        pass         
+        # start and end node with remain the same
+
+        change_done = True
+        active_index = 0
+
+        while change_done and active_index < len(path_list) - 2:
+            change_done = False
+        
+            if self.check_line_collision(node_start = path_list[active_index], node_finish = path_list[active_index+2]):
+                # no collision! remove the node in between
+                path_list.pop([active_index + 1])
+                change_done = True
+            else:
+                active_index += 1
+
+        return path_list
+
+    def transform_nodes_into_targets(self, nodes_list):
+
+
+        togo_targets_list = []
+
+
+        for node in nodes_list:
+            x, y = Map.to_x_y_coords(rows = self.map_size_x, cols = self.map_size_y, row = node.row, col = node.col)
+            trg_obj = Target(target_type = "POS", target_vals = [x, y])
+
+            togo_targets_list.append(trg_obj)
+
+        return togo_targets_list
