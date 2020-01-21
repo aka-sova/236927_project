@@ -77,12 +77,11 @@ def main(calibration: bool):
             r.self_calib_rot(range_cmd = (350, 1000), step = 50, direction='right')
         else:
 
-            r.init_sense_thread()
-            r.init_mapping_thread()
+            r.init_sense_thread()           # get info from the sensors
+            r.init_mapping_thread()         # update & save map
+            r.init_local_sockets()          # send the Pose to the visualizer
 
-            # initialize the sockets, which will send the Location to the visualizer
-            r.init_local_sockets(pose_socket = True)
-
+            
             
 
             target = Target(target_type = "POS", target_vals = [0, -200])

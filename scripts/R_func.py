@@ -579,12 +579,11 @@ class R_Client_Extend(RClient):
 
             time.sleep(C_CONSTANTS.MAP_SAVE_FREQ)        
 
-    def init_local_sockets(self, pose_socket : bool):
+    def init_local_sockets(self):
         """Initialize the local sockets which will send the data to the visualizer"""
 
-        if pose_socket:
-            self.local_pose_thread=threading.Thread(target=self.local_pose_loop)
-            self.local_pose_thread.start()
+        self.local_pose_thread=threading.Thread(target=self.local_pose_loop)
+        self.local_pose_thread.start()
 
 
     def local_pose_loop(self):
