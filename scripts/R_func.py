@@ -69,7 +69,9 @@ def init_logger(logger_address : str):
 
     return logger  
 
-
+class Obstacle_Interference(Exception):
+   """Raised when the obstacle is in the way of the GOTO maneuver"""
+   pass
 
       
 
@@ -207,7 +209,6 @@ class R_Client_Extend(RClient):
 
         assert target.type == "POS"
         goal_reached = False
-        reach_margin = 10                   # defines when we have reached the destination
 
         # This functin will implement intermediate 'targets' of rotational type to reach the goal
 
@@ -269,11 +270,11 @@ class R_Client_Extend(RClient):
             self.logger.debug("Target location : [{0} {1}]".format(target.x, target.y))
             self.logger.debug("Calculated:\n\tdistance : {0}\n\tangle: {1}".format(distance, angle_deg))
 
-            if distance <= reach_margin:
-                self.logger.debug("Distance is less than a margin of {}. GOTO done".format(reach_margin))
+            if distance <= C_CONSTANTS.REACH_MARGIN:
+                self.logger.debug("Distance is less than a margin of {}. GOTO done".format(C_CONSTANTS.REACH_MARGIN))
                 goal_reached = True
             else:
-                self.logger.debug("Distance is larger than a margin of {}. Performing additional steps".format(reach_margin))
+                self.logger.debug("Distance is larger than a margin of {}. Performing additional steps".format(C_CONSTANTS.REACH_MARGIN))
                 
 
         # when finished, clear the target, change the status
@@ -398,27 +399,31 @@ class R_Client_Extend(RClient):
         """The main function which will look for a path to find to reach the goal"""
 
         self.logger.info('Initializing the Algorithm')
+        self.dest_reached = False
 
         while not self.dest_reached:
+            goto_list = self.planner.find_path(self.cur_loc, target = target, map = self.map)
 
-            # 3. If the robot is currently not during process or action, find the next decision
-            if self.status ==  'idle':
-                self.make_decision()   # will update the 'current_target' property of the object
-                self.status = 'in_progress'
-            else:
-                # 4. Check if the robot has finished the current task
-                if self.current_target.type == "POS":
-                    self.goto(self.current_target)
-                elif self.current_target.type == "POPULATE_MAP":
-                    self.populate_map()
-                else:
-                    # no decision was taken?
-                    pass
+            success_code = self.follow_goto_list(goto_list)   # 0 is success
+            
+            if success_code == 0:
+                # check that the destination was indeed reached
+                distance, angle_deg = self.calc_metrics(target)
+                if distance < C_CONSTANTS.REACH_MARGIN:
+                    self.dest_reached = True
+                    self.logger.info('Reached the destination')
+  
 
+    def follow_goto_list(self, goto_list):
+        
+        for goto_target in goto_list:
+            try:
+                self.goto(goto_target)
+            except Obstacle_Interference:
+                self.logger.info("Found obstacle on the way. Recalculating the route")
+                return 1
 
-            time.sleep(0.1)
-
-
+        return 0
 
 
     def self_calib_pos(self, range_cmd : tuple = (300, 1000) , step : int = 100):

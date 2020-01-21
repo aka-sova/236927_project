@@ -83,17 +83,27 @@ class RRTStar(object):
         self.collision_margin = 3
 
 
-    def find_path(self, init_loc : list, dest_loc : list, map : Map):
+    def find_path(self, init_loc : list, target : Target, map : Map):
         """Use the R* algorithm to find the path to the destination
         Input: 
 
-        init_loc - initial location [ROW, COL]
-        dest_loc - final location   [ROW, COL]
+        init_loc - initial location [X, Y]
+        target -    Target  - has x,y
         map      - Map object, containing all the map information
 
         Output:
         list of GOTO Target objects defining the required path
         """
+
+        init_loc = Map.to_csv_coords(rows = self.map_size_x, 
+                                    cols = self.map_size_y, 
+                                    x=init_loc[0], 
+                                    y=init_loc[1])
+
+        dest_loc = Map.to_csv_coords(rows = self.map_size_x, 
+                                    cols = self.map_size_y, 
+                                    x=target.x, 
+                                    y=target.y)                        
 
 
         self.logger.info("Finding a path from [{} {}] to [{} {}]".format(init_loc[0], init_loc[1], dest_loc[0], dest_loc[1]))
@@ -155,7 +165,7 @@ class RRTStar(object):
         self.output_togo_list = self.transform_nodes_into_targets(self.optimized_path)
 
         self.logger.info("Path generation successful")     
-        return self.output_togo_list
+        return self.output_togo_list[1:] # don't return the initial node
 
     
     def check_static_collision(self, node):

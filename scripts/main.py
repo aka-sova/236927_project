@@ -82,6 +82,10 @@ def main(calibration: bool):
             # r.init_local_sockets()          # send the Pose to the visualizer
 
             
+            destination_location = [100, 100]
+
+            target = Target(target_type = "POS", target_vals = destination_location)
+            r.reach_destination(target = target)
 
 
             # target = Target(target_type = "POS", target_vals = [0, -200])
@@ -105,10 +109,10 @@ def main(calibration: bool):
 
             # debug the RRTtree
 
-            r.map.create_obstacles()
+            # r.map.create_obstacles()
             # r.map.save_maps_debug()
 
-            targets_path = r.planner.find_path(init_loc = [450, 50], dest_loc = [50, 450], map = r.map)
+            targets_path = r.planner.find_path(r.cur_loc, dest_loc = [50, 450], map = r.map)
             print("hello")
             
 

@@ -25,7 +25,8 @@ DRAW_INFLATED_OBSTACLES = True
 VIS_MAP_OBSTACLES_UPDATE = 0.5      # update the obstacles, shown as pixels
 VIS_MAP_BG_UPDATE = 5               # update the background - inflated obstacles
 
-
+### DYNAMICS_PARAMS
+REACH_MARGIN = 10
 
 
 ### ALGO PARAMS
