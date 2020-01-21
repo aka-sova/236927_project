@@ -166,9 +166,23 @@ class RRTStar(object):
             return True
         return False
 
-    def check_line_collision_long(self, node_start, node_finish):
+    def check_line_collision(self, node_start, node_finish):
+
+        if C_CONSTANTS.LINE_OBSTACLE_AVOIDANCE_ALGORITHM == "CROSS":
+            return self.check_line_collision_cross(node_start, node_finish)
+
+        if C_CONSTANTS.LINE_OBSTACLE_AVOIDANCE_ALGORITHM == "LINE_BUILDING":
+            return self.check_line_collision_line_builing(node_start, node_finish)
+      
+        if C_CONSTANTS.LINE_OBSTACLE_AVOIDANCE_ALGORITHM == "FILLED":
+            return self.check_line_collision_filled(node_start, node_finish)
+      
+
+    def check_line_collision_cross(self, node_start, node_finish):
         """Check if the line between the nodes crosses any of the occupied pixels
         return TRUE if path is collision FREE"""
+
+        # collision check is performed using the 'cross' operator
 
         if C_CONSTANTS.PRINT_TIMES_RRT == True:
             start = timeit.default_timer()
@@ -213,7 +227,7 @@ class RRTStar(object):
 
         return True
 
-    def check_line_collision(self, node_start, node_finish):
+    def check_line_collision_line_builing(self, node_start, node_finish):
         """Check if the line between the nodes crosses any of the occupied pixels
         return TRUE if path is collision FREE"""
 
@@ -297,7 +311,7 @@ class RRTStar(object):
         return True
 
 
-    def check_line_collision_binary(self, node_start, node_finish):
+    def check_line_collision_filled(self, node_start, node_finish):
         """Check if the line between the nodes crosses any of the occupied pixels
         return TRUE if path is collision FREE"""
 
@@ -308,7 +322,7 @@ class RRTStar(object):
             start = timeit.default_timer()
 
         # for each obstacle pixel, check if it intercepts the line between 2 nodes
-        obstacles = np.transpose(np.nonzero(self.map.inflated_map))
+        obstacles = np.transpose(np.nonzero(self.map.filled_map)) # FILLED MAP
 
         # build a line function describing the path from start to finish
         # X = col
@@ -319,38 +333,6 @@ class RRTStar(object):
         min_col = min(node_finish.col, node_start.col)
         max_col = max(node_finish.col, node_start.col)
 
-        # build the line function
-
-        # find a slope
-        d_row = node_finish.row - node_start.row
-        d_col = node_finish.col - node_start.col
-
-        if d_col != 0:
-            slope_1 = (float)(d_row / d_col)
-        else:
-            slope_1 = np.inf
-
-
-        if d_row != 0:
-            slope_2 = (float)(d_col / d_row)
-        else:
-            slope_2 = np.inf
-        # build a line
-
-        row_0 = node_finish.row - (slope_1 * node_finish.col)
-        col_0 = node_finish.col - (slope_2 * node_finish.row)
-
-
-        # the equation 1 is 
-        #       ROW = SLOPE_1 * COL + ROW_0
-
-
-        # the equation 2 is 
-        #       COL = SLOPE_2 * ROW + COL_0
-
-
-        # for each obstacle, check how far it is from the line in both directions - X and Y
-
         for obstacle in obstacles:
             nonzero_row = obstacle[0]
             nonzero_col = obstacle[1]
@@ -360,17 +342,13 @@ class RRTStar(object):
                 continue
         
             # 2. check what is the discrepancy of it if we put it into the line function
-            if slope_1 != np.inf:
-                calculated_row = slope_1 * nonzero_col + row_0
-                dist_1 = np.abs(calculated_row - nonzero_row)
+            p1 = np.array([node_start.col, node_start.row])
+            p2 = np.array([node_finish.col, node_finish.row])
+            p3 = np.array([nonzero_col,nonzero_row])
 
-            if slope_2 != np.inf:
-                calculated_col = slope_2 * nonzero_row + col_0
-                dist_2 = np.abs(calculated_col - nonzero_col)  
+            distance = np.linalg.norm(np.cross(p2-p1, p1-p3))/np.linalg.norm(p2-p1)
 
-            distance = min(dist_1, dist_2)
-
-            if distance < self.collision_margin:
+            if distance < C_CONSTANTS.MAP_INFLATE_RANGE:
                 if C_CONSTANTS.PRINT_TIMES_RRT == True:
                     stop = timeit.default_timer()
                     self.logger.info('[RRT] Collision line check. Time elapsed :  {}'.format(stop - start))  

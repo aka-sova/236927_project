@@ -102,7 +102,7 @@ class R_Client_Extend(RClient):
         
         planner_logger = init_logger(planner_logger_location)
         self.planner = RRTStar(logger = self.logger,
-                               max_iter = 30,
+                               max_iter = 50,
                                expand_dis = 70,
                                path_resolution = 5.0,
                                connect_circle_dist = 50.0,

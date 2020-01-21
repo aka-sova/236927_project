@@ -31,3 +31,4 @@ VIS_MAP_BG_UPDATE = 5               # update the background - inflated obstacles
 ### ALGO PARAMS
 MAP_CONNECT_RANGE = 30      # connect the dots in between as containing an obstacle
 MAP_INFLATE_RANGE = 10      # 'inflate' the obstacle by this amount to make the routes more safe
+LINE_OBSTACLE_AVOIDANCE_ALGORITHM = "LINE_BUILDING" # choose from [ "FILLED" / "LINE_BUILDING" / "CROSS" ]
