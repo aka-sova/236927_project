@@ -20,6 +20,7 @@ from scipy import interpolate
 import csv
 
 import socket
+from datetime import datetime
 
 global logger
 
@@ -92,6 +93,8 @@ class R_Client_Extend(RClient):
         self.artifacts_loc = artifacts_loc
         self.gui = main_gui
 
+
+
         self.map = Map(logger = self.logger,
                        sensor_angles = angles, 
                        output_loc = map_output_loc,
@@ -103,17 +106,21 @@ class R_Client_Extend(RClient):
                        size_y = 500)
         
         self.planner = RRTStar(logger = self.logger,
-                               max_iter = 50,
+                               max_iter = 100,
                                expand_dis = 70,
                                path_resolution = 5.0,
                                connect_circle_dist = 50.0,
-                               goal_sample_rate=20)
+                               goal_sample_rate=20,
+                               artifacts_loc = artifacts_loc)
 
         # calib tables indicate which commands to give to achieve certain poses
         self.read_calib_tables()
 
         self.collision_margin = 3
         self.first_destination = True
+
+        self.reach_destination_flag = False
+        self.current_destination = None
 
     def read_calib_tables(self):
         """read the calibration tables for position and rotation and save them in the object"""
@@ -411,17 +418,6 @@ class R_Client_Extend(RClient):
 
         return path_clear
 
-    def moveincircle(self, radius : int, init_dir : str):
-        """Move the robot in a circle starting from the initial location 
-        the center of the circle will be generated to the left / right from the robot"""
-
-        pass
-
-    def make_decision(self):
-        """based on the current location, and current map
-        make a decision, and return the GOTO next location"""
-
-        self.current_target = None
 
     def reach_destination(self, target):
         """The main function which will look for a path to find to reach the goal"""
@@ -455,6 +451,49 @@ class R_Client_Extend(RClient):
                     self.logger.info('Reached the destination')
                     self.gui.lbl_status.set("Reached destination")
   
+    def reach_destination_thread(self):
+        """The main function which will look for a path to find to reach the goal"""
+
+        while self.reach_destination_flag == False:
+            time.sleep(0.5)
+
+        target = self.current_destination
+        while self.cur_loc == [-9999, -9999]:
+            self.logger.info("Current location is invalid. Retry")
+            time.sleep(1.0)
+
+        # get the map. Rotate 360 degrees with a small pace
+        if self.first_destination : 
+            self.gui.lbl_status.set("Get env. data")
+            self.rotate_around(rotate_step = 45)
+            self.first_destination = False
+
+        self.logger.info('Initializing the Algorithm')
+        self.dest_reached = False
+
+        while not self.dest_reached:
+
+            self.gui.lbl_status.set("Calculating path")
+            goto_list = self.planner.find_path(self.cur_loc, target = target, map = self.map)
+
+            success_code = self.follow_goto_list(goto_list)   # 0 is success
+            
+            self.logger.info('Algorithm completed')
+            if success_code == 0:
+                # check that the destination was indeed reached
+                distance, _ = self.calc_metrics(target)
+                if distance < C_CONSTANTS.REACH_MARGIN:
+                    self.dest_reached = True
+                    self.logger.info('Reached the destination')
+                    self.gui.lbl_status.set("Reached destination")
+
+                    # start the thread again, wait for new Destination
+                    self.reach_destination_flag = False
+                    self.current_destination = None
+                    self.reach_dest_thread=threading.Thread(target=self.reach_destination_thread)
+                    self.reach_dest_thread.start()
+                    break
+
     def rotate_around(self, rotate_step):
         """Rotate to build a first map"""
         for _ in range((int)(360 / rotate_step)):
@@ -599,7 +638,9 @@ class R_Client_Extend(RClient):
             self.get_data()
             time.sleep(C_CONSTANTS.SENSE_UPDATE_FREQ)
 
-
+    def init_reach_thread(self):
+        self.reach_dest_thread=threading.Thread(target=self.reach_destination_thread)
+        self.reach_dest_thread.start()
 
     def init_mapping_thread(self):
         """Initialize the sensors thread that will operate always"""

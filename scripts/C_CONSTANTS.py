@@ -21,7 +21,7 @@ VIS_LOC_SEND_FREQ = 0.5
 
 # vizualization API params
 DRAW_REGULAR_OBSTACLES = True
-DRAW_INFLATED_OBSTACLES = True
+DRAW_INFLATED_OBSTACLES = False
 
 VIS_MAP_OBSTACLES_UPDATE = 0.5      # update the obstacles, shown as pixels
 VIS_MAP_BG_UPDATE = 5               # update the background - inflated obstacles

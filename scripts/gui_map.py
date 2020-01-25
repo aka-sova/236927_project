@@ -264,8 +264,8 @@ class GUI_MAP(tk.Tk):
                     self.y = - data[0] + self.size_x/2 # receive the updated position
                     self.angle = data[2] # receive the updated angle
 
-                    self.target_x = data[4] + self.size_y/2
-                    self.target_y = - data[3] + self.size_x/2
+                    self.target_x = data[4]
+                    self.target_y = - data[3]
 
                     self.update_labels()
 
@@ -556,15 +556,10 @@ if __name__ == '__main__':
     # which will constantly read for the file with 
     # Coordinates, current angle, current GOTO location
 
-    # The other (main) client will always WRITE into this file
-    # 
+    # The other (main) client will always trasmit to this application
 
 
     # Things we need to transmit 
-    #   1. Location, Angle, GOTO position (if exists)
-    #   2. MAP data  - should be done incrementally? Do it incrementally, but add button "GET FULL DATA"
-    #                   which will read the whole MAP data file
-
-
-    #   Main process will create temp file, then copy to TARGET file - once in 0.5 [s]. Overwrite it every time
-    #   VISUALIZER process will search for TARGET file every 0.2 [s]. Read it and and destroy
+    #   1. Location, Angle, GOTO position  - done through socket
+    #   2. MAP data  - done through pickle file
+    #   3. inflated map data - through changing background image, if needed

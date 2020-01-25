@@ -21,6 +21,8 @@ from map_func import Map
 from gui_map import GUI_MAP
 from RRT import Target
 
+from datetime import datetime
+
 class Parser_dummy(object):
     def __init__(self):
         pass
@@ -204,6 +206,7 @@ class Main_Gui(tk.Tk):
         self.robot.init_sense_thread()           # get info from the sensors
         self.robot.init_mapping_thread()         # update & save map
         self.robot.init_local_sockets()          # send the Pose to the visualizer
+        self.robot.init_reach_thread()           # thread to detect when the Reach Destination was activated
 
 
     def RUN_COMMAND(self):
@@ -217,7 +220,9 @@ class Main_Gui(tk.Tk):
 
         target = Target(target_type = "POS", target_vals = destination_location)
 
-        self.robot.reach_destination(target = target)
+        # self.robot.reach_destination(target = target)
+        self.robot.current_destination = target
+        self.robot.reach_destination_flag = True
 
     def STOP_COMMAND(self):
         self.stop_command_activated = True  # constantly check if was activated inside the robot thread
@@ -245,7 +250,7 @@ if __name__ == '__main__':
     args = Parser_dummy()
     
     args.calib_folder = os.path.join(cur_loc, 'scripts', 'calib')
-    args.logger_location = os.path.join(cur_loc, 'artifacts','logger.log')
+
 
     args.map_output_loc = os.path.join(cur_loc, 'output','map.p')
     args.map_output_temp_loc = os.path.join(cur_loc, 'output','map_temp.p')
@@ -253,8 +258,14 @@ if __name__ == '__main__':
     args.map_inflated_output_loc = os.path.join(cur_loc, 'output','map_inflated.p')
     args.map_inflated_output_temp_loc = os.path.join(cur_loc, 'output','map_inflated_temp.p')
 
-    args.artifacts_loc = os.path.join(cur_loc, 'artifacts')
+    now = datetime.now() # current date and time
+    folder_name = now.strftime("%m_%d_%H_%M_%S")
+    artifacts_loc = os.path.join(cur_loc, 'artifacts')
 
+
+    args.artifacts_loc = os.path.join(artifacts_loc, folder_name)
+    os.makedirs(args.artifacts_loc, exist_ok=True)
+    args.logger_location = os.path.join(args.artifacts_loc,'logger.log')
 
     main_gui = Main_Gui("Robot GUI", args)
 

@@ -20,6 +20,8 @@ import random
 import copy
 import pickle
 
+from datetime import datetime
+
 import matplotlib.pyplot as plt
 
 class Target(object):
@@ -56,9 +58,15 @@ class RRTStar(object):
             self.parent = None
             self.cost = 0.0            
 
-    def __init__(self, logger, max_iter, expand_dis, path_resolution, connect_circle_dist, goal_sample_rate):
+    def __init__(self, logger, max_iter, expand_dis, path_resolution, connect_circle_dist, goal_sample_rate, artifacts_loc):
 
         self.logger = logger
+
+        self.artifacts_loc = artifacts_loc
+
+        self.debug_path_idx = 0
+
+
         self.max_iter = max_iter
         self.path_resolution = path_resolution
         self.connect_circle_dist = connect_circle_dist
@@ -121,7 +129,7 @@ class RRTStar(object):
         
         if self.check_line_collision(self.start, self.end):
             self.logger.info("No collision spotted, path is free")
-            self.path_nodes_list = [self.start, self.end]
+            self.path_nodes_list = [self.end]                       # output only the end node
             self.output_togo_list = self.transform_nodes_into_targets(self.path_nodes_list)
             return self.output_togo_list
 
@@ -685,7 +693,10 @@ class RRTStar(object):
             if node.parent:
                 plt.plot([node.parent.col, node.col], [node.parent.row, node.row], 'ko--', linewidth=2)
               
-        plt.show()
+
+        debug_name = os.path.join(self.artifacts_loc, (str)(self.debug_path_idx) + '.png')
+        plt.savefig(debug_name)
+        self.debug_path_idx += 1
         
 
     @staticmethod
