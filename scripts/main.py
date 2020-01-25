@@ -6,7 +6,7 @@ sys.path.append(os.path.join(cur_loc, 'scripts\\api_src'))
 sys.path.append(os.path.join(cur_loc, 'scripts'))
 
 from udpclient import RClient
-from R_func import R_Client_Extend, Target
+from R_func import R_Client_Extend, Target, init_logger
 import time
 import math
 
@@ -49,17 +49,16 @@ def main(calibration: bool):
     artifacts_loc = os.path.join(cur_loc, 'artifacts')
 
 
+    logger = init_logger(logger_location)
 
     # angles = [angle * math.pi/180 for angle in [-45, 0, 45]]
     angles = [45, 0, -45]
-    final_loc = [1000, 1000] # X, Y of the final location
 
     r = R_Client_Extend(host = "192.168.1.158", 
                         port = 2777,
                         angles = angles,
                         calib_folder = calib_folder,
-                        logger_location = logger_location,
-                        planner_logger_location = planner_logger_location,
+                        logger = logger,
                         map_output_loc = map_output_loc,
                         map_output_temp_loc = map_output_temp_loc,
                         map_inflated_output_loc = map_inflated_output_loc,

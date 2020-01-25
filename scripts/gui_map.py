@@ -132,7 +132,8 @@ class GUI_MAP(tk.Tk):
         self.goto_var_x.set(self.target_x)
         self.goto_var_y.set(self.target_y)
 
-    def create_label_frame(self, master, label_text : str, label_target):
+    @staticmethod
+    def create_label_frame(master, label_text : str, label_target):
 
         dump_frame = tk.Frame(master = master)
         dump_frame.pack(side = tk.TOP)
@@ -142,6 +143,20 @@ class GUI_MAP(tk.Tk):
 
         dump_lbl = tk.Label(master = dump_frame, textvariable = label_target, width = 15)
         dump_lbl.pack(side = tk.RIGHT)
+
+
+    @staticmethod
+    def create_entry_frame(master, label_text : str, label_target):
+
+        dump_frame = tk.Frame(master = master)
+        dump_frame.pack(side = tk.TOP)
+
+        dump_lbl = tk.Label(master = dump_frame, text = label_text, width = 15)
+        dump_lbl.pack(side = tk.LEFT)
+
+        dump_lbl = tk.Entry(master = dump_frame, textvariable = label_target, width = 15)
+        dump_lbl.pack(side = tk.RIGHT)
+
 
     def create_canvas_frame(self):
         """The main frame with a mao on it, which will be updated in real time"""
@@ -516,38 +531,40 @@ class GUI_MAP(tk.Tk):
 
 
 
-cur_loc = os.getcwd()
-bg_src = os.path.join(cur_loc, 'artifacts', 'inflated_map.png')
-map_input_loc = os.path.join(cur_loc, 'output','map.p')
-map_input_inflated_loc = os.path.join(cur_loc, 'output','map_inflated.p')
-logger_location = os.path.join(cur_loc, 'artifacts','logger_vizual.log')
+if __name__ == '__main__':
 
-master = GUI_MAP(name = "MAP", map_bg_loc=bg_src, map_input_loc = map_input_loc, map_input_inflated_loc = map_input_inflated_loc, logger_location = logger_location)
+    cur_loc = os.getcwd()
+    bg_src = os.path.join(cur_loc, 'artifacts', 'inflated_map.png')
+    map_input_loc = os.path.join(cur_loc, 'output','map.p')
+    map_input_inflated_loc = os.path.join(cur_loc, 'output','map_inflated.p')
+    logger_location = os.path.join(cur_loc, 'artifacts','logger_vizual.log')
 
-# This will bind arrow keys to the tkinter 
-# toplevel which will navigate the image or drawing 
-# master.bind("<KeyPress-Left>", lambda e: master.left(e)) 
-# master.bind("<KeyPress-Right>", lambda e: master.right(e)) 
-# master.bind("<KeyPress-Up>", lambda e: master.up(e)) 
-# master.bind("<KeyPress-Down>", lambda e: master.down(e)) 
+    master = GUI_MAP(name = "MAP", map_bg_loc=bg_src, map_input_loc = map_input_loc, map_input_inflated_loc = map_input_inflated_loc, logger_location = logger_location)
 
-master.mainloop()
+    # This will bind arrow keys to the tkinter 
+    # toplevel which will navigate the image or drawing 
+    # master.bind("<KeyPress-Left>", lambda e: master.left(e)) 
+    # master.bind("<KeyPress-Right>", lambda e: master.right(e)) 
+    # master.bind("<KeyPress-Up>", lambda e: master.up(e)) 
+    # master.bind("<KeyPress-Down>", lambda e: master.down(e)) 
 
-
-### IDEA on how to received and transmit data:
-# This gui will be a SEPARATE program - call it VISUALIZER 
-# which will constantly read for the file with 
-# Coordinates, current angle, current GOTO location
-
-# The other (main) client will always WRITE into this file
-# 
+    master.mainloop()
 
 
-# Things we need to transmit 
-#   1. Location, Angle, GOTO position (if exists)
-#   2. MAP data  - should be done incrementally? Do it incrementally, but add button "GET FULL DATA"
-#                   which will read the whole MAP data file
+    ### IDEA on how to received and transmit data:
+    # This gui will be a SEPARATE program - call it VISUALIZER 
+    # which will constantly read for the file with 
+    # Coordinates, current angle, current GOTO location
+
+    # The other (main) client will always WRITE into this file
+    # 
 
 
-#   Main process will create temp file, then copy to TARGET file - once in 0.5 [s]. Overwrite it every time
-#   VISUALIZER process will search for TARGET file every 0.2 [s]. Read it and and destroy
+    # Things we need to transmit 
+    #   1. Location, Angle, GOTO position (if exists)
+    #   2. MAP data  - should be done incrementally? Do it incrementally, but add button "GET FULL DATA"
+    #                   which will read the whole MAP data file
+
+
+    #   Main process will create temp file, then copy to TARGET file - once in 0.5 [s]. Overwrite it every time
+    #   VISUALIZER process will search for TARGET file every 0.2 [s]. Read it and and destroy

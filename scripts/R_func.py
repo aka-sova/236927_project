@@ -76,7 +76,7 @@ class Obstacle_Interference(Exception):
       
 
 class R_Client_Extend(RClient):
-    def __init__(self, host, calib_folder, angles : list, logger_location, planner_logger_location, map_output_loc, map_output_temp_loc, map_inflated_output_loc, map_inflated_output_temp_loc, artifacts_loc, port, user_deprecate='',id_deprecate=''):
+    def __init__(self, host, calib_folder, angles : list, logger, map_output_loc, map_output_temp_loc, map_inflated_output_loc, map_inflated_output_temp_loc, artifacts_loc, port, main_gui, user_deprecate='',id_deprecate=''):
         super().__init__(host,port,user_deprecate='',id_deprecate='')
         self.goto_margin = 10  # margin to know we have arrived 
         self.angle_margin = 5 # [deg] 
@@ -85,12 +85,12 @@ class R_Client_Extend(RClient):
         self.cur_dir = []               # direction 
         self.cur_angle = -9999          # means angle is not set
         self.cur_readings = []
-        self.status = 'idle'            # ['idle' / 'in_process']
         self.dest_reached = False
         self.current_target = None
         self.calib_folder = calib_folder
-        self.logger = init_logger(logger_location)
+        self.logger = logger
         self.artifacts_loc = artifacts_loc
+        self.gui = main_gui
 
         self.map = Map(logger = self.logger,
                        sensor_angles = angles, 
@@ -102,7 +102,6 @@ class R_Client_Extend(RClient):
                        size_x = 500,
                        size_y = 500)
         
-        planner_logger = init_logger(planner_logger_location)
         self.planner = RRTStar(logger = self.logger,
                                max_iter = 50,
                                expand_dis = 70,
@@ -163,6 +162,7 @@ class R_Client_Extend(RClient):
 
         while sense_data ==  [0.0,0.0,0.0,0.0,0.0] or (sense_data[0] == -9999 or sense_data[1] == -9999):
             self.logger.info("Sense data is erroneous. Retrying")
+            self.gui.sensors_status_var.set("Error")
 
             if (sense_data ==  [0.0,0.0,0.0,0.0,0.0]):
                 self.logger.info("Sense data is empty")
@@ -176,11 +176,15 @@ class R_Client_Extend(RClient):
 
             print(sense_data)
 
-
+        self.gui.sensors_status_var.set("Connected")
         self.cur_loc = sense_data[0:2]
         self.cur_dir = sense_data[2:4]
         self.cur_angle = math.atan2(self.cur_dir[1], self.cur_dir[0]) * 180 / math.pi
         self.cur_readings = sense_data[4:]
+
+        self.gui.lbl_pose_x.set(self.cur_loc[0])
+        self.gui.lbl_pose_y.set(self.cur_loc[1])
+        self.gui.lbl_angle.set(self.cur_angle)
 
     def calc_metrics(self, target: Target):
         """Calculate the distance and the angle towards the target"""
@@ -212,6 +216,9 @@ class R_Client_Extend(RClient):
 
         assert target.type == "POS"
         goal_reached = False
+
+        self.gui.lbl_goto_x.set(target.x)
+        self.gui.lbl_goto_y.set(target.y)
 
         # This functin will implement intermediate 'targets' of rotational type to reach the goal
 
@@ -288,19 +295,8 @@ class R_Client_Extend(RClient):
         self.logger.debug("Current location : [{0} {1}]".format(self.cur_loc[0], self.cur_loc[1]))
         self.logger.debug("Target location : [{0} {1}]".format(target.x, target.y))
 
-
         self.current_target = None
-        self.status = 'idle'
 
-    def populate_map(self):
-        """This function will slowly spin the robot around itself,
-        in order to gather information about the environment (update the map)
-        """
-
-        # make the loop for rotation and time.sleep
-
-        self.current_target = None
-        self.status = 'idle'
 
     def turn_small(self, angle: int):
         """Turn only 1 time in boundaries of the interpolation"""
@@ -436,6 +432,7 @@ class R_Client_Extend(RClient):
 
         # get the map. Rotate 360 degrees with a small pace
         if self.first_destination : 
+            self.gui.lbl_status.set("Get env. data")
             self.rotate_around(rotate_step = 45)
             self.first_destination = False
 
@@ -443,6 +440,8 @@ class R_Client_Extend(RClient):
         self.dest_reached = False
 
         while not self.dest_reached:
+
+            self.gui.lbl_status.set("Calculating path")
             goto_list = self.planner.find_path(self.cur_loc, target = target, map = self.map)
 
             success_code = self.follow_goto_list(goto_list)   # 0 is success
@@ -454,6 +453,7 @@ class R_Client_Extend(RClient):
                 if distance < C_CONSTANTS.REACH_MARGIN:
                     self.dest_reached = True
                     self.logger.info('Reached the destination')
+                    self.gui.lbl_status.set("Reached destination")
   
     def rotate_around(self, rotate_step):
         """Rotate to build a first map"""
@@ -466,8 +466,10 @@ class R_Client_Extend(RClient):
         
         for goto_target in goto_list:
             try:
+                self.gui.lbl_status.set("Following next GOTO")
                 self.goto(goto_target)
             except Obstacle_Interference:
+                self.gui.lbl_status.set("Stop GOTO")
                 self.logger.info("Found obstacle on the way. Recalculating the route")
                 return 1
 
@@ -590,11 +592,14 @@ class R_Client_Extend(RClient):
         """Initialize the sensors thread that will operate always"""
         self.local_pose_thread=threading.Thread(target=self.sense_thread)
         self.local_pose_thread.start()
+        self.gui.sensors_status_var.set("Connected")
 
     def sense_thread(self):
         while True:
             self.get_data()
             time.sleep(C_CONSTANTS.SENSE_UPDATE_FREQ)
+
+
 
     def init_mapping_thread(self):
         """Initialize the sensors thread that will operate always"""
@@ -655,10 +660,12 @@ class R_Client_Extend(RClient):
 
         with conn:
             print('Connected by', addr)
+            self.gui.sensors_status_var.set("Connected")
             while True:
 
                 if (current_tries_am > max_tries_reconnect):
                     # end current socket and thread, and wait for new connection
+                    self.gui.sensors_status_var.set("Disconnected")
                     sock.close()
                     self.local_pose_thread=threading.Thread(target=self.local_pose_loop)
                     self.local_pose_thread.start()
@@ -696,7 +703,6 @@ class R_Client_Extend(RClient):
                     # print(total_tuple)
                     current_tries_am += 1
                     time.sleep(1.0)
-
 
     def check_line_collision_cross(self, init_loc : list, final_loc : list):
         """Check if the line between the nodes crosses any of the occupied pixels
