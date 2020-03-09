@@ -16,7 +16,7 @@ MAP_SAVE_FREQ = 0.5             # Save the map as PICKLE file for the Vizualizat
 MAP_SAVE_DEBUG_FREQ = 5         # Save the binary, 'connected obstacles', and 'inflated obstacles' maps as images
 
 # between main and visualization
-VIS_LOC_SEND_FREQ = 0.5
+VIS_LOC_SEND_FREQ = 0.5         # Send data between Main and Visualization
 
 
 # vizualization API params
@@ -27,8 +27,11 @@ VIS_MAP_OBSTACLES_UPDATE = 0.5      # update the obstacles, shown as pixels
 VIS_MAP_BG_UPDATE = 5               # update the background - inflated obstacles
 
 ### DYNAMICS_PARAMS
-REACH_MARGIN = 10
-MAP_UPDATE_WAIT_TIME = 1
+REACH_MARGIN = 10                   # Check reached the target
+MAP_UPDATE_WAIT_TIME = 1            # Checking the Clear Path before movement. Wait for this amount to ensure map is updated
+
+PERFORM_ANGLE_VALIDATION_EN_ROUTE = True
+ACCEPTABLE_TURNING_ANGLE = 5        # in [deg]. If robot looks at target at this angle or smaller, it will start moving
 
 
 ### ALGO PARAMS

@@ -106,7 +106,7 @@ class R_Client_Extend(RClient):
                        size_y = 500)
         
         self.planner = RRTStar(logger = self.logger,
-                               max_iter = 100,
+                               max_iter = 75,
                                expand_dis = 70,
                                path_resolution = 5.0,
                                connect_circle_dist = 50.0,
@@ -241,6 +241,11 @@ class R_Client_Extend(RClient):
         distance, angle_deg = self.calc_metrics(target)
         self.logger.debug("Calculated:\n\tdistance : {0}\n\tangle: {1}".format(distance, angle_deg))
 
+        # perhaps the target is already close to the robot
+        if distance <= C_CONSTANTS.REACH_MARGIN:
+            self.logger.debug("Distance is less than a margin of {}. GOTO done".format(C_CONSTANTS.REACH_MARGIN))
+            goal_reached = True
+
         # While the goal is not reached:
 
             # 2. Send the rotation command
@@ -250,31 +255,8 @@ class R_Client_Extend(RClient):
 
         while not goal_reached:
 
-            # calculate the smallest angle required to perform
-            angle_to_rotate = normalize_angle(angle_deg - self.cur_angle)
-
-
-            self.logger.debug("Performing turn of {}".format(angle_to_rotate))
-
-            # Fix the angle by whatever we can to make precise rotation
-            turn_acceptable = False
-
-            while not turn_acceptable:
-                self.turn(angle_to_rotate)
-                
-                time.sleep(1.0) # long enough?
-                # calculate the angle discrepancy
-                self.get_data()
-                angle_to_rotate = normalize_angle(angle_deg - self.cur_angle)
-                discrepancy = abs(angle_to_rotate)
-                self.logger.debug("Turn performed. current angle {},  discrepancy: {}".format(self.cur_angle, discrepancy))
-                if discrepancy < 5:
-                    turn_acceptable = True
-                else:
-                    self.logger.debug("Turn has too big discrepancy. Trying again")
-                    self.logger.debug("Performing turn of {}".format(angle_to_rotate))
-
-
+            # rotate the robot towards the goal
+            self.correct_robot_angle()
             
             # calculate the required encoder value for the engines
             self.drive_distance_long(distance)
@@ -372,9 +354,47 @@ class R_Client_Extend(RClient):
 
             for _ in range(drive_segments):
                 self.drive_distance_short(segment_path)
+                
+                # verify that the angle between the robot and the target is acceptable
+                # since the engines aren't working equally, we have to validate that we move correctly.
+                # Enable this through the C_CONSTANTS
+
+                if C_CONSTANTS.PERFORM_ANGLE_VALIDATION_EN_ROUTE == True:
+                    self.correct_robot_angle()
+
+                
                 time.sleep(1.0)
 
+    def correct_robot_angle(self):
+        """Will make the robot to rotate towards the TARGET.
+        Tagret should be already specified in the 'current_destination'"""
+
+        target = self.current_destination
+        distance, angle_deg = self.calc_metrics(target)
+        self.logger.debug("Calculated:\n\tdistance : {0}\n\tangle: {1}".format(distance, angle_deg))
+        # calculate the smallest angle required to perform
+        angle_to_rotate = normalize_angle(angle_deg - self.cur_angle)
+
+
+        self.logger.debug("Performing turn of {}".format(angle_to_rotate))
+
+        # Fix the angle by whatever we can to make precise rotation
+        turn_acceptable = False
+
+        while not turn_acceptable:
+            self.turn(angle_to_rotate)
             
+            time.sleep(1.0) # long enough?
+            # calculate the angle discrepancy
+            self.get_data()
+            angle_to_rotate = normalize_angle(angle_deg - self.cur_angle)
+            discrepancy = abs(angle_to_rotate)
+            self.logger.debug("Turn performed. current angle {},  discrepancy: {}".format(self.cur_angle, discrepancy))
+            if discrepancy < C_CONSTANTS.ACCEPTABLE_TURNING_ANGLE:
+                turn_acceptable = True
+            else:
+                self.logger.debug("Turn has too big discrepancy. Trying again")
+                self.logger.debug("Performing turn of {}".format(angle_to_rotate))  
 
 
     def drive_distance_short(self, distance: int):
@@ -420,7 +440,9 @@ class R_Client_Extend(RClient):
 
 
     def reach_destination(self, target):
-        """The main function which will look for a path to find to reach the goal"""
+        """The main function which will look for a path to find to reach the goal
+        Currently not active"""
+
 
         while self.cur_loc == [-9999, -9999]:
             self.logger.info("Current location is invalid. Retry")
@@ -478,8 +500,9 @@ class R_Client_Extend(RClient):
 
             success_code = self.follow_goto_list(goto_list)   # 0 is success
             
-            self.logger.info('Algorithm completed')
+            
             if success_code == 0:
+                self.logger.info('Algorithm completed')
                 # check that the destination was indeed reached
                 distance, _ = self.calc_metrics(target)
                 if distance < C_CONSTANTS.REACH_MARGIN:
@@ -493,6 +516,8 @@ class R_Client_Extend(RClient):
                     self.reach_dest_thread=threading.Thread(target=self.reach_destination_thread)
                     self.reach_dest_thread.start()
                     break
+            else:
+                self.logger.info('Obstacle found on the GOTO path. Destination not reached')
 
     def rotate_around(self, rotate_step):
         """Rotate to build a first map"""
@@ -509,7 +534,12 @@ class R_Client_Extend(RClient):
                 self.goto(goto_target)
             except Obstacle_Interference:
                 self.gui.lbl_status.set("Stop GOTO")
-                self.logger.info("Found obstacle on the way. Recalculating the route")
+                self.logger.info("Found obstacle on the way")
+
+
+                self.logger.info("Rotating the agent to receive environment location")
+                self.rotate_around(rotate_step = 45)
+
                 return 1
 
         return 0
