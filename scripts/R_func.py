@@ -106,7 +106,7 @@ class R_Client_Extend(RClient):
                        size_y = 500)
         
         self.planner = RRTStar(logger = self.logger,
-                               max_iter = 75,
+                               max_iter = C_CONSTANTS.ITERATIONS_NUMBER,
                                expand_dis = 70,
                                path_resolution = 5.0,
                                connect_circle_dist = 50.0,
@@ -116,7 +116,6 @@ class R_Client_Extend(RClient):
         # calib tables indicate which commands to give to achieve certain poses
         self.read_calib_tables()
 
-        self.collision_margin = 3
         self.first_destination = True
 
         self.reach_destination_flag = False
@@ -239,7 +238,7 @@ class R_Client_Extend(RClient):
         self.logger.debug("Current angle: {}".format(self.cur_angle))
 
         distance, angle_deg = self.calc_metrics(target)
-        self.logger.debug("Calculated:\n\tdistance : {0}\n\tangle: {1}".format(distance, angle_deg))
+        self.logger.debug("[def goto 1]Calculated:\n\tdistance : {0}\n\tangle: {1}".format(distance, angle_deg))
 
         # perhaps the target is already close to the robot
         if distance <= C_CONSTANTS.REACH_MARGIN:
@@ -268,7 +267,7 @@ class R_Client_Extend(RClient):
             self.logger.debug("STEP FINISHED")
             self.logger.debug("Current location : [{0} {1}]".format(self.cur_loc[0], self.cur_loc[1]))
             self.logger.debug("Target location : [{0} {1}]".format(target.x, target.y))
-            self.logger.debug("Calculated:\n\tdistance : {0}\n\tangle: {1}".format(distance, angle_deg))
+            self.logger.debug("[def goto 2]Calculated:\n\tdistance : {0}\n\tangle: {1}".format(distance, angle_deg))
 
             if distance <= C_CONSTANTS.REACH_MARGIN:
                 self.logger.debug("Distance is less than a margin of {}. GOTO done".format(C_CONSTANTS.REACH_MARGIN))
@@ -340,7 +339,13 @@ class R_Client_Extend(RClient):
 
     def drive_distance_long(self, distance: int):
         """Will drive any distance, even in parts"""
+
+        self.logger.debug("[def drive_distance_long] NEED TO DRIVE THIS DISTANCE : {}".format(distance))
+
         max_driving_dist = max(self.pos_interp.x)
+
+        self.logger.debug("[def drive_distance_long] max driving dist : {}".format(max_driving_dist))
+
 
         if distance < max_driving_dist:
             self.drive_distance_short(distance)
@@ -354,24 +359,26 @@ class R_Client_Extend(RClient):
 
             for _ in range(drive_segments):
                 self.drive_distance_short(segment_path)
+                time.sleep(1.0)
                 
                 # verify that the angle between the robot and the target is acceptable
                 # since the engines aren't working equally, we have to validate that we move correctly.
                 # Enable this through the C_CONSTANTS
 
                 if C_CONSTANTS.PERFORM_ANGLE_VALIDATION_EN_ROUTE == True:
+                    # fails when reached the GOTO...
                     self.correct_robot_angle()
 
                 
-                time.sleep(1.0)
+                
 
     def correct_robot_angle(self):
         """Will make the robot to rotate towards the TARGET.
         Tagret should be already specified in the 'current_destination'"""
 
-        target = self.current_destination
+        target = self.current_target   # current GOTO target
         distance, angle_deg = self.calc_metrics(target)
-        self.logger.debug("Calculated:\n\tdistance : {0}\n\tangle: {1}".format(distance, angle_deg))
+        self.logger.debug("[def correct_robot_angle] Calculated:\n\tdistance : {0}\n\tangle: {1}".format(distance, angle_deg))
         # calculate the smallest angle required to perform
         angle_to_rotate = normalize_angle(angle_deg - self.cur_angle)
 
@@ -405,6 +412,8 @@ class R_Client_Extend(RClient):
         # will drive only the maximum distance from the interpolation values
         distance = min(max(self.pos_interp.x), distance)
 
+
+
         # CHECK THE CLEAR PATH FOR THIS DISTANCE
         if self.check_clear_path(distance):
             if distance < min(self.pos_interp.x):
@@ -412,6 +421,7 @@ class R_Client_Extend(RClient):
                 return
 
             command_value = int(self.pos_interp(abs(distance)))
+            self.logger.debug("[def drive_distance_short] Distance required: {}, Command to the motors: {}".format(distance, command_value))
             self.drive(command_value, command_value)
         
         else:
@@ -420,7 +430,8 @@ class R_Client_Extend(RClient):
     def check_clear_path(self, distance):
         """Check that the path from the current angle for this distance is clear of obstacles"""
 
-        distance = distance * 2 
+        # give a small margin
+        distance = distance * C_CONSTANTS.CLEAR_PATH_FINDING_MARGIN
 
         end_x = int(distance * math.cos(self.cur_angle*math.pi/180) + self.cur_loc[0])
         end_y = int(distance * math.sin(self.cur_angle*math.pi/180) + self.cur_loc[1])
@@ -814,8 +825,8 @@ class R_Client_Extend(RClient):
 
             distance = np.linalg.norm(np.cross(p2-p1, p1-p3))/np.linalg.norm(p2-p1)
 
-            if distance < self.collision_margin:
-                self.logger.info("Distance : {}".format(distance))
+            if distance < C_CONSTANTS.OBSTACLE_COLLISION_MARGIN:
+                self.logger.info("Distance from the obstacle : {} , smaller that the margin".format(distance))
                 return False
 
         return True                 

@@ -47,7 +47,7 @@ class Map(object):
         dir_angle : Direction of the agent (float) (deg)
         meas : List of measurements
         
-        As output, the probs of the map will be updated
+        Map object is updated. Map is in CSV coordinate system!  Since indexes cannot be negative
         """
 
         # for now, implement the binary map directly

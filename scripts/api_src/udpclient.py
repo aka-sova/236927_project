@@ -104,6 +104,7 @@ class RClient(object):
         
     def drive(self,left,right):
         """ Make the robot move.  Send 2 integers for motors [-1000 : 1000] """
+        print("Sending commands to motors. Left: {}  Right: {}".format(left,right))
         self.sendmsg("{} {}".format(left,right))
         
     def sense(self):

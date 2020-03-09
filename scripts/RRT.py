@@ -139,7 +139,7 @@ class RRTStar(object):
             self.node_list = [self.start]
             for i in range(self.max_iter):
 
-                self.logger.info("Iter: {} ,  number of nodes: {}".format( i, len(self.node_list)))
+                # self.logger.info("Iter: {} ,  number of nodes: {}".format( i, len(self.node_list)))
 
                 rnd = self.get_random_node()
                 nearest_ind = self.get_nearest_node_index(self.node_list, rnd)
@@ -659,25 +659,30 @@ class RRTStar(object):
         return togo_targets_list
 
     def draw_graph(self):
+
+        """Create a plot of the path found and save it"""
+
         plt.clf()
 
         for node in self.node_list:
             if node.parent:
                 plt.plot([node.parent.col, node.col], [node.parent.row, node.row], "-g")
 
-        rad_list = [50, 80]
-        centers_list = [[100,100], [250,250]]
+        # rad_list = [50, 80]
+        # centers_list = [[100,100], [250,250]]
 
 
         # for radius, center_coords in zip(rad_list, centers_list):
         #     self.plot_circle(center_coords[0], center_coords[1], radius)
 
+        # plot the origin & target 
         plt.plot(self.start.col, self.start.row, "xr")
         plt.plot(self.end.col, self.end.row, "xr")
         plt.axis("equal")
-        plt.axis([0, self.map_size_x, 0, self.map_size_y])
+        plt.axis([0, self.map_size_x, self.map_size_y, 0]) # X axis is inverted
         plt.grid(True)
 
+        # plot the obstacles
         obstacles = np.transpose(np.nonzero(self.map.inflated_map))
 
         for obstacle in obstacles:
@@ -685,14 +690,15 @@ class RRTStar(object):
             nonzero_col = obstacle[1]
             plt.plot(nonzero_col, nonzero_row, ",k")
 
+        # plot the original path
         for node in self.path_nodes_list:
             if node.parent:
                 plt.plot([node.parent.col, node.col], [node.parent.row, node.row], 'ro--', linewidth=2)
 
+        # plot the optimized path
         for node in self.optimized_path:
             if node.parent:
                 plt.plot([node.parent.col, node.col], [node.parent.row, node.row], 'ko--', linewidth=2)
-              
 
         debug_name = os.path.join(self.artifacts_loc, (str)(self.debug_path_idx) + '.png')
         plt.savefig(debug_name)
