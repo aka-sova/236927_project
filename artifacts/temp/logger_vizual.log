@@ -1,0 +1,63 @@
+01/20 06:52:28 - INFO - Creating MENUS
+01/20 06:52:28 - INFO - Creating FRAMES
+01/20 06:52:28 - INFO - Creating CANVAS
+01/20 06:52:28 - INFO - Initializing the agent pose + go drawing thread
+01/20 06:52:28 - INFO - Opening a pose thread
+01/20 06:52:28 - INFO - Initializing the obstacles drawing threads
+01/20 06:52:28 - INFO - [DRAWING] Reading raw obstacles PICKLE file. Time elapsed :  0.0007819000000000001
+01/20 06:52:28 - DEBUG - STREAM b'IHDR' 16 13
+01/20 06:52:28 - DEBUG - STREAM b'sBIT' 41 4
+01/20 06:52:28 - DEBUG - b'sBIT' 41 4 (unknown)
+01/20 06:52:28 - DEBUG - STREAM b'IDAT' 57 2869
+01/20 06:52:28 - INFO - [DRAWING] Reading raw obstacles PICKLE file. Time elapsed :  0.0029369999999999674
+01/20 06:52:29 - INFO - [DRAWING] Drawing raw obstacles. Time elapsed :  0.6631471
+01/20 06:52:29 - INFO - [DRAWING] Drawing raw obstacles. Time elapsed :  0.6748193
+01/20 06:52:29 - INFO - [DRAWING] Changing background and all connected. Time elapsed :  0.953151
+01/20 06:52:29 - INFO - [DRAWING] Reading raw obstacles PICKLE file. Time elapsed :  0.00033649999999996183
+01/20 06:52:30 - INFO - [DRAWING] Drawing raw obstacles. Time elapsed :  0.5536544000000001
+01/20 06:52:30 - INFO - Server not found. Reason: Connection refused
+01/20 06:52:30 - INFO - [DRAWING] Reading raw obstacles PICKLE file. Time elapsed :  0.0004045999999999772
+01/20 06:52:31 - INFO - [DRAWING] Drawing raw obstacles. Time elapsed :  0.4707425999999999
+01/20 06:52:31 - INFO - [DRAWING] Reading raw obstacles PICKLE file. Time elapsed :  0.0005575000000002106
+01/20 06:52:32 - INFO - [DRAWING] Drawing raw obstacles. Time elapsed :  0.4274152
+01/20 06:52:32 - INFO - Server not found. Reason: Connection refused
+01/20 06:52:32 - INFO - [DRAWING] Reading raw obstacles PICKLE file. Time elapsed :  0.000915499999999625
+01/20 06:52:33 - INFO - [DRAWING] Drawing raw obstacles. Time elapsed :  0.3892250000000006
+01/20 06:52:33 - INFO - [DRAWING] Reading raw obstacles PICKLE file. Time elapsed :  0.000994100000000664
+01/20 06:52:34 - INFO - [DRAWING] Drawing raw obstacles. Time elapsed :  0.43472380000000044
+01/20 06:52:34 - INFO - [DRAWING] Reading raw obstacles PICKLE file. Time elapsed :  0.0009938000000007108
+01/20 06:52:34 - INFO - Server not found. Reason: Connection refused
+01/20 06:52:35 - INFO - [DRAWING] Drawing raw obstacles. Time elapsed :  0.45638690000000004
+01/20 06:52:35 - DEBUG - STREAM b'IHDR' 16 13
+01/20 06:52:35 - DEBUG - STREAM b'sBIT' 41 4
+01/20 06:52:35 - DEBUG - b'sBIT' 41 4 (unknown)
+01/20 06:52:35 - DEBUG - STREAM b'IDAT' 57 2869
+01/20 06:52:35 - INFO - [DRAWING] Reading raw obstacles PICKLE file. Time elapsed :  0.0003311999999997539
+01/20 06:52:35 - INFO - [DRAWING] Drawing raw obstacles. Time elapsed :  0.3808403
+01/20 06:52:35 - INFO - [DRAWING] Changing background and all connected. Time elapsed :  0.9346987000000002
+01/20 06:52:35 - INFO - [DRAWING] Reading raw obstacles PICKLE file. Time elapsed :  0.00041790000000041516
+01/20 06:52:35 - INFO - [DRAWING] Drawing raw obstacles. Time elapsed :  0.33895549999999997
+01/20 06:52:36 - INFO - [DRAWING] Reading raw obstacles PICKLE file. Time elapsed :  0.0009244999999999948
+01/20 06:52:36 - INFO - Server not found. Reason: Connection refused
+01/20 06:52:36 - INFO - [DRAWING] Drawing raw obstacles. Time elapsed :  0.4560393999999999
+01/20 06:52:37 - INFO - [DRAWING] Reading raw obstacles PICKLE file. Time elapsed :  0.0010063999999996298
+01/20 06:52:37 - INFO - [DRAWING] Drawing raw obstacles. Time elapsed :  0.38514550000000014
+01/20 06:52:38 - INFO - [DRAWING] Reading raw obstacles PICKLE file. Time elapsed :  0.0014897000000004823
+01/20 06:52:38 - INFO - [DRAWING] Drawing raw obstacles. Time elapsed :  0.38853519999999975
+01/20 06:52:38 - INFO - Server not found. Reason: Connection refused
+01/20 06:52:39 - INFO - [DRAWING] Reading raw obstacles PICKLE file. Time elapsed :  0.00048779999999837287
+01/20 06:52:39 - INFO - [DRAWING] Drawing raw obstacles. Time elapsed :  0.3962696000000001
+01/20 06:52:40 - INFO - [DRAWING] Reading raw obstacles PICKLE file. Time elapsed :  0.0010089999999998156
+01/20 06:52:40 - INFO - [DRAWING] Drawing raw obstacles. Time elapsed :  0.3870331
+01/20 06:52:40 - DEBUG - STREAM b'IHDR' 16 13
+01/20 06:52:40 - DEBUG - STREAM b'sBIT' 41 4
+01/20 06:52:40 - DEBUG - b'sBIT' 41 4 (unknown)
+01/20 06:52:40 - DEBUG - STREAM b'IDAT' 57 2869
+01/20 06:52:40 - INFO - [DRAWING] Reading raw obstacles PICKLE file. Time elapsed :  0.0003654000000015145
+01/20 06:52:40 - INFO - Server not found. Reason: Connection refused
+01/20 06:52:40 - INFO - [DRAWING] Reading raw obstacles PICKLE file. Time elapsed :  0.05394199999999927
+01/20 06:52:41 - INFO - [DRAWING] Drawing raw obstacles. Time elapsed :  0.49113709999999955
+01/20 06:52:41 - INFO - [DRAWING] Changing background and all connected. Time elapsed :  0.6193736999999988
+01/20 06:52:41 - INFO - [DRAWING] Drawing raw obstacles. Time elapsed :  0.44831429999999983
+01/20 06:52:41 - INFO - [DRAWING] Reading raw obstacles PICKLE file. Time elapsed :  0.0015062999999990723
+ obstacles PICKLE file. Time elapsed :  0.0015062999999990723

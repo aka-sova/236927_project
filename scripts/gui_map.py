@@ -28,6 +28,9 @@ import threading
 import sys
 import os
 
+import configparser
+from shutil import copyfile
+
 cur_loc = os.getcwd()
 sys.path.append(os.path.join(cur_loc, 'scripts\\api_src'))
 sys.path.append(os.path.join(cur_loc, 'scripts'))
@@ -38,12 +41,17 @@ from errnames import get_error_name
 import C_CONSTANTS
 
 class GUI_MAP(tk.Tk):
-    def __init__(self, name, map_bg_loc = '', map_input_loc = '', map_input_inflated_loc = '', logger_location = ''):
+    def __init__(self, name, map_bg_loc = '', map_input_loc = '', map_input_loc_temp = '', map_input_inflated_loc = '', logger_location = '', updated_path_file_loc = '',  path_data_file_loc=''):
         super().__init__()
         self.title(name)
         self.map_bg_loc = map_bg_loc
         self.map_input_loc = map_input_loc
+        self.map_input_loc_temp = map_input_loc_temp
         self.map_input_inflated_loc = map_input_inflated_loc
+
+        self.updated_path_file_loc = updated_path_file_loc
+        self.path_data_file_loc = path_data_file_loc
+        self.path_data_list = []
 
         self.logger = init_logger(logger_location)
 
@@ -61,6 +69,10 @@ class GUI_MAP(tk.Tk):
         self.x = -9999
         self.y = -9999
         self.angle = -9999
+
+        self.last_valid_x = -9999
+        self.last_valid_y = -9999
+        self.last_valid_angle = -9999
 
         self.connected = False
 
@@ -194,6 +206,10 @@ class GUI_MAP(tk.Tk):
             self.map_bg_draw_thread = threading.Thread(target=self.draw_map_bg_proc)
             self.map_bg_draw_thread.start()
 
+        if C_CONSTANTS.DRAW_AGENT_PATH :
+            self.agent_path_draw_thread = threading.Thread(target=self.draw_agent_path_proc)
+            self.agent_path_draw_thread.start()
+
     def create_grid_graphics(self):
         """Create origin, grid, etc"""
         # draw the origin and coordinate system with arrows
@@ -260,6 +276,7 @@ class GUI_MAP(tk.Tk):
                     data = unpack('iiiii', data)
                     self.logger.debug("Received data={}".format(data))
 
+                    # self.x , self.y   are converted to CSV coords.  X -> COL,  y -> ROW
                     self.x = data[1] + self.size_y/2 # receive the updated position
                     self.y = - data[0] + self.size_x/2 # receive the updated position
                     self.angle = data[2] # receive the updated angle
@@ -302,6 +319,10 @@ class GUI_MAP(tk.Tk):
     def create_cur_shape(self):
         """Delete the current location shape, and create new one at x,y"""
 
+        self.last_valid_x = self.x
+        self.last_valid_y = self.y
+        self.last_valid_angle = self.angle
+
         start = timeit.default_timer()
 
         if self.cur_loc_object != None:
@@ -331,14 +352,16 @@ class GUI_MAP(tk.Tk):
             # meaning we have a POS target
             # draw it with a red dot
             r = 5
-            self.cur_trg_object = self.map_cvs.create_oval(self.target_x-r,
-                                                           self.target_y-r,
-                                                           self.target_x+r,
-                                                           self.target_y+r, 
+
+
+            self.cur_trg_object = self.map_cvs.create_oval(self.target_x + self.size_y/2 -r,
+                                                           - self.target_y - self.size_x/2 -r,
+                                                           self.target_x + self.size_y/2 +r,
+                                                           - self.target_y - self.size_x/2 +r, 
                                                            fill="#5E5E5E")
 
         stop = timeit.default_timer()
-        self.logger.info('[DRAWING] Drawing self + GOTO. Time elapsed :  {}'.format(stop - start)) 
+        self.logger.debug('[DRAWING] Drawing self + GOTO. Time elapsed :  {}'.format(stop - start)) 
 
     def create_gridlines(self, line_distance):
         """Add gridlines to canvas"""
@@ -371,6 +394,92 @@ class GUI_MAP(tk.Tk):
         while True:
             self.draw_inflated_obstacles()
             time.sleep(C_CONSTANTS.VIS_MAP_BG_UPDATE)
+
+    def draw_agent_path_proc(self):
+        """Thread process to draw the obstacles from csv"""
+        while True:
+            self.draw_agent_path()
+            time.sleep(C_CONSTANTS.VIS_MAP_PATH_UPDATE)
+
+    def draw_agent_path(self):
+        """This func will wait for the file "updated_path.txt" to be created with the defined frequency
+        When this file exists, this means the path or destination (one of them) has been updated. 
+        Then another file - "path_data.ini" is being read,
+        which contains the path information which will be displayed"""
+
+        if not os.path.exists(self.updated_path_file_loc):
+            return
+        else:
+            os.remove(self.updated_path_file_loc)
+            config = configparser.RawConfigParser()
+            config.read(self.path_data_file_loc)
+
+            destination_var = eval(config.get("General", "Final_destination"))
+            goto_list = eval(config.get("General", "Goto_list"))
+
+            # 1. Clear the current path graphics
+            self.clear_path_canvas_data()
+
+            # 2. Add the final destination on the map
+            self.draw_final_destination(destination_var)
+
+            # 3. Add the GOTO list on the map
+            self.draw_goto_path(goto_list)
+
+    def clear_path_canvas_data(self):
+        """remove all the drawn obstacle pixels"""
+        for path_data_object in self.path_data_list:
+            self.map_cvs.delete(path_data_object)
+
+        self.path_data_list = []
+
+    def draw_final_destination(self, destination_var : list):
+
+        dest_x = destination_var[1] + self.size_y/2
+        dest_y = - destination_var[0] + self.size_x/2 
+
+        destination_obj = self.map_cvs.create_rectangle( 
+                         -5, -5, 5, 5, fill = "red")
+        self.map_cvs.move(destination_obj, dest_x, dest_y)
+        self.path_data_list.append(destination_obj)
+
+
+    def draw_goto_path(self, goto_list: list):
+
+
+        for idx, _ in enumerate(goto_list):
+            cur_goto_x = goto_list[idx][1] + self.size_y/2 
+            cur_goto_y = - goto_list[idx][0] + self.size_x/2
+
+            # create node
+            goto_node = self.map_cvs.create_rectangle( 
+                            -5, -5, 5, 5, fill = "green")
+            self.map_cvs.move(goto_node, cur_goto_x, cur_goto_y)
+            self.path_data_list.append(goto_node)
+
+            # if not last, create line
+            if idx < len(goto_list) -1:
+                next_goto_x = goto_list[idx+1][1] + self.size_y/2 
+                next_goto_y = - goto_list[idx+1][0] + self.size_x/2
+
+                path_line_obj = self.map_cvs.create_line(cur_goto_x, 
+                                                       cur_goto_y,
+                                                       next_goto_x, 
+                                                       next_goto_y, 
+                                                       arrow=tk.LAST,
+                                                       fill="green")
+                self.path_data_list.append(path_line_obj)
+
+            if idx == 0 and self.last_valid_x != -9999 and self.last_valid_y != -9999:
+                # create a line from current location
+                path_line_obj = self.map_cvs.create_line(self.last_valid_x, 
+                                                       self.last_valid_y,
+                                                       cur_goto_x, 
+                                                       cur_goto_y, 
+                                                       arrow=tk.LAST,
+                                                       fill="green")
+                self.path_data_list.append(path_line_obj)
+
 
     def draw_inflated_obstacles(self):
         """Draw the inflated obstacles from the output PNG file from main process"""
@@ -436,8 +545,14 @@ class GUI_MAP(tk.Tk):
         # if not os.path.exists(self.map_input_inflated_loc):
         #     return
 
-        with open(self.map_input_loc, "rb" ) as f:
-            self.bin_map = pickle.load(f)
+ 
+        copyfile(self.map_input_loc, self.map_input_loc_temp)
+        try:
+            with open(self.map_input_loc_temp, "rb" ) as f:
+                self.bin_map = pickle.load(f)
+        except:
+            return
+
 
         # with open(self.map_input_inflated_loc, "rb" ) as f:
         #     self.inflated_map = pickle.load(f)      
@@ -536,10 +651,23 @@ if __name__ == '__main__':
     cur_loc = os.getcwd()
     bg_src = os.path.join(cur_loc, 'artifacts', 'inflated_map.png')
     map_input_loc = os.path.join(cur_loc, 'output','map.p')
+    map_input_loc_temp = os.path.join(cur_loc, 'output','map_temp.p')
     map_input_inflated_loc = os.path.join(cur_loc, 'output','map_inflated.p')
     logger_location = os.path.join(cur_loc, 'artifacts','logger_vizual.log')
+    updated_path_file_loc  =  os.path.join(cur_loc, 'output', 'updated_path.txt')
+    path_data_file_loc  =  os.path.join(cur_loc, 'output', 'path_data.ini')
+    
+    
 
-    master = GUI_MAP(name = "MAP", map_bg_loc=bg_src, map_input_loc = map_input_loc, map_input_inflated_loc = map_input_inflated_loc, logger_location = logger_location)
+
+    master = GUI_MAP(name = "MAP", map_bg_loc=bg_src, 
+                    map_input_loc = map_input_loc, 
+                    map_input_loc_temp = map_input_loc_temp,
+                    map_input_inflated_loc = map_input_inflated_loc, 
+                    logger_location = logger_location, 
+                    updated_path_file_loc = updated_path_file_loc,
+                    path_data_file_loc = path_data_file_loc
+                    )
 
     # This will bind arrow keys to the tkinter 
     # toplevel which will navigate the image or drawing 

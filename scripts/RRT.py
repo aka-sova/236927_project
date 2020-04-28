@@ -156,13 +156,15 @@ class RRTStar(object):
             self.logger.info("Tree construction completed")
 
             # 2.3 Choose the closest node to the target
-            self.logger.info("Finding a route") 
+            self.logger.info("Finding a route. Finding best node") 
 
 
             last_index = self.search_best_goal_node()
+            self.logger.info("Best node found. Generating final course") 
             if last_index:
                 self.path_nodes_list =  self.generate_final_course(last_index)
 
+            self.logger.info("Route found. Optimizing") 
             if self.path_nodes_list is not []:
                 # remove nodes with no collision
                 # 2.2 Optimize the path, connect nodes which have no obstacles in between
@@ -170,7 +172,8 @@ class RRTStar(object):
             else:
                 self.logger.WARNING("Route was not found! ")                         
 
-        self.draw_graph()
+
+        # self.draw_graph()
         self.output_togo_list = self.transform_nodes_into_targets(self.optimized_path)
 
         self.logger.info("Path generation successful")     
@@ -475,7 +478,7 @@ class RRTStar(object):
         min_cost = min(costs)
 
         if min_cost == float("inf"):
-            print("There is no good path.(min_cost is inf)")
+            # print("There is no good path.(min_cost is inf)")
             return None
 
         min_ind = near_inds[costs.index(min_cost)]
@@ -614,10 +617,13 @@ class RRTStar(object):
         path_list_copy = copy.deepcopy(path_list)
 
         change_done = True
+        idx = 0
 
         while change_done:
+            self.logger.info("Optimizing ({})".format(idx)) 
             change_done, path_list_copy_new = self.optimize_path_once(path_list_copy)
             path_list_copy = copy.deepcopy(path_list_copy_new)
+            idx += 1
  
         return path_list_copy
 
@@ -633,6 +639,7 @@ class RRTStar(object):
             if active_index == len(path_list_copy) - 2:
                 return change_done, path_list_copy
         
+            self.logger.info("\t\tchecking line collision") 
             if self.check_line_collision(node_start = path_list_copy[active_index], node_finish = path_list_copy[active_index+2]):
                 # no collision! remove the node in between
                 path_list_copy.pop(active_index + 1)
@@ -640,7 +647,7 @@ class RRTStar(object):
                 change_done = True
             else:
                 active_index += 1
-
+            self.logger.info("\t\tfinished line collision")
         return change_done, path_list_copy
 
 

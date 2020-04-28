@@ -1,0 +1,1595 @@
+03/16 10:03:50 - INFO - Creating MENUS
+03/16 10:03:50 - INFO - Creating FRAMES
+03/16 10:03:52 - INFO - Conneting to 192.168.1.158 - 2777
+03/16 10:03:52 - INFO - Sense data is erroneous. Retrying
+03/16 10:03:52 - INFO - Sense data is empty
+03/16 10:04:12 - INFO - Initializing the Algorithm
+03/16 10:04:12 - INFO - Finding a path from [-10.2596 -204.506] to [0 0]
+03/16 10:04:12 - INFO - Collision detected, initializing algorithm
+03/16 10:04:26 - INFO - Tree construction completed
+03/16 10:04:26 - INFO - Finding a route
+03/16 10:04:32 - DEBUG - findfont: Matching :family=sans-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=10.0 to DejaVu Sans ('C:\\Users\\alex_ander_student\\AppData\\Local\\conda\\conda\\envs\\py36\\lib\\site-packages\\matplotlib\\mpl-data\\fonts\\ttf\\DejaVuSans.ttf') with score of 0.050000
+03/16 10:04:34 - INFO - Path generation successful
+03/16 10:04:34 - INFO - GOTO Target location received : [-58 -154]
+03/16 10:04:34 - DEBUG - Current location : [-10.3898 -204.128]
+03/16 10:04:34 - DEBUG - Current angle: 162.91661890898524
+03/16 10:04:34 - DEBUG - [def goto 1]Calculated:
+	distance : 69.13427173291116
+	angle: 133.52434958231981
+03/16 10:04:34 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 69.13427173291116
+	angle: 133.52434958231981
+03/16 10:04:34 - DEBUG - Performing turn of -29.392269326665428
+03/16 10:04:35 - DEBUG - Turn performed. current angle 126.0672149195211,  discrepancy: 7.457134662798708
+03/16 10:04:35 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:04:35 - DEBUG - Performing turn of 7.457134662798708
+03/16 10:04:38 - DEBUG - Turn performed. current angle 133.92764649366654,  discrepancy: 0.40329691134672885
+03/16 10:04:38 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 69.13427173291116
+03/16 10:04:38 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:04:39 - INFO - Verifying path is clear before initializing movement
+03/16 10:04:39 - INFO - Current loc: [-10.0222 -204.13], dest loc : [-34 -178]
+03/16 10:04:40 - INFO - Path is clear: True
+03/16 10:04:40 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:04:42 - INFO - Verifying path is clear before initializing movement
+03/16 10:04:42 - INFO - Current loc: [-37.2026 -176.581], dest loc : [-60 -153]
+03/16 10:04:42 - INFO - Distance from the obstacle : 0.11899985023642494 , smaller that the margin
+03/16 10:04:42 - INFO - Path is clear: False
+03/16 10:04:42 - INFO - Found obstacle on the way
+03/16 10:04:42 - INFO - Rotating the agent to receive environment location
+03/16 10:04:46 - INFO - Obstacle found on the GOTO path. Destination not reached
+03/16 10:04:46 - INFO - Finding a path from [-37.2495 -174.292] to [0 0]
+03/16 10:04:46 - INFO - Collision detected, initializing algorithm
+03/16 10:05:00 - INFO - Tree construction completed
+03/16 10:05:00 - INFO - Finding a route
+03/16 10:05:12 - INFO - Path generation successful
+03/16 10:05:12 - INFO - GOTO Target location received : [-99 -161]
+03/16 10:05:12 - DEBUG - Current location : [-38.0626 -174.097]
+03/16 10:05:12 - DEBUG - Current angle: -155.68311220016204
+03/16 10:05:12 - DEBUG - [def goto 1]Calculated:
+	distance : 62.32895095988701
+	angle: 167.87020087800218
+03/16 10:05:12 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 62.32895095988701
+	angle: 167.87020087800218
+03/16 10:05:12 - DEBUG - Performing turn of -36.44668692183575
+03/16 10:05:13 - DEBUG - Turn performed. current angle 158.18104588178196,  discrepancy: 9.689154996220225
+03/16 10:05:13 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:05:13 - DEBUG - Performing turn of 9.689154996220225
+03/16 10:05:16 - DEBUG - Turn performed. current angle 171.96135451448527,  discrepancy: 4.091153636483085
+03/16 10:05:16 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 62.32895095988701
+03/16 10:05:16 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:05:17 - INFO - Verifying path is clear before initializing movement
+03/16 10:05:17 - INFO - Current loc: [-35.5591 -174.318], dest loc : [-70 -169]
+03/16 10:05:17 - INFO - Path is clear: True
+03/16 10:05:17 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:05:19 - INFO - Verifying path is clear before initializing movement
+03/16 10:05:19 - INFO - Current loc: [-75.9092 -166.528], dest loc : [-107 -160]
+03/16 10:05:19 - INFO - Path is clear: True
+03/16 10:05:19 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:05:20 - DEBUG - STEP FINISHED
+03/16 10:05:20 - DEBUG - Current location : [-111.064 -161.144]
+03/16 10:05:20 - DEBUG - Target location : [-99 -161]
+03/16 10:05:20 - DEBUG - [def goto 2]Calculated:
+	distance : 12.064859385836199
+	angle: 0.6838694003395909
+03/16 10:05:20 - DEBUG - Distance is larger than a margin of 10. Performing additional steps
+03/16 10:05:20 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 12.064859385836199
+	angle: 0.6838694003395909
+03/16 10:05:20 - DEBUG - Performing turn of -170.22831587527241
+03/16 10:05:23 - DEBUG - Turn performed. current angle -24.013240863603087,  discrepancy: 24.69711026394268
+03/16 10:05:23 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:05:23 - DEBUG - Performing turn of 24.69711026394268
+03/16 10:05:24 - DEBUG - Turn performed. current angle 0.7019481219327917,  discrepancy: 0.018078721593200786
+03/16 10:05:24 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 12.064859385836199
+03/16 10:05:24 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:05:25 - INFO - Verifying path is clear before initializing movement
+03/16 10:05:25 - INFO - Current loc: [-115.234 -161.523], dest loc : [-100 -161]
+03/16 10:05:26 - INFO - Path is clear: True
+03/16 10:05:26 - DEBUG - [def drive_distance_short] Distance required: 12.064859385836199, Command to the motors: 484
+03/16 10:05:27 - DEBUG - STEP FINISHED
+03/16 10:05:27 - DEBUG - Current location : [-96.9568 -161.514]
+03/16 10:05:27 - DEBUG - Target location : [-99 -161]
+03/16 10:05:27 - DEBUG - [def goto 2]Calculated:
+	distance : 2.1068607547723714
+	angle: 165.87933126074302
+03/16 10:05:27 - DEBUG - Distance is less than a margin of 10. GOTO done
+03/16 10:05:27 - DEBUG - 
+GOTO FINISHED
+03/16 10:05:27 - DEBUG - Current location : [-96.5648 -161.52]
+03/16 10:05:27 - DEBUG - Target location : [-99 -161]
+03/16 10:05:27 - INFO - GOTO Target location received : [0 0]
+03/16 10:05:27 - DEBUG - Current location : [-96.5648 -161.52]
+03/16 10:05:27 - DEBUG - Current angle: 0.5443604213999406
+03/16 10:05:27 - DEBUG - [def goto 1]Calculated:
+	distance : 188.18467259328003
+	angle: 59.1268895062631
+03/16 10:05:27 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 188.18467259328003
+	angle: 59.1268895062631
+03/16 10:05:27 - DEBUG - Performing turn of 58.582529084863154
+03/16 10:05:28 - DEBUG - Turn performed. current angle 69.57114023372681,  discrepancy: 10.44425072746371
+03/16 10:05:28 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:05:28 - DEBUG - Performing turn of -10.44425072746371
+03/16 10:05:31 - DEBUG - Turn performed. current angle 53.690773379172136,  discrepancy: 5.436116127090962
+03/16 10:05:31 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:05:31 - DEBUG - Performing turn of 5.436116127090962
+03/16 10:05:34 - DEBUG - Turn performed. current angle 62.27010340493229,  discrepancy: 3.1432138986691953
+03/16 10:05:34 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 188.18467259328003
+03/16 10:05:34 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:05:35 - INFO - Verifying path is clear before initializing movement
+03/16 10:05:35 - INFO - Current loc: [-94.4882 -161.561], dest loc : [-77 -129]
+03/16 10:05:35 - INFO - Path is clear: True
+03/16 10:05:35 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:05:37 - INFO - Verifying path is clear before initializing movement
+03/16 10:05:37 - INFO - Current loc: [-78.0186 -128.096], dest loc : [-63 -98]
+03/16 10:05:37 - INFO - Distance from the obstacle : 0.446514191666139 , smaller that the margin
+03/16 10:05:37 - INFO - Path is clear: False
+03/16 10:05:37 - INFO - Found obstacle on the way
+03/16 10:05:37 - INFO - Rotating the agent to receive environment location
+03/16 10:05:42 - INFO - Obstacle found on the GOTO path. Destination not reached
+03/16 10:05:42 - INFO - Finding a path from [-78.4264 -128.704] to [0 0]
+03/16 10:05:42 - INFO - Collision detected, initializing algorithm
+03/16 10:06:15 - INFO - Tree construction completed
+03/16 10:06:15 - INFO - Finding a route
+03/16 10:07:03 - INFO - Path generation successful
+03/16 10:07:03 - INFO - GOTO Target location received : [-134 -87]
+03/16 10:07:03 - DEBUG - Current location : [-78.3808 -128.509]
+03/16 10:07:03 - DEBUG - Current angle: 130.150165884687
+03/16 10:07:03 - DEBUG - [def goto 1]Calculated:
+	distance : 69.40095452974693
+	angle: 143.26576116965708
+03/16 10:07:03 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 69.40095452974693
+	angle: 143.26576116965708
+03/16 10:07:03 - DEBUG - Performing turn of 13.115595284970084
+03/16 10:07:06 - DEBUG - Turn performed. current angle 144.98932173183613,  discrepancy: 1.7235605621790455
+03/16 10:07:06 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 69.40095452974693
+03/16 10:07:06 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:07:07 - INFO - Verifying path is clear before initializing movement
+03/16 10:07:07 - INFO - Current loc: [-77.9723 -128.417], dest loc : [-107 -107]
+03/16 10:07:08 - INFO - Path is clear: True
+03/16 10:07:08 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:07:10 - INFO - Verifying path is clear before initializing movement
+03/16 10:07:10 - INFO - Current loc: [-110.734 -107.345], dest loc : [-138 -89]
+03/16 10:07:10 - INFO - Path is clear: True
+03/16 10:07:10 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:07:11 - DEBUG - STEP FINISHED
+03/16 10:07:11 - DEBUG - Current location : [-142.604 -85.6939]
+03/16 10:07:11 - DEBUG - Target location : [-134 -87]
+03/16 10:07:11 - DEBUG - [def goto 2]Calculated:
+	distance : 8.702569345314075
+	angle: -8.631685182925626
+03/16 10:07:11 - DEBUG - Distance is less than a margin of 10. GOTO done
+03/16 10:07:11 - DEBUG - 
+GOTO FINISHED
+03/16 10:07:11 - DEBUG - Current location : [-142.604 -85.6939]
+03/16 10:07:11 - DEBUG - Target location : [-134 -87]
+03/16 10:07:11 - INFO - GOTO Target location received : [-67 -1]
+03/16 10:07:11 - DEBUG - Current location : [-142.604 -85.6939]
+03/16 10:07:11 - DEBUG - Current angle: 145.37085952263558
+03/16 10:07:11 - DEBUG - [def goto 1]Calculated:
+	distance : 113.52982653562896
+	angle: 48.24555554446957
+03/16 10:07:11 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 113.52982653562896
+	angle: 48.24555554446957
+03/16 10:07:11 - DEBUG - Performing turn of -97.12530397816602
+03/16 10:07:12 - DEBUG - Turn performed. current angle 33.948678415784016,  discrepancy: 14.296877128685551
+03/16 10:07:12 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:07:12 - DEBUG - Performing turn of 14.296877128685551
+03/16 10:07:15 - DEBUG - Turn performed. current angle 47.81541472382881,  discrepancy: 0.43014082064075865
+03/16 10:07:15 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 113.52982653562896
+03/16 10:07:15 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:07:16 - INFO - Verifying path is clear before initializing movement
+03/16 10:07:16 - INFO - Current loc: [-142.387 -86.6809], dest loc : [-118 -60]
+03/16 10:07:17 - INFO - Path is clear: True
+03/16 10:07:17 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:07:19 - INFO - Verifying path is clear before initializing movement
+03/16 10:07:19 - INFO - Current loc: [-117.059 -59.0151], dest loc : [-96 -35]
+03/16 10:07:19 - INFO - Path is clear: True
+03/16 10:07:19 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:07:21 - INFO - Verifying path is clear before initializing movement
+03/16 10:07:21 - INFO - Current loc: [-93.4848 -30.614], dest loc : [-72 -4]
+03/16 10:07:22 - INFO - Path is clear: True
+03/16 10:07:22 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:07:23 - DEBUG - STEP FINISHED
+03/16 10:07:23 - DEBUG - Current location : [-70.6083 -2.45226]
+03/16 10:07:23 - DEBUG - Target location : [-67 -1]
+03/16 10:07:23 - DEBUG - [def goto 2]Calculated:
+	distance : 3.8895871243102396
+	angle: 21.923681758425133
+03/16 10:07:23 - DEBUG - Distance is less than a margin of 10. GOTO done
+03/16 10:07:23 - DEBUG - 
+GOTO FINISHED
+03/16 10:07:23 - DEBUG - Current location : [-70.6083 -2.45226]
+03/16 10:07:23 - DEBUG - Target location : [-67 -1]
+03/16 10:07:23 - INFO - GOTO Target location received : [0 0]
+03/16 10:07:23 - DEBUG - Current location : [-70.6083 -2.45226]
+03/16 10:07:23 - DEBUG - Current angle: 52.59441312446563
+03/16 10:07:23 - DEBUG - [def goto 1]Calculated:
+	distance : 70.65087124726489
+	angle: 1.9891103000426211
+03/16 10:07:23 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 70.65087124726489
+	angle: 1.9891103000426211
+03/16 10:07:23 - DEBUG - Performing turn of -50.60530282442301
+03/16 10:07:24 - DEBUG - Turn performed. current angle -7.805225249164339,  discrepancy: 9.79433554920696
+03/16 10:07:24 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:07:24 - DEBUG - Performing turn of 9.79433554920696
+03/16 10:07:27 - DEBUG - Turn performed. current angle 3.9159155633421494,  discrepancy: 1.9268052632995283
+03/16 10:07:27 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 70.65087124726489
+03/16 10:07:27 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:07:28 - INFO - Verifying path is clear before initializing movement
+03/16 10:07:28 - INFO - Current loc: [-74.1371 -3.55193], dest loc : [-38 -1]
+03/16 10:07:28 - INFO - Path is clear: True
+03/16 10:07:28 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:07:30 - INFO - Verifying path is clear before initializing movement
+03/16 10:07:30 - INFO - Current loc: [-37.1228 -1.51341], dest loc : [-4 2]
+03/16 10:07:31 - INFO - Path is clear: True
+03/16 10:07:31 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:07:32 - DEBUG - STEP FINISHED
+03/16 10:07:32 - DEBUG - Current location : [0.639985 1.74284]
+03/16 10:07:32 - DEBUG - Target location : [0 0]
+03/16 10:07:32 - DEBUG - [def goto 2]Calculated:
+	distance : 1.8566292214184823
+	angle: -110.16364506226304
+03/16 10:07:32 - DEBUG - Distance is less than a margin of 10. GOTO done
+03/16 10:07:32 - DEBUG - 
+GOTO FINISHED
+03/16 10:07:32 - DEBUG - Current location : [0.639985 1.74284]
+03/16 10:07:32 - DEBUG - Target location : [0 0]
+03/16 10:07:32 - INFO - Algorithm completed
+03/16 10:07:32 - INFO - Reached the destination
+03/16 10:09:32 - INFO - Initializing the Algorithm
+03/16 10:09:32 - INFO - Finding a path from [1.25768 2.0347] to [0 -200]
+03/16 10:09:32 - INFO - Collision detected, initializing algorithm
+03/16 10:10:30 - INFO - Tree construction completed
+03/16 10:10:30 - INFO - Finding a route
+03/16 10:11:09 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:09 - INFO - Sense data is -9999
+03/16 10:11:14 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:14 - INFO - Sense data is -9999
+03/16 10:11:14 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:14 - INFO - Sense data is -9999
+03/16 10:11:15 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:15 - INFO - Sense data is -9999
+03/16 10:11:15 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:15 - INFO - Sense data is -9999
+03/16 10:11:16 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:16 - INFO - Sense data is -9999
+03/16 10:11:16 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:16 - INFO - Sense data is -9999
+03/16 10:11:17 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:17 - INFO - Sense data is -9999
+03/16 10:11:18 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:18 - INFO - Sense data is -9999
+03/16 10:11:18 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:18 - INFO - Sense data is -9999
+03/16 10:11:19 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:19 - INFO - Sense data is -9999
+03/16 10:11:20 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:20 - INFO - Sense data is -9999
+03/16 10:11:20 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:20 - INFO - Sense data is -9999
+03/16 10:11:21 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:21 - INFO - Sense data is -9999
+03/16 10:11:21 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:21 - INFO - Sense data is -9999
+03/16 10:11:23 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:23 - INFO - Sense data is -9999
+03/16 10:11:23 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:23 - INFO - Sense data is -9999
+03/16 10:11:24 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:24 - INFO - Sense data is -9999
+03/16 10:11:24 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:24 - INFO - Sense data is -9999
+03/16 10:11:25 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:25 - INFO - Sense data is -9999
+03/16 10:11:25 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:25 - INFO - Sense data is -9999
+03/16 10:11:26 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:26 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:26 - INFO - Sense data is -9999
+03/16 10:11:26 - INFO - Sense data is -9999
+03/16 10:11:27 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:27 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:27 - INFO - Sense data is -9999
+03/16 10:11:27 - INFO - Sense data is -9999
+03/16 10:11:28 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:28 - INFO - Sense data is erroneous. Retrying
+03/16 10:11:28 - INFO - Sense data is -9999
+03/16 10:11:28 - INFO - Sense data is -9999
+03/16 10:11:48 - INFO - Path generation successful
+03/16 10:11:48 - INFO - GOTO Target location received : [128 -35]
+03/16 10:11:48 - DEBUG - Current location : [6.11738 -238.62]
+03/16 10:11:48 - DEBUG - Current angle: 91.30731052631585
+03/16 10:11:48 - DEBUG - [def goto 1]Calculated:
+	distance : 237.3109299169855
+	angle: 59.09615411751828
+03/16 10:11:48 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 237.3109299169855
+	angle: 59.09615411751828
+03/16 10:11:48 - DEBUG - Performing turn of -32.211156408797564
+03/16 10:11:49 - DEBUG - Turn performed. current angle 91.2516346827848,  discrepancy: 32.155480565266515
+03/16 10:11:49 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:11:49 - DEBUG - Performing turn of -32.155480565266515
+03/16 10:11:50 - DEBUG - Turn performed. current angle 90.60084894269326,  discrepancy: 31.50469482517498
+03/16 10:11:50 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:11:50 - DEBUG - Performing turn of -31.50469482517498
+03/16 10:11:51 - DEBUG - Turn performed. current angle 90.1042388780972,  discrepancy: 31.008084760578924
+03/16 10:11:51 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:11:51 - DEBUG - Performing turn of -31.008084760578924
+03/16 10:11:52 - DEBUG - Turn performed. current angle 90.15726626268251,  discrepancy: 31.06111214516423
+03/16 10:11:52 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:11:52 - DEBUG - Performing turn of -31.06111214516423
+03/16 10:11:53 - DEBUG - Turn performed. current angle 89.52211088528057,  discrepancy: 30.425956767762287
+03/16 10:11:53 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:11:53 - DEBUG - Performing turn of -30.425956767762287
+03/16 10:11:54 - DEBUG - Turn performed. current angle 89.47730492293634,  discrepancy: 30.38115080541806
+03/16 10:11:54 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:11:54 - DEBUG - Performing turn of -30.38115080541806
+03/16 10:11:55 - DEBUG - Turn performed. current angle 88.04932738454578,  discrepancy: 28.953173267027495
+03/16 10:11:55 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:11:55 - DEBUG - Performing turn of -28.953173267027495
+03/16 10:11:56 - DEBUG - Turn performed. current angle 87.73204835498022,  discrepancy: 28.63589423746194
+03/16 10:11:56 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:11:56 - DEBUG - Performing turn of -28.63589423746194
+03/16 10:11:57 - DEBUG - Turn performed. current angle 66.79800895404762,  discrepancy: 7.701854836529336
+03/16 10:11:57 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:11:57 - DEBUG - Performing turn of -7.701854836529336
+03/16 10:12:01 - DEBUG - Turn performed. current angle 43.40162734997261,  discrepancy: 15.694526767545675
+03/16 10:12:01 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:01 - DEBUG - Performing turn of 15.694526767545675
+03/16 10:12:04 - DEBUG - Turn performed. current angle 35.536585470726656,  discrepancy: 23.559568646791625
+03/16 10:12:04 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:04 - DEBUG - Performing turn of 23.559568646791625
+03/16 10:12:05 - DEBUG - Turn performed. current angle 26.15871094059816,  discrepancy: 32.93744317692013
+03/16 10:12:05 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:05 - DEBUG - Performing turn of 32.93744317692013
+03/16 10:12:06 - DEBUG - Turn performed. current angle 14.394324747156187,  discrepancy: 44.70182937036209
+03/16 10:12:06 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:06 - DEBUG - Performing turn of 44.70182937036209
+03/16 10:12:07 - DEBUG - Turn performed. current angle 10.362248146248522,  discrepancy: 48.73390597126976
+03/16 10:12:07 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:07 - DEBUG - Performing turn of 48.73390597126976
+03/16 10:12:08 - DEBUG - Turn performed. current angle 13.207482790722095,  discrepancy: 45.888671326796185
+03/16 10:12:08 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:08 - DEBUG - Performing turn of 45.888671326796185
+03/16 10:12:08 - INFO - Sense data is erroneous. Retrying
+03/16 10:12:08 - INFO - Sense data is -9999
+03/16 10:12:09 - DEBUG - Turn performed. current angle 13.277526742738848,  discrepancy: 45.81862737477943
+03/16 10:12:09 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:09 - DEBUG - Performing turn of 45.81862737477943
+03/16 10:12:10 - DEBUG - Turn performed. current angle 12.623350437953198,  discrepancy: 46.47280367956508
+03/16 10:12:10 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:10 - DEBUG - Performing turn of 46.47280367956508
+03/16 10:12:11 - DEBUG - Turn performed. current angle 54.24144625863038,  discrepancy: 4.854707858887899
+03/16 10:12:11 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 237.3109299169855
+03/16 10:12:11 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:12:12 - INFO - Verifying path is clear before initializing movement
+03/16 10:12:12 - INFO - Current loc: [62.2994 -165.282], dest loc : [82 -134]
+03/16 10:12:12 - INFO - Path is clear: True
+03/16 10:12:12 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:12:14 - INFO - Verifying path is clear before initializing movement
+03/16 10:12:14 - INFO - Current loc: [59.6877 -153.73], dest loc : [50 -126]
+03/16 10:12:14 - INFO - Path is clear: True
+03/16 10:12:14 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:12:16 - INFO - Verifying path is clear before initializing movement
+03/16 10:12:16 - INFO - Current loc: [56.1694 -139.482], dest loc : [49 -111]
+03/16 10:12:16 - INFO - Path is clear: True
+03/16 10:12:16 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:12:18 - INFO - Verifying path is clear before initializing movement
+03/16 10:12:18 - INFO - Current loc: [53.0492 -125.079], dest loc : [46 -97]
+03/16 10:12:18 - INFO - Path is clear: True
+03/16 10:12:18 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:12:19 - INFO - Sense data is erroneous. Retrying
+03/16 10:12:19 - INFO - Sense data is -9999
+03/16 10:12:20 - INFO - Verifying path is clear before initializing movement
+03/16 10:12:20 - INFO - Current loc: [50.0847 -111.695], dest loc : [43 -83]
+03/16 10:12:20 - INFO - Path is clear: True
+03/16 10:12:20 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:12:21 - INFO - Sense data is erroneous. Retrying
+03/16 10:12:21 - INFO - Sense data is -9999
+03/16 10:12:22 - INFO - Verifying path is clear before initializing movement
+03/16 10:12:22 - INFO - Current loc: [42.639 -99.1981], dest loc : [30 -79]
+03/16 10:12:23 - INFO - Path is clear: True
+03/16 10:12:23 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:12:23 - INFO - Sense data is erroneous. Retrying
+03/16 10:12:23 - INFO - Sense data is -9999
+03/16 10:12:25 - INFO - Verifying path is clear before initializing movement
+03/16 10:12:25 - INFO - Current loc: [38.6177 -92.3596], dest loc : [16 -74]
+03/16 10:12:25 - INFO - Path is clear: True
+03/16 10:12:25 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:12:26 - DEBUG - STEP FINISHED
+03/16 10:12:26 - DEBUG - Current location : [34.6804 -86.2904]
+03/16 10:12:26 - DEBUG - Target location : [128 -35]
+03/16 10:12:26 - DEBUG - [def goto 2]Calculated:
+	distance : 106.48592806713947
+	angle: 28.794113614902695
+03/16 10:12:26 - DEBUG - Distance is larger than a margin of 10. Performing additional steps
+03/16 10:12:26 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 106.48592806713947
+	angle: 28.794113614902695
+03/16 10:12:26 - DEBUG - Performing turn of -91.99915904534559
+03/16 10:12:27 - DEBUG - Turn performed. current angle 100.92844628718066,  discrepancy: 72.13433267227796
+03/16 10:12:27 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:27 - DEBUG - Performing turn of -72.13433267227796
+03/16 10:12:28 - DEBUG - Turn performed. current angle 64.28137345559213,  discrepancy: 35.48725984068943
+03/16 10:12:28 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:28 - DEBUG - Performing turn of -35.48725984068943
+03/16 10:12:29 - DEBUG - Turn performed. current angle 49.3921924575999,  discrepancy: 20.598078842697202
+03/16 10:12:29 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:29 - DEBUG - Performing turn of -20.598078842697202
+03/16 10:12:30 - INFO - Sense data is erroneous. Retrying
+03/16 10:12:30 - INFO - Sense data is -9999
+03/16 10:12:30 - DEBUG - Turn performed. current angle 29.616939889582593,  discrepancy: 0.8228262746798976
+03/16 10:12:30 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 106.48592806713947
+03/16 10:12:30 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:12:31 - INFO - Verifying path is clear before initializing movement
+03/16 10:12:31 - INFO - Current loc: [43.1565 -77.431], dest loc : [69 -62]
+03/16 10:12:31 - INFO - Path is clear: True
+03/16 10:12:31 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:12:33 - INFO - Verifying path is clear before initializing movement
+03/16 10:12:33 - INFO - Current loc: [54.3603 -73.3376], dest loc : [80 -61]
+03/16 10:12:33 - INFO - Path is clear: True
+03/16 10:12:33 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:12:35 - INFO - Verifying path is clear before initializing movement
+03/16 10:12:35 - INFO - Current loc: [68.6966 -67.9325], dest loc : [94 -57]
+03/16 10:12:35 - INFO - Path is clear: True
+03/16 10:12:35 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:12:36 - DEBUG - STEP FINISHED
+03/16 10:12:36 - DEBUG - Current location : [75.5026 -65.574]
+03/16 10:12:36 - DEBUG - Target location : [128 -35]
+03/16 10:12:36 - DEBUG - [def goto 2]Calculated:
+	distance : 60.75151424252732
+	angle: 30.21612583607586
+03/16 10:12:36 - DEBUG - Distance is larger than a margin of 10. Performing additional steps
+03/16 10:12:36 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 60.75151424252732
+	angle: 30.21612583607586
+03/16 10:12:36 - DEBUG - Performing turn of 9.744280742789517
+03/16 10:12:39 - DEBUG - Turn performed. current angle 59.29760014775172,  discrepancy: 29.081474311675862
+03/16 10:12:39 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:39 - DEBUG - Performing turn of -29.081474311675862
+03/16 10:12:40 - DEBUG - Turn performed. current angle 104.96185844637878,  discrepancy: 74.74573261030292
+03/16 10:12:40 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:40 - DEBUG - Performing turn of -74.74573261030292
+03/16 10:12:41 - DEBUG - Turn performed. current angle 133.66643506081948,  discrepancy: 103.45030922474362
+03/16 10:12:41 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:41 - DEBUG - Performing turn of -103.45030922474362
+03/16 10:12:42 - DEBUG - Turn performed. current angle 133.5005598320284,  discrepancy: 103.28443399595253
+03/16 10:12:42 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:42 - DEBUG - Performing turn of -103.28443399595253
+03/16 10:12:43 - DEBUG - Turn performed. current angle 131.85772044989122,  discrepancy: 101.64159461381536
+03/16 10:12:43 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:43 - DEBUG - Performing turn of -101.64159461381536
+03/16 10:12:44 - DEBUG - Turn performed. current angle 150.8546409029368,  discrepancy: 120.63851506686095
+03/16 10:12:44 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:44 - DEBUG - Performing turn of -120.63851506686095
+03/16 10:12:47 - DEBUG - Turn performed. current angle 147.235050585191,  discrepancy: 117.01892474911514
+03/16 10:12:47 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:47 - DEBUG - Performing turn of -117.01892474911514
+03/16 10:12:50 - DEBUG - Turn performed. current angle 171.10994200263698,  discrepancy: 140.89381616656112
+03/16 10:12:50 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:50 - DEBUG - Performing turn of -140.89381616656112
+03/16 10:12:53 - DEBUG - Turn performed. current angle 108.77749944113886,  discrepancy: 78.561373605063
+03/16 10:12:53 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:53 - DEBUG - Performing turn of -78.561373605063
+03/16 10:12:54 - DEBUG - Turn performed. current angle 110.17990498244271,  discrepancy: 79.96377914636685
+03/16 10:12:54 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:54 - DEBUG - Performing turn of -79.96377914636685
+03/16 10:12:55 - DEBUG - Turn performed. current angle 111.28406440901051,  discrepancy: 81.06793857293465
+03/16 10:12:55 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:55 - DEBUG - Performing turn of -81.06793857293465
+03/16 10:12:56 - DEBUG - Turn performed. current angle 132.3829652229711,  discrepancy: 102.16683938689525
+03/16 10:12:56 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:56 - DEBUG - Performing turn of -102.16683938689525
+03/16 10:12:57 - DEBUG - Turn performed. current angle 152.71093910760698,  discrepancy: 122.49481327153111
+03/16 10:12:57 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:12:57 - DEBUG - Performing turn of -122.49481327153111
+03/16 10:13:00 - DEBUG - Turn performed. current angle 130.9240703844594,  discrepancy: 100.70794454838355
+03/16 10:13:00 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:00 - DEBUG - Performing turn of -100.70794454838355
+03/16 10:13:01 - DEBUG - Turn performed. current angle 129.19577140538104,  discrepancy: 98.97964556930518
+03/16 10:13:01 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:01 - DEBUG - Performing turn of -98.97964556930518
+03/16 10:13:02 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:13:02 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:02 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:13:03 - DEBUG - Turn performed. current angle 129.19577140538104,  discrepancy: 98.97964556930518
+03/16 10:13:03 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:03 - DEBUG - Performing turn of -98.97964556930518
+03/16 10:13:04 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:13:04 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:04 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:13:05 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:13:05 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:05 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:13:06 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:13:06 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:06 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:13:07 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:13:07 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:07 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:13:08 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:13:08 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:08 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:13:09 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:13:09 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:09 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:13:10 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:13:10 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:10 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:13:11 - DEBUG - Turn performed. current angle 129.3523720098454,  discrepancy: 99.13624617376954
+03/16 10:13:11 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:11 - DEBUG - Performing turn of -99.13624617376954
+03/16 10:13:12 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:13:12 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:12 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:13:13 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:13:13 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:13 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:13:14 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:13:14 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:14 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:13:15 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:13:15 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:15 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:13:16 - DEBUG - Turn performed. current angle 129.2497669083227,  discrepancy: 99.03364107224684
+03/16 10:13:16 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:16 - DEBUG - Performing turn of -99.03364107224684
+03/16 10:13:17 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:13:17 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:17 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:13:18 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:13:18 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:18 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:13:19 - DEBUG - Turn performed. current angle 129.3523720098454,  discrepancy: 99.13624617376954
+03/16 10:13:19 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:19 - DEBUG - Performing turn of -99.13624617376954
+03/16 10:13:20 - DEBUG - Turn performed. current angle 129.28340423432672,  discrepancy: 99.06727839825086
+03/16 10:13:20 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:20 - DEBUG - Performing turn of -99.06727839825086
+03/16 10:13:21 - DEBUG - Turn performed. current angle 129.3523720098454,  discrepancy: 99.13624617376954
+03/16 10:13:21 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:21 - DEBUG - Performing turn of -99.13624617376954
+03/16 10:13:22 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:13:22 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:22 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:13:23 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:13:23 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:23 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:13:24 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:13:24 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:24 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:13:25 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:13:25 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:25 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:13:26 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:13:26 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:26 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:13:27 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:13:27 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:27 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:13:28 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:13:28 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:28 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:13:29 - DEBUG - Turn performed. current angle 129.32505177868893,  discrepancy: 99.10892594261307
+03/16 10:13:29 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:29 - DEBUG - Performing turn of -99.10892594261307
+03/16 10:13:30 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:13:30 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:30 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:13:31 - DEBUG - Turn performed. current angle 129.3523720098454,  discrepancy: 99.13624617376954
+03/16 10:13:31 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:31 - DEBUG - Performing turn of -99.13624617376954
+03/16 10:13:32 - DEBUG - Turn performed. current angle 129.3523720098454,  discrepancy: 99.13624617376954
+03/16 10:13:32 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:32 - DEBUG - Performing turn of -99.13624617376954
+03/16 10:13:33 - DEBUG - Turn performed. current angle 129.32505177868893,  discrepancy: 99.10892594261307
+03/16 10:13:33 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:33 - DEBUG - Performing turn of -99.10892594261307
+03/16 10:13:34 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:13:34 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:34 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:13:35 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:13:35 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:35 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:13:36 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:13:36 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:36 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:13:37 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:13:37 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:37 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:13:38 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:13:38 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:38 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:13:39 - DEBUG - Turn performed. current angle 128.70736739760972,  discrepancy: 98.49124156153385
+03/16 10:13:39 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:39 - DEBUG - Performing turn of -98.49124156153385
+03/16 10:13:40 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:13:40 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:40 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:13:41 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:13:41 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:41 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:13:42 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:13:42 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:42 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:13:43 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:13:43 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:43 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:13:44 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:13:44 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:44 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:13:45 - DEBUG - Turn performed. current angle 128.27721169988152,  discrepancy: 98.06108586380566
+03/16 10:13:45 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:45 - DEBUG - Performing turn of -98.06108586380566
+03/16 10:13:46 - DEBUG - Turn performed. current angle 128.27721169988152,  discrepancy: 98.06108586380566
+03/16 10:13:46 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:46 - DEBUG - Performing turn of -98.06108586380566
+03/16 10:13:47 - DEBUG - Turn performed. current angle 128.1064135495931,  discrepancy: 97.89028771351724
+03/16 10:13:47 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:47 - DEBUG - Performing turn of -97.89028771351724
+03/16 10:13:48 - DEBUG - Turn performed. current angle 128.30605196750807,  discrepancy: 98.08992613143221
+03/16 10:13:48 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:48 - DEBUG - Performing turn of -98.08992613143221
+03/16 10:13:49 - DEBUG - Turn performed. current angle 128.1064135495931,  discrepancy: 97.89028771351724
+03/16 10:13:49 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:49 - DEBUG - Performing turn of -97.89028771351724
+03/16 10:13:50 - DEBUG - Turn performed. current angle 128.0449100878654,  discrepancy: 97.82878425178953
+03/16 10:13:50 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:50 - DEBUG - Performing turn of -97.82878425178953
+03/16 10:13:51 - DEBUG - Turn performed. current angle 128.0449100878654,  discrepancy: 97.82878425178953
+03/16 10:13:51 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:51 - DEBUG - Performing turn of -97.82878425178953
+03/16 10:13:52 - DEBUG - Turn performed. current angle 128.0449100878654,  discrepancy: 97.82878425178953
+03/16 10:13:52 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:52 - DEBUG - Performing turn of -97.82878425178953
+03/16 10:13:53 - DEBUG - Turn performed. current angle 128.40190538480797,  discrepancy: 98.18577954873211
+03/16 10:13:53 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:53 - DEBUG - Performing turn of -98.18577954873211
+03/16 10:13:54 - DEBUG - Turn performed. current angle 128.40190538480797,  discrepancy: 98.18577954873211
+03/16 10:13:54 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:54 - DEBUG - Performing turn of -98.18577954873211
+03/16 10:13:55 - DEBUG - Turn performed. current angle 128.40190538480797,  discrepancy: 98.18577954873211
+03/16 10:13:55 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:55 - DEBUG - Performing turn of -98.18577954873211
+03/16 10:13:56 - DEBUG - Turn performed. current angle 128.40190538480797,  discrepancy: 98.18577954873211
+03/16 10:13:56 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:56 - DEBUG - Performing turn of -98.18577954873211
+03/16 10:13:57 - DEBUG - Turn performed. current angle 128.40190538480797,  discrepancy: 98.18577954873211
+03/16 10:13:57 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:57 - DEBUG - Performing turn of -98.18577954873211
+03/16 10:13:58 - DEBUG - Turn performed. current angle 128.40190538480797,  discrepancy: 98.18577954873211
+03/16 10:13:58 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:58 - DEBUG - Performing turn of -98.18577954873211
+03/16 10:13:59 - DEBUG - Turn performed. current angle 128.40190538480797,  discrepancy: 98.18577954873211
+03/16 10:13:59 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:13:59 - DEBUG - Performing turn of -98.18577954873211
+03/16 10:14:00 - DEBUG - Turn performed. current angle 129.24215174099828,  discrepancy: 99.02602590492242
+03/16 10:14:00 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:00 - DEBUG - Performing turn of -99.02602590492242
+03/16 10:14:01 - DEBUG - Turn performed. current angle 129.15349891304578,  discrepancy: 98.93737307696992
+03/16 10:14:01 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:01 - DEBUG - Performing turn of -98.93737307696992
+03/16 10:14:02 - DEBUG - Turn performed. current angle 129.4202756039942,  discrepancy: 99.20414976791835
+03/16 10:14:02 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:02 - DEBUG - Performing turn of -99.20414976791835
+03/16 10:14:03 - DEBUG - Turn performed. current angle 129.23600398661227,  discrepancy: 99.01987815053641
+03/16 10:14:03 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:03 - DEBUG - Performing turn of -99.01987815053641
+03/16 10:14:04 - DEBUG - Turn performed. current angle 128.83737459720135,  discrepancy: 98.62124876112549
+03/16 10:14:04 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:04 - DEBUG - Performing turn of -98.62124876112549
+03/16 10:14:05 - DEBUG - Turn performed. current angle 129.20322534578125,  discrepancy: 98.98709950970539
+03/16 10:14:05 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:05 - DEBUG - Performing turn of -98.98709950970539
+03/16 10:14:06 - DEBUG - Turn performed. current angle 129.24956129713098,  discrepancy: 99.03343546105512
+03/16 10:14:06 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:06 - DEBUG - Performing turn of -99.03343546105512
+03/16 10:14:07 - DEBUG - Turn performed. current angle 129.20322534578125,  discrepancy: 98.98709950970539
+03/16 10:14:07 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:07 - DEBUG - Performing turn of -98.98709950970539
+03/16 10:14:08 - DEBUG - Turn performed. current angle 128.61405660424802,  discrepancy: 98.39793076817216
+03/16 10:14:08 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:08 - DEBUG - Performing turn of -98.39793076817216
+03/16 10:14:09 - DEBUG - Turn performed. current angle 128.40190538480797,  discrepancy: 98.18577954873211
+03/16 10:14:09 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:09 - DEBUG - Performing turn of -98.18577954873211
+03/16 10:14:10 - DEBUG - Turn performed. current angle 128.61405660424802,  discrepancy: 98.39793076817216
+03/16 10:14:10 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:10 - DEBUG - Performing turn of -98.39793076817216
+03/16 10:14:11 - DEBUG - Turn performed. current angle 128.40190538480797,  discrepancy: 98.18577954873211
+03/16 10:14:11 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:11 - DEBUG - Performing turn of -98.18577954873211
+03/16 10:14:12 - DEBUG - Turn performed. current angle 128.40190538480797,  discrepancy: 98.18577954873211
+03/16 10:14:12 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:12 - DEBUG - Performing turn of -98.18577954873211
+03/16 10:14:13 - DEBUG - Turn performed. current angle 128.40190538480797,  discrepancy: 98.18577954873211
+03/16 10:14:13 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:13 - DEBUG - Performing turn of -98.18577954873211
+03/16 10:14:14 - DEBUG - Turn performed. current angle 128.61405660424802,  discrepancy: 98.39793076817216
+03/16 10:14:14 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:14 - DEBUG - Performing turn of -98.39793076817216
+03/16 10:14:15 - DEBUG - Turn performed. current angle 128.61405660424802,  discrepancy: 98.39793076817216
+03/16 10:14:15 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:15 - DEBUG - Performing turn of -98.39793076817216
+03/16 10:14:16 - DEBUG - Turn performed. current angle 128.40190538480797,  discrepancy: 98.18577954873211
+03/16 10:14:16 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:16 - DEBUG - Performing turn of -98.18577954873211
+03/16 10:14:17 - DEBUG - Turn performed. current angle 128.40190538480797,  discrepancy: 98.18577954873211
+03/16 10:14:17 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:17 - DEBUG - Performing turn of -98.18577954873211
+03/16 10:14:18 - DEBUG - Turn performed. current angle 128.40190538480797,  discrepancy: 98.18577954873211
+03/16 10:14:18 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:18 - DEBUG - Performing turn of -98.18577954873211
+03/16 10:14:19 - DEBUG - Turn performed. current angle 128.24359270587345,  discrepancy: 98.02746686979759
+03/16 10:14:19 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:19 - DEBUG - Performing turn of -98.02746686979759
+03/16 10:14:20 - DEBUG - Turn performed. current angle 128.27721169988152,  discrepancy: 98.06108586380566
+03/16 10:14:20 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:20 - DEBUG - Performing turn of -98.06108586380566
+03/16 10:14:21 - DEBUG - Turn performed. current angle 128.21454652177079,  discrepancy: 97.99842068569492
+03/16 10:14:21 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:21 - DEBUG - Performing turn of -97.99842068569492
+03/16 10:14:22 - DEBUG - Turn performed. current angle 128.0449100878654,  discrepancy: 97.82878425178953
+03/16 10:14:22 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:22 - DEBUG - Performing turn of -97.82878425178953
+03/16 10:14:23 - DEBUG - Turn performed. current angle 128.0449100878654,  discrepancy: 97.82878425178953
+03/16 10:14:23 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:23 - DEBUG - Performing turn of -97.82878425178953
+03/16 10:14:25 - DEBUG - Turn performed. current angle 128.0449100878654,  discrepancy: 97.82878425178953
+03/16 10:14:25 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:25 - DEBUG - Performing turn of -97.82878425178953
+03/16 10:14:26 - DEBUG - Turn performed. current angle 128.44859679397268,  discrepancy: 98.23247095789682
+03/16 10:14:26 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:26 - DEBUG - Performing turn of -98.23247095789682
+03/16 10:14:27 - DEBUG - Turn performed. current angle 128.56749961331516,  discrepancy: 98.3513737772393
+03/16 10:14:27 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:27 - DEBUG - Performing turn of -98.3513737772393
+03/16 10:14:28 - DEBUG - Turn performed. current angle 128.24359270587345,  discrepancy: 98.02746686979759
+03/16 10:14:28 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:28 - DEBUG - Performing turn of -98.02746686979759
+03/16 10:14:29 - DEBUG - Turn performed. current angle 128.0449100878654,  discrepancy: 97.82878425178953
+03/16 10:14:29 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:29 - DEBUG - Performing turn of -97.82878425178953
+03/16 10:14:30 - DEBUG - Turn performed. current angle 128.24359270587345,  discrepancy: 98.02746686979759
+03/16 10:14:30 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:30 - DEBUG - Performing turn of -98.02746686979759
+03/16 10:14:31 - DEBUG - Turn performed. current angle 128.24359270587345,  discrepancy: 98.02746686979759
+03/16 10:14:31 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:31 - DEBUG - Performing turn of -98.02746686979759
+03/16 10:14:32 - DEBUG - Turn performed. current angle 128.51245981591066,  discrepancy: 98.2963339798348
+03/16 10:14:32 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:32 - DEBUG - Performing turn of -98.2963339798348
+03/16 10:14:33 - DEBUG - Turn performed. current angle 128.78541287382563,  discrepancy: 98.56928703774977
+03/16 10:14:33 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:33 - DEBUG - Performing turn of -98.56928703774977
+03/16 10:14:34 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:14:34 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:34 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:14:35 - DEBUG - Turn performed. current angle 128.631711224992,  discrepancy: 98.41558538891613
+03/16 10:14:35 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:35 - DEBUG - Performing turn of -98.41558538891613
+03/16 10:14:36 - DEBUG - Turn performed. current angle 128.78541287382563,  discrepancy: 98.56928703774977
+03/16 10:14:36 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:36 - DEBUG - Performing turn of -98.56928703774977
+03/16 10:14:37 - DEBUG - Turn performed. current angle 128.56749961331516,  discrepancy: 98.3513737772393
+03/16 10:14:37 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:37 - DEBUG - Performing turn of -98.3513737772393
+03/16 10:14:38 - DEBUG - Turn performed. current angle 128.56749961331516,  discrepancy: 98.3513737772393
+03/16 10:14:38 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:38 - DEBUG - Performing turn of -98.3513737772393
+03/16 10:14:39 - DEBUG - Turn performed. current angle 128.56749961331516,  discrepancy: 98.3513737772393
+03/16 10:14:39 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:39 - DEBUG - Performing turn of -98.3513737772393
+03/16 10:14:40 - DEBUG - Turn performed. current angle 128.56749961331516,  discrepancy: 98.3513737772393
+03/16 10:14:40 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:40 - DEBUG - Performing turn of -98.3513737772393
+03/16 10:14:41 - DEBUG - Turn performed. current angle 128.56749961331516,  discrepancy: 98.3513737772393
+03/16 10:14:41 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:41 - DEBUG - Performing turn of -98.3513737772393
+03/16 10:14:42 - DEBUG - Turn performed. current angle 128.56749961331516,  discrepancy: 98.3513737772393
+03/16 10:14:42 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:42 - DEBUG - Performing turn of -98.3513737772393
+03/16 10:14:43 - DEBUG - Turn performed. current angle 128.56749961331516,  discrepancy: 98.3513737772393
+03/16 10:14:43 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:43 - DEBUG - Performing turn of -98.3513737772393
+03/16 10:14:44 - DEBUG - Turn performed. current angle 128.78541287382563,  discrepancy: 98.56928703774977
+03/16 10:14:44 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:44 - DEBUG - Performing turn of -98.56928703774977
+03/16 10:14:45 - DEBUG - Turn performed. current angle 128.56749961331516,  discrepancy: 98.3513737772393
+03/16 10:14:45 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:45 - DEBUG - Performing turn of -98.3513737772393
+03/16 10:14:46 - DEBUG - Turn performed. current angle 128.56749961331516,  discrepancy: 98.3513737772393
+03/16 10:14:46 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:46 - DEBUG - Performing turn of -98.3513737772393
+03/16 10:14:47 - DEBUG - Turn performed. current angle 128.56749961331516,  discrepancy: 98.3513737772393
+03/16 10:14:47 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:47 - DEBUG - Performing turn of -98.3513737772393
+03/16 10:14:48 - DEBUG - Turn performed. current angle 128.56749961331516,  discrepancy: 98.3513737772393
+03/16 10:14:48 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:48 - DEBUG - Performing turn of -98.3513737772393
+03/16 10:14:49 - DEBUG - Turn performed. current angle 128.56749961331516,  discrepancy: 98.3513737772393
+03/16 10:14:49 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:49 - DEBUG - Performing turn of -98.3513737772393
+03/16 10:14:50 - DEBUG - Turn performed. current angle 128.35879287802607,  discrepancy: 98.1426670419502
+03/16 10:14:50 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:50 - DEBUG - Performing turn of -98.1426670419502
+03/16 10:14:51 - DEBUG - Turn performed. current angle 128.78541287382563,  discrepancy: 98.56928703774977
+03/16 10:14:51 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:51 - DEBUG - Performing turn of -98.56928703774977
+03/16 10:14:52 - DEBUG - Turn performed. current angle 128.56749961331516,  discrepancy: 98.3513737772393
+03/16 10:14:52 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:52 - DEBUG - Performing turn of -98.3513737772393
+03/16 10:14:53 - DEBUG - Turn performed. current angle 128.78541287382563,  discrepancy: 98.56928703774977
+03/16 10:14:53 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:53 - DEBUG - Performing turn of -98.56928703774977
+03/16 10:14:54 - DEBUG - Turn performed. current angle 128.70736739760972,  discrepancy: 98.49124156153385
+03/16 10:14:54 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:54 - DEBUG - Performing turn of -98.49124156153385
+03/16 10:14:55 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:14:55 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:55 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:14:56 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:14:56 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:56 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:14:57 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:14:57 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:57 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:14:58 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:14:58 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:58 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:14:59 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:14:59 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:14:59 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:15:00 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:15:00 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:00 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:15:01 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:01 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:01 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:02 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:15:02 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:02 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:15:03 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:15:03 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:03 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:15:04 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:15:04 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:04 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:15:05 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:15:05 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:05 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:15:06 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:15:06 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:06 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:15:07 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:15:07 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:07 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:15:08 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:08 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:08 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:09 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:15:09 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:09 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:15:10 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:15:10 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:10 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:15:11 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:15:11 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:11 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:15:12 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:15:12 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:12 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:15:13 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:13 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:13 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:14 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:14 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:14 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:15 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:15 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:15 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:16 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:16 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:16 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:17 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:15:17 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:17 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:15:18 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:15:18 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:18 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:15:19 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:15:19 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:19 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:15:20 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:15:20 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:20 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:15:21 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:15:21 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:21 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:15:22 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:15:22 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:22 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:15:23 - DEBUG - Turn performed. current angle 128.98780252187314,  discrepancy: 98.77167668579727
+03/16 10:15:23 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:23 - DEBUG - Performing turn of -98.77167668579727
+03/16 10:15:24 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:24 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:24 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:25 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:25 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:25 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:26 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:26 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:26 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:27 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:27 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:27 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:28 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:28 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:28 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:29 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:29 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:29 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:30 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:30 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:30 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:31 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:31 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:31 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:32 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:32 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:32 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:33 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:33 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:33 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:34 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:34 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:34 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:35 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:35 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:35 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:36 - DEBUG - Turn performed. current angle 128.56749961331516,  discrepancy: 98.3513737772393
+03/16 10:15:36 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:36 - DEBUG - Performing turn of -98.3513737772393
+03/16 10:15:37 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:37 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:37 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:38 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:38 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:38 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:39 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:39 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:39 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:40 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:40 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:40 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:41 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:41 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:41 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:42 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:42 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:42 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:43 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:43 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:43 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:44 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:44 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:44 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:45 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:15:45 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:45 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:15:46 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:46 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:46 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:47 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:47 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:47 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:48 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:48 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:48 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:49 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:49 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:49 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:50 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:50 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:50 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:51 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:51 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:51 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:52 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:52 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:52 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:53 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:53 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:53 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:54 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:54 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:54 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:55 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:55 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:55 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:56 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:56 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:56 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:57 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:57 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:57 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:58 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:58 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:58 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:15:59 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:15:59 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:15:59 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:16:00 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:16:00 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:00 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:16:01 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:16:01 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:01 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:16:02 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:16:02 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:02 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:16:03 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:16:03 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:03 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:16:04 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:16:04 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:04 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:16:05 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:16:05 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:05 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:16:06 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:16:06 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:06 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:16:07 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:16:07 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:07 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:16:08 - DEBUG - Turn performed. current angle 129.19577140538104,  discrepancy: 98.97964556930518
+03/16 10:16:08 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:08 - DEBUG - Performing turn of -98.97964556930518
+03/16 10:16:09 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:16:09 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:09 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:16:10 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:16:10 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:10 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:16:11 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:16:11 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:11 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:16:12 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:16:12 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:12 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:16:13 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:16:13 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:13 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:16:14 - DEBUG - Turn performed. current angle 129.19577140538104,  discrepancy: 98.97964556930518
+03/16 10:16:14 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:14 - DEBUG - Performing turn of -98.97964556930518
+03/16 10:16:15 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:16:15 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:15 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:16:16 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:16:16 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:16 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:16:17 - DEBUG - Turn performed. current angle 129.32505177868893,  discrepancy: 99.10892594261307
+03/16 10:16:17 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:17 - DEBUG - Performing turn of -99.10892594261307
+03/16 10:16:18 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:16:18 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:18 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:16:19 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:16:19 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:19 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:16:20 - DEBUG - Turn performed. current angle 128.9212725506629,  discrepancy: 98.70514671458704
+03/16 10:16:20 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:20 - DEBUG - Performing turn of -98.70514671458704
+03/16 10:16:21 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:16:21 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:21 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:16:22 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:16:22 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:22 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:16:23 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:16:23 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:23 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:16:24 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:16:24 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:24 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:16:25 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:16:25 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:25 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:16:26 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:16:26 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:26 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:16:27 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:16:27 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:27 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:16:28 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:16:28 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:28 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:16:29 - DEBUG - Turn performed. current angle 129.25656774781163,  discrepancy: 99.04044191173577
+03/16 10:16:29 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:29 - DEBUG - Performing turn of -99.04044191173577
+03/16 10:16:30 - DEBUG - Turn performed. current angle 129.56302126254477,  discrepancy: 99.3468954264689
+03/16 10:16:30 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:30 - DEBUG - Performing turn of -99.3468954264689
+03/16 10:16:30 - INFO - Sense data is erroneous. Retrying
+03/16 10:16:30 - INFO - Sense data is -9999
+03/16 10:16:31 - DEBUG - Turn performed. current angle 155.8874017111847,  discrepancy: 125.67127587510885
+03/16 10:16:31 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:31 - DEBUG - Performing turn of -125.67127587510885
+03/16 10:16:31 - INFO - Sense data is erroneous. Retrying
+03/16 10:16:31 - INFO - Sense data is -9999
+03/16 10:16:31 - INFO - Sense data is erroneous. Retrying
+03/16 10:16:31 - INFO - Sense data is -9999
+03/16 10:16:32 - INFO - Sense data is erroneous. Retrying
+03/16 10:16:32 - INFO - Sense data is -9999
+03/16 10:16:32 - INFO - Sense data is erroneous. Retrying
+03/16 10:16:32 - INFO - Sense data is -9999
+03/16 10:16:33 - INFO - Sense data is erroneous. Retrying
+03/16 10:16:33 - INFO - Sense data is -9999
+03/16 10:16:34 - INFO - Sense data is erroneous. Retrying
+03/16 10:16:34 - INFO - Sense data is -9999
+03/16 10:16:34 - INFO - Sense data is erroneous. Retrying
+03/16 10:16:34 - INFO - Sense data is -9999
+03/16 10:16:34 - INFO - Sense data is erroneous. Retrying
+03/16 10:16:34 - INFO - Sense data is -9999
+03/16 10:16:35 - INFO - Sense data is erroneous. Retrying
+03/16 10:16:35 - INFO - Sense data is -9999
+03/16 10:16:35 - INFO - Sense data is erroneous. Retrying
+03/16 10:16:35 - INFO - Sense data is -9999
+03/16 10:16:35 - INFO - Sense data is erroneous. Retrying
+03/16 10:16:35 - INFO - Sense data is -9999
+03/16 10:16:36 - DEBUG - Turn performed. current angle -51.82071043990307,  discrepancy: 82.03683627597893
+03/16 10:16:36 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:36 - DEBUG - Performing turn of 82.03683627597893
+03/16 10:16:37 - DEBUG - Turn performed. current angle 96.74005247705118,  discrepancy: 66.52392664097532
+03/16 10:16:37 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:37 - DEBUG - Performing turn of -66.52392664097532
+03/16 10:16:38 - DEBUG - Turn performed. current angle 96.76249582300487,  discrepancy: 66.54636998692901
+03/16 10:16:38 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:38 - DEBUG - Performing turn of -66.54636998692901
+03/16 10:16:39 - DEBUG - Turn performed. current angle 96.78356015615199,  discrepancy: 66.56743432007613
+03/16 10:16:39 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:39 - DEBUG - Performing turn of -66.56743432007613
+03/16 10:16:40 - DEBUG - Turn performed. current angle 96.78356015615199,  discrepancy: 66.56743432007613
+03/16 10:16:40 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:40 - DEBUG - Performing turn of -66.56743432007613
+03/16 10:16:41 - DEBUG - Turn performed. current angle 96.78356015615199,  discrepancy: 66.56743432007613
+03/16 10:16:41 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:41 - DEBUG - Performing turn of -66.56743432007613
+03/16 10:16:42 - DEBUG - Turn performed. current angle 96.67844288482154,  discrepancy: 66.46231704874567
+03/16 10:16:42 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:42 - DEBUG - Performing turn of -66.46231704874567
+03/16 10:16:43 - DEBUG - Turn performed. current angle 96.78356015615199,  discrepancy: 66.56743432007613
+03/16 10:16:43 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:43 - DEBUG - Performing turn of -66.56743432007613
+03/16 10:16:44 - DEBUG - Turn performed. current angle 96.87577053026371,  discrepancy: 66.65964469418785
+03/16 10:16:44 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:44 - DEBUG - Performing turn of -66.65964469418785
+03/16 10:16:45 - DEBUG - Turn performed. current angle 96.78356015615199,  discrepancy: 66.56743432007613
+03/16 10:16:45 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:45 - DEBUG - Performing turn of -66.56743432007613
+03/16 10:16:46 - DEBUG - Turn performed. current angle 96.78356015615199,  discrepancy: 66.56743432007613
+03/16 10:16:46 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:46 - DEBUG - Performing turn of -66.56743432007613
+03/16 10:16:47 - DEBUG - Turn performed. current angle 96.78356015615199,  discrepancy: 66.56743432007613
+03/16 10:16:47 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:47 - DEBUG - Performing turn of -66.56743432007613
+03/16 10:16:48 - DEBUG - Turn performed. current angle 96.67844288482154,  discrepancy: 66.46231704874567
+03/16 10:16:48 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:48 - DEBUG - Performing turn of -66.46231704874567
+03/16 10:16:49 - DEBUG - Turn performed. current angle 96.78356015615199,  discrepancy: 66.56743432007613
+03/16 10:16:49 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:49 - DEBUG - Performing turn of -66.56743432007613
+03/16 10:16:50 - DEBUG - Turn performed. current angle 96.78356015615199,  discrepancy: 66.56743432007613
+03/16 10:16:50 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:50 - DEBUG - Performing turn of -66.56743432007613
+03/16 10:16:51 - DEBUG - Turn performed. current angle 96.78356015615199,  discrepancy: 66.56743432007613
+03/16 10:16:51 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:51 - DEBUG - Performing turn of -66.56743432007613
+03/16 10:16:52 - DEBUG - Turn performed. current angle 96.67844288482154,  discrepancy: 66.46231704874567
+03/16 10:16:52 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:52 - DEBUG - Performing turn of -66.46231704874567
+03/16 10:16:53 - DEBUG - Turn performed. current angle 96.78356015615199,  discrepancy: 66.56743432007613
+03/16 10:16:53 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:53 - DEBUG - Performing turn of -66.56743432007613
+03/16 10:16:54 - DEBUG - Turn performed. current angle 96.78356015615199,  discrepancy: 66.56743432007613
+03/16 10:16:54 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:54 - DEBUG - Performing turn of -66.56743432007613
+03/16 10:16:55 - DEBUG - Turn performed. current angle 96.63304403224159,  discrepancy: 66.41691819616572
+03/16 10:16:55 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:55 - DEBUG - Performing turn of -66.41691819616572
+03/16 10:16:56 - DEBUG - Turn performed. current angle 96.63304403224159,  discrepancy: 66.41691819616572
+03/16 10:16:56 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:56 - DEBUG - Performing turn of -66.41691819616572
+03/16 10:16:57 - DEBUG - Turn performed. current angle 96.67844288482154,  discrepancy: 66.46231704874567
+03/16 10:16:57 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:57 - DEBUG - Performing turn of -66.46231704874567
+03/16 10:16:58 - DEBUG - Turn performed. current angle 96.78356015615199,  discrepancy: 66.56743432007613
+03/16 10:16:58 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:58 - DEBUG - Performing turn of -66.56743432007613
+03/16 10:16:59 - DEBUG - Turn performed. current angle 96.78356015615199,  discrepancy: 66.56743432007613
+03/16 10:16:59 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:16:59 - DEBUG - Performing turn of -66.56743432007613
+03/16 10:17:00 - DEBUG - Turn performed. current angle 96.78356015615199,  discrepancy: 66.56743432007613
+03/16 10:17:00 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:17:00 - DEBUG - Performing turn of -66.56743432007613
+03/16 10:17:01 - DEBUG - Turn performed. current angle 56.41840443143513,  discrepancy: 26.202278595359267
+03/16 10:17:01 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:17:01 - DEBUG - Performing turn of -26.202278595359267
+03/16 10:17:02 - DEBUG - Turn performed. current angle 63.36194761700882,  discrepancy: 33.14582178093296
+03/16 10:17:02 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:17:02 - DEBUG - Performing turn of -33.14582178093296
+03/16 10:17:03 - DEBUG - Turn performed. current angle 37.73302239796613,  discrepancy: 7.51689656189027
+03/16 10:17:03 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:17:03 - DEBUG - Performing turn of -7.51689656189027
+03/16 10:17:06 - DEBUG - Turn performed. current angle 31.135792986859414,  discrepancy: 0.9196671507835532
+03/16 10:17:06 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 60.75151424252732
+03/16 10:17:06 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:17:07 - INFO - Verifying path is clear before initializing movement
+03/16 10:17:07 - INFO - Current loc: [51.5617 -164.638], dest loc : [70 -148]
+03/16 10:17:07 - INFO - Path is clear: True
+03/16 10:17:07 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:17:09 - INFO - Verifying path is clear before initializing movement
+03/16 10:17:09 - INFO - Current loc: [55.4133 -155.899], dest loc : [82 -142]
+03/16 10:17:09 - INFO - Path is clear: True
+03/16 10:17:09 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:17:10 - DEBUG - STEP FINISHED
+03/16 10:17:10 - DEBUG - Current location : [55.8656 -155.779]
+03/16 10:17:10 - DEBUG - Target location : [128 -35]
+03/16 10:17:10 - DEBUG - [def goto 2]Calculated:
+	distance : 140.6802704872293
+	angle: 59.15253939772466
+03/16 10:17:10 - DEBUG - Distance is larger than a margin of 10. Performing additional steps
+03/16 10:17:10 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 140.6802704872293
+	angle: 59.15253939772466
+03/16 10:17:10 - DEBUG - Performing turn of -18.32366807543101
+03/16 10:17:11 - INFO - Sense data is erroneous. Retrying
+03/16 10:17:11 - INFO - Sense data is -9999
+03/16 10:17:13 - DEBUG - Turn performed. current angle 91.85655927865442,  discrepancy: 32.704019880929756
+03/16 10:17:13 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:17:13 - DEBUG - Performing turn of -32.704019880929756
+03/16 10:17:14 - DEBUG - Turn performed. current angle 108.16249958743235,  discrepancy: 49.00996018970769
+03/16 10:17:14 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:17:14 - DEBUG - Performing turn of -49.00996018970769
+03/16 10:17:15 - INFO - Sense data is erroneous. Retrying
+03/16 10:17:15 - INFO - Sense data is -9999
+03/16 10:17:15 - INFO - Sense data is erroneous. Retrying
+03/16 10:17:15 - INFO - Sense data is -9999
+03/16 10:17:15 - DEBUG - Turn performed. current angle 107.94554373481589,  discrepancy: 48.793004337091226
+03/16 10:17:15 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:17:15 - DEBUG - Performing turn of -48.793004337091226
+03/16 10:17:16 - DEBUG - Turn performed. current angle 108.0670134128651,  discrepancy: 48.914474015140435
+03/16 10:17:16 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:17:16 - DEBUG - Performing turn of -48.914474015140435
+03/16 10:17:17 - DEBUG - Turn performed. current angle 106.23806561578212,  discrepancy: 47.08552621805746
+03/16 10:17:17 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:17:17 - DEBUG - Performing turn of -47.08552621805746
+03/16 10:17:18 - DEBUG - Turn performed. current angle 106.33972673006375,  discrepancy: 47.187187332339086
+03/16 10:17:18 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:17:18 - DEBUG - Performing turn of -47.187187332339086
+03/16 10:17:19 - INFO - Sense data is erroneous. Retrying
+03/16 10:17:19 - INFO - Sense data is -9999
+03/16 10:17:19 - INFO - Sense data is erroneous. Retrying
+03/16 10:17:19 - INFO - Sense data is -9999
+03/16 10:17:20 - INFO - Sense data is erroneous. Retrying
+03/16 10:17:20 - INFO - Sense data is -9999
+03/16 10:17:20 - DEBUG - Turn performed. current angle 127.9867435787837,  discrepancy: 68.83420418105905
+03/16 10:17:20 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:17:20 - DEBUG - Performing turn of -68.83420418105905
+03/16 10:17:21 - DEBUG - Turn performed. current angle 104.34606221696393,  discrepancy: 45.19352281923927
+03/16 10:17:21 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:17:21 - DEBUG - Performing turn of -45.19352281923927
+03/16 10:17:22 - DEBUG - Turn performed. current angle 103.3591321110724,  discrepancy: 44.20659271334774
+03/16 10:17:22 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:17:22 - DEBUG - Performing turn of -44.20659271334774
+03/16 10:17:23 - DEBUG - Turn performed. current angle 103.4173753322774,  discrepancy: 44.26483593455274
+03/16 10:17:23 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:17:23 - DEBUG - Performing turn of -44.26483593455274
+03/16 10:17:24 - DEBUG - Turn performed. current angle 103.24980114841436,  discrepancy: 44.097261750689704
+03/16 10:17:24 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:17:24 - DEBUG - Performing turn of -44.097261750689704
+03/16 10:17:25 - DEBUG - Turn performed. current angle 81.88889882855591,  discrepancy: 22.73635943083125
+03/16 10:17:25 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:17:25 - DEBUG - Performing turn of -22.73635943083125
+03/16 10:17:26 - DEBUG - Turn performed. current angle 81.19483414097549,  discrepancy: 22.042294743250828
+03/16 10:17:26 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:17:26 - DEBUG - Performing turn of -22.042294743250828
+03/16 10:17:27 - DEBUG - Turn performed. current angle 58.6823722731809,  discrepancy: 0.47016712454375664
+03/16 10:17:27 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 140.6802704872293
+03/16 10:17:27 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:17:28 - INFO - Verifying path is clear before initializing movement
+03/16 10:17:28 - INFO - Current loc: [42.0671 -62.3234], dest loc : [57 -37]
+03/16 10:17:29 - INFO - Distance from the obstacle : 0.15451179520192143 , smaller that the margin
+03/16 10:17:29 - INFO - Path is clear: False
+03/16 10:17:29 - INFO - Found obstacle on the way
+03/16 10:17:29 - INFO - Rotating the agent to receive environment location
+03/16 10:17:33 - INFO - Obstacle found on the GOTO path. Destination not reached
+03/16 10:17:33 - INFO - Finding a path from [58.7548 -41.6891] to [0 -200]
+03/16 10:17:33 - INFO - Collision detected, initializing algorithm
+03/16 10:17:33 - INFO - Tree construction completed
+03/16 10:17:33 - INFO - Finding a route
+03/16 10:17:47 - INFO - Sense data is erroneous. Retrying
+03/16 10:17:47 - INFO - Sense data is -9999
+03/16 10:17:47 - INFO - Sense data is erroneous. Retrying
+03/16 10:17:47 - INFO - Sense data is -9999
+03/16 10:17:48 - INFO - Sense data is erroneous. Retrying
+03/16 10:17:48 - INFO - Sense data is -9999
+03/16 10:17:48 - INFO - Sense data is erroneous. Retrying
+03/16 10:17:48 - INFO - Sense data is -9999
+03/16 10:17:49 - INFO - Sense data is erroneous. Retrying
+03/16 10:17:49 - INFO - Sense data is -9999
+03/16 10:17:49 - INFO - Sense data is erroneous. Retrying
+03/16 10:17:49 - INFO - Sense data is -9999
+03/16 10:17:50 - INFO - Sense data is erroneous. Retrying
+03/16 10:17:50 - INFO - Sense data is -9999
+03/16 10:17:50 - INFO - Sense data is erroneous. Retrying
+03/16 10:17:50 - INFO - Sense data is -9999
+03/16 10:17:51 - INFO - Sense data is erroneous. Retrying
+03/16 10:17:51 - INFO - Sense data is -9999
+03/16 10:17:52 - INFO - Sense data is erroneous. Retrying
+03/16 10:17:52 - INFO - Sense data is -9999
+03/16 10:17:52 - INFO - Sense data is erroneous. Retrying
+03/16 10:17:52 - INFO - Sense data is -9999
+03/16 10:18:01 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:01 - INFO - Sense data is -9999
+03/16 10:18:02 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:02 - INFO - Sense data is -9999
+03/16 10:18:02 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:02 - INFO - Sense data is -9999
+03/16 10:18:03 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:03 - INFO - Sense data is -9999
+03/16 10:18:04 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:04 - INFO - Sense data is -9999
+03/16 10:18:05 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:05 - INFO - Sense data is -9999
+03/16 10:18:05 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:05 - INFO - Sense data is -9999
+03/16 10:18:06 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:06 - INFO - Sense data is -9999
+03/16 10:18:06 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:06 - INFO - Sense data is -9999
+03/16 10:18:07 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:07 - INFO - Sense data is -9999
+03/16 10:18:07 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:07 - INFO - Sense data is -9999
+03/16 10:18:08 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:08 - INFO - Sense data is -9999
+03/16 10:18:08 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:08 - INFO - Sense data is -9999
+03/16 10:18:09 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:09 - INFO - Sense data is -9999
+03/16 10:18:09 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:09 - INFO - Sense data is -9999
+03/16 10:18:10 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:10 - INFO - Sense data is -9999
+03/16 10:18:10 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:10 - INFO - Sense data is -9999
+03/16 10:18:11 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:11 - INFO - Sense data is -9999
+03/16 10:18:11 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:11 - INFO - Sense data is -9999
+03/16 10:18:12 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:12 - INFO - Sense data is -9999
+03/16 10:18:12 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:12 - INFO - Sense data is -9999
+03/16 10:18:13 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:13 - INFO - Sense data is -9999
+03/16 10:18:13 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:13 - INFO - Sense data is -9999
+03/16 10:18:14 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:14 - INFO - Sense data is -9999
+03/16 10:18:14 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:14 - INFO - Sense data is -9999
+03/16 10:18:15 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:15 - INFO - Sense data is -9999
+03/16 10:18:15 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:15 - INFO - Sense data is -9999
+03/16 10:18:16 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:16 - INFO - Sense data is -9999
+03/16 10:18:16 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:16 - INFO - Sense data is -9999
+03/16 10:18:17 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:17 - INFO - Sense data is -9999
+03/16 10:18:17 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:17 - INFO - Sense data is -9999
+03/16 10:18:18 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:18 - INFO - Sense data is -9999
+03/16 10:18:18 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:18 - INFO - Sense data is -9999
+03/16 10:18:19 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:19 - INFO - Sense data is -9999
+03/16 10:18:20 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:20 - INFO - Sense data is -9999
+03/16 10:18:20 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:20 - INFO - Sense data is -9999
+03/16 10:18:21 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:21 - INFO - Sense data is -9999
+03/16 10:18:21 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:22 - INFO - Sense data is -9999
+03/16 10:18:22 - INFO - Sense data is erroneous. Retrying
+03/16 10:18:22 - INFO - Sense data is -9999
+stance_short] Distance required: 29.73, Command to the motors: 1000
+2020-03-16 22:17:10,845 - DEBUG - STEP FINISHED
+2020-03-16 22:17:10,845 - DEBUG - Current location : [55.8656 -155.779]
+2020-03-16 22:17:10,845 - DEBUG - Target location : [128 -35]
+2020-03-16 22:17:10,845 - DEBUG - [def goto 2]Calculated:
+	distance : 140.6802704872293
+	angle: 59.15253939772466
+2020-03-16 22:17:10,845 - DEBUG - Distance is larger than a margin of 10. Performing additional steps
+2020-03-16 22:17:10,845 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 140.6802704872293
+	angle: 59.15253939772466
+2020-03-16 22:17:10,846 - DEBUG - Performing turn of -18.32366807543101
+2020-03-16 22:17:11,473 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:17:11,474 - INFO - Sense data is -9999
+2020-03-16 22:17:13,860 - DEBUG - Turn performed. current angle 91.85655927865442,  discrepancy: 32.704019880929756
+2020-03-16 22:17:13,860 - DEBUG - Turn has too big discrepancy. Trying again
+2020-03-16 22:17:13,861 - DEBUG - Performing turn of -32.704019880929756
+2020-03-16 22:17:14,864 - DEBUG - Turn performed. current angle 108.16249958743235,  discrepancy: 49.00996018970769
+2020-03-16 22:17:14,864 - DEBUG - Turn has too big discrepancy. Trying again
+2020-03-16 22:17:14,864 - DEBUG - Performing turn of -49.00996018970769
+2020-03-16 22:17:15,656 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:17:15,656 - INFO - Sense data is -9999
+2020-03-16 22:17:15,687 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:17:15,688 - INFO - Sense data is -9999
+2020-03-16 22:17:15,867 - DEBUG - Turn performed. current angle 107.94554373481589,  discrepancy: 48.793004337091226
+2020-03-16 22:17:15,867 - DEBUG - Turn has too big discrepancy. Trying again
+2020-03-16 22:17:15,867 - DEBUG - Performing turn of -48.793004337091226
+2020-03-16 22:17:16,869 - DEBUG - Turn performed. current angle 108.0670134128651,  discrepancy: 48.914474015140435
+2020-03-16 22:17:16,869 - DEBUG - Turn has too big discrepancy. Trying again
+2020-03-16 22:17:16,869 - DEBUG - Performing turn of -48.914474015140435
+2020-03-16 22:17:17,872 - DEBUG - Turn performed. current angle 106.23806561578212,  discrepancy: 47.08552621805746
+2020-03-16 22:17:17,872 - DEBUG - Turn has too big discrepancy. Trying again
+2020-03-16 22:17:17,872 - DEBUG - Performing turn of -47.08552621805746
+2020-03-16 22:17:18,874 - DEBUG - Turn performed. current angle 106.33972673006375,  discrepancy: 47.187187332339086
+2020-03-16 22:17:18,874 - DEBUG - Turn has too big discrepancy. Trying again
+2020-03-16 22:17:18,874 - DEBUG - Performing turn of -47.187187332339086
+2020-03-16 22:17:19,835 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:17:19,835 - INFO - Sense data is -9999
+2020-03-16 22:17:19,877 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:17:19,877 - INFO - Sense data is -9999
+2020-03-16 22:17:20,205 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:17:20,205 - INFO - Sense data is -9999
+2020-03-16 22:17:20,882 - DEBUG - Turn performed. current angle 127.9867435787837,  discrepancy: 68.83420418105905
+2020-03-16 22:17:20,882 - DEBUG - Turn has too big discrepancy. Trying again
+2020-03-16 22:17:20,882 - DEBUG - Performing turn of -68.83420418105905
+2020-03-16 22:17:21,885 - DEBUG - Turn performed. current angle 104.34606221696393,  discrepancy: 45.19352281923927
+2020-03-16 22:17:21,885 - DEBUG - Turn has too big discrepancy. Trying again
+2020-03-16 22:17:21,885 - DEBUG - Performing turn of -45.19352281923927
+2020-03-16 22:17:22,888 - DEBUG - Turn performed. current angle 103.3591321110724,  discrepancy: 44.20659271334774
+2020-03-16 22:17:22,888 - DEBUG - Turn has too big discrepancy. Trying again
+2020-03-16 22:17:22,888 - DEBUG - Performing turn of -44.20659271334774
+2020-03-16 22:17:23,891 - DEBUG - Turn performed. current angle 103.4173753322774,  discrepancy: 44.26483593455274
+2020-03-16 22:17:23,891 - DEBUG - Turn has too big discrepancy. Trying again
+2020-03-16 22:17:23,891 - DEBUG - Performing turn of -44.26483593455274
+2020-03-16 22:17:24,894 - DEBUG - Turn performed. current angle 103.24980114841436,  discrepancy: 44.097261750689704
+2020-03-16 22:17:24,894 - DEBUG - Turn has too big discrepancy. Trying again
+2020-03-16 22:17:24,894 - DEBUG - Performing turn of -44.097261750689704
+2020-03-16 22:17:25,896 - DEBUG - Turn performed. current angle 81.88889882855591,  discrepancy: 22.73635943083125
+2020-03-16 22:17:25,897 - DEBUG - Turn has too big discrepancy. Trying again
+2020-03-16 22:17:25,897 - DEBUG - Performing turn of -22.73635943083125
+2020-03-16 22:17:26,899 - DEBUG - Turn performed. current angle 81.19483414097549,  discrepancy: 22.042294743250828
+2020-03-16 22:17:26,899 - DEBUG - Turn has too big discrepancy. Trying again
+2020-03-16 22:17:26,899 - DEBUG - Performing turn of -22.042294743250828
+2020-03-16 22:17:27,901 - DEBUG - Turn performed. current angle 58.6823722731809,  discrepancy: 0.47016712454375664
+2020-03-16 22:17:27,902 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 140.6802704872293
+2020-03-16 22:17:27,902 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+2020-03-16 22:17:28,903 - INFO - Verifying path is clear before initializing movement
+2020-03-16 22:17:28,903 - INFO - Current loc: [42.0671 -62.3234], dest loc : [57 -37]
+2020-03-16 22:17:29,051 - INFO - Distance from the obstacle : 0.15451179520192143 , smaller that the margin
+2020-03-16 22:17:29,051 - INFO - Path is clear: False
+2020-03-16 22:17:29,055 - INFO - Found obstacle on the way
+2020-03-16 22:17:29,055 - INFO - Rotating the agent to receive environment location
+2020-03-16 22:17:33,066 - INFO - Obstacle found on the GOTO path. Destination not reached
+2020-03-16 22:17:33,067 - INFO - Finding a path from [58.7548 -41.6891] to [0 -200]
+2020-03-16 22:17:33,073 - INFO - Collision detected, initializing algorithm
+2020-03-16 22:17:33,344 - INFO - Tree construction completed
+2020-03-16 22:17:33,345 - INFO - Finding a route
+2020-03-16 22:17:47,131 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:17:47,168 - INFO - Sense data is -9999
+2020-03-16 22:17:47,534 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:17:47,542 - INFO - Sense data is -9999
+2020-03-16 22:17:48,561 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:17:48,585 - INFO - Sense data is -9999
+2020-03-16 22:17:48,685 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:17:48,742 - INFO - Sense data is -9999
+2020-03-16 22:17:49,602 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:17:49,648 - INFO - Sense data is -9999
+2020-03-16 22:17:49,782 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:17:49,817 - INFO - Sense data is -9999
+2020-03-16 22:17:50,664 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:17:50,684 - INFO - Sense data is -9999
+2020-03-16 22:17:50,820 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:17:50,846 - INFO - Sense data is -9999
+2020-03-16 22:17:51,702 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:17:51,734 - INFO - Sense data is -9999
+2020-03-16 22:17:52,450 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:17:52,472 - INFO - Sense data is -9999
+2020-03-16 22:17:52,754 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:17:52,788 - INFO - Sense data is -9999
+2020-03-16 22:18:01,897 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:01,921 - INFO - Sense data is -9999
+2020-03-16 22:18:02,924 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:02,952 - INFO - Sense data is -9999
+2020-03-16 22:18:02,960 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:02,993 - INFO - Sense data is -9999
+2020-03-16 22:18:03,976 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:03,996 - INFO - Sense data is -9999
+2020-03-16 22:18:04,040 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:04,069 - INFO - Sense data is -9999
+2020-03-16 22:18:05,010 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:05,063 - INFO - Sense data is -9999
+2020-03-16 22:18:05,101 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:05,104 - INFO - Sense data is -9999
+2020-03-16 22:18:06,078 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:06,105 - INFO - Sense data is -9999
+2020-03-16 22:18:06,131 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:06,152 - INFO - Sense data is -9999
+2020-03-16 22:18:07,150 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:07,168 - INFO - Sense data is -9999
+2020-03-16 22:18:07,180 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:07,258 - INFO - Sense data is -9999
+2020-03-16 22:18:08,189 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:08,222 - INFO - Sense data is -9999
+2020-03-16 22:18:08,318 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:08,345 - INFO - Sense data is -9999
+2020-03-16 22:18:09,241 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:09,264 - INFO - Sense data is -9999
+2020-03-16 22:18:09,378 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:09,399 - INFO - Sense data is -9999
+2020-03-16 22:18:10,290 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:10,315 - INFO - Sense data is -9999
+2020-03-16 22:18:10,435 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:10,461 - INFO - Sense data is -9999
+2020-03-16 22:18:11,337 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:11,371 - INFO - Sense data is -9999
+2020-03-16 22:18:11,500 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:11,531 - INFO - Sense data is -9999
+2020-03-16 22:18:12,395 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:12,439 - INFO - Sense data is -9999
+2020-03-16 22:18:12,548 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:12,577 - INFO - Sense data is -9999
+2020-03-16 22:18:13,490 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:13,510 - INFO - Sense data is -9999
+2020-03-16 22:18:13,607 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:13,637 - INFO - Sense data is -9999
+2020-03-16 22:18:14,534 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:14,560 - INFO - Sense data is -9999
+2020-03-16 22:18:14,673 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:14,709 - INFO - Sense data is -9999
+2020-03-16 22:18:15,605 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:15,639 - INFO - Sense data is -9999
+2020-03-16 22:18:15,732 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:15,744 - INFO - Sense data is -9999
+2020-03-16 22:18:16,659 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:16,710 - INFO - Sense data is -9999
+2020-03-16 22:18:16,779 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:16,869 - INFO - Sense data is -9999
+2020-03-16 22:18:17,744 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:17,783 - INFO - Sense data is -9999
+2020-03-16 22:18:17,895 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:17,938 - INFO - Sense data is -9999
+2020-03-16 22:18:18,817 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:18,849 - INFO - Sense data is -9999
+2020-03-16 22:18:18,954 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:18,982 - INFO - Sense data is -9999
+2020-03-16 22:18:19,873 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:19,900 - INFO - Sense data is -9999
+2020-03-16 22:18:20,004 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:20,042 - INFO - Sense data is -9999
+2020-03-16 22:18:20,925 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:20,955 - INFO - Sense data is -9999
+2020-03-16 22:18:21,066 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:21,098 - INFO - Sense data is -9999
+2020-03-16 22:18:21,984 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:22,027 - INFO - Sense data is -9999
+2020-03-16 22:18:22,135 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:18:22,155 - INFO - Sense data is -9999

@@ -24,3 +24,20 @@ NEXT:
 
 
 3. Fix for when receiving -9999 -9990 for position!!!!!!  causes problems
+
+
+
+
+
+*COORDINATE SYSTEMS*
+
+During the development process, a need for another coordinate system arose,
+since the XY system has negative values, but arrays and matrixes cannnot support negative indexes
+
+1. The agent is moving in the XY cooridnate system
+2. The map object in the map_func is in the CSV coordinate system.  ROW & COL
+3. The path finding (RRT) is in the CSV coordinate system.
+4. 
+
+
+

@@ -1,0 +1,236 @@
+03/16 09:59:58 - INFO - Creating MENUS
+03/16 09:59:58 - INFO - Creating FRAMES
+03/16 10:00:08 - INFO - Conneting to 192.168.1.158 - 2777
+03/16 10:00:08 - INFO - Sense data is erroneous. Retrying
+03/16 10:00:09 - INFO - Sense data is empty
+03/16 10:00:34 - INFO - Initializing the Algorithm
+03/16 10:00:34 - INFO - Finding a path from [166.146 -15.8615] to [0 -100]
+03/16 10:00:34 - INFO - Collision detected, initializing algorithm
+03/16 10:00:39 - INFO - Tree construction completed
+03/16 10:00:39 - INFO - Finding a route
+03/16 10:00:49 - DEBUG - findfont: Matching :family=sans-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=10.0 to DejaVu Sans ('C:\\Users\\alex_ander_student\\AppData\\Local\\conda\\conda\\envs\\py36\\lib\\site-packages\\matplotlib\\mpl-data\\fonts\\ttf\\DejaVuSans.ttf') with score of 0.050000
+03/16 10:00:51 - INFO - Path generation successful
+03/16 10:00:51 - INFO - GOTO Target location received : [143 -115]
+03/16 10:00:51 - DEBUG - Current location : [162.429 -15.9161]
+03/16 10:00:51 - DEBUG - Current angle: -128.8708316405746
+03/16 10:00:51 - DEBUG - [def goto 1]Calculated:
+	distance : 100.9708140019184
+	angle: -101.09415975307077
+03/16 10:00:51 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 100.9708140019184
+	angle: -101.09415975307077
+03/16 10:00:51 - DEBUG - Performing turn of 27.776671887503838
+03/16 10:00:52 - DEBUG - Turn performed. current angle -95.43013559002445,  discrepancy: 5.664024163046321
+03/16 10:00:52 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:00:52 - DEBUG - Performing turn of -5.664024163046321
+03/16 10:00:55 - DEBUG - Turn performed. current angle -107.92814904051798,  discrepancy: 6.83398928744721
+03/16 10:00:55 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:00:55 - DEBUG - Performing turn of 6.83398928744721
+03/16 10:00:58 - DEBUG - Turn performed. current angle -101.6095359503624,  discrepancy: 0.51537619729163
+03/16 10:00:58 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 100.9708140019184
+03/16 10:00:58 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:00:59 - INFO - Verifying path is clear before initializing movement
+03/16 10:00:59 - INFO - Current loc: [162.987 -14.9359], dest loc : [155 -49]
+03/16 10:00:59 - INFO - Path is clear: True
+03/16 10:00:59 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:01:01 - INFO - Verifying path is clear before initializing movement
+03/16 10:01:01 - INFO - Current loc: [155.908 -51.4786], dest loc : [151 -79]
+03/16 10:01:01 - INFO - Path is clear: True
+03/16 10:01:01 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:01:03 - INFO - Verifying path is clear before initializing movement
+03/16 10:01:03 - INFO - Current loc: [149.473 -86.6878], dest loc : [143 -121]
+03/16 10:01:03 - INFO - Path is clear: True
+03/16 10:01:03 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:01:04 - DEBUG - STEP FINISHED
+03/16 10:01:04 - DEBUG - Current location : [143.024 -121.44]
+03/16 10:01:04 - DEBUG - Target location : [143 -115]
+03/16 10:01:04 - DEBUG - [def goto 2]Calculated:
+	distance : 6.44004472034162
+	angle: 90.2135236556545
+03/16 10:01:04 - DEBUG - Distance is less than a margin of 10. GOTO done
+03/16 10:01:04 - DEBUG - 
+GOTO FINISHED
+03/16 10:01:04 - DEBUG - Current location : [143.024 -121.44]
+03/16 10:01:04 - DEBUG - Target location : [143 -115]
+03/16 10:01:04 - INFO - GOTO Target location received : [0 -100]
+03/16 10:01:04 - DEBUG - Current location : [143.024 -121.44]
+03/16 10:01:04 - DEBUG - Current angle: -99.5081003539592
+03/16 10:01:04 - DEBUG - [def goto 1]Calculated:
+	distance : 144.62205286884847
+	angle: 171.47456277215755
+03/16 10:01:04 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 144.62205286884847
+	angle: 171.47456277215755
+03/16 10:01:04 - DEBUG - Performing turn of -89.01733687388327
+03/16 10:01:05 - DEBUG - Turn performed. current angle 158.89974426824375,  discrepancy: 12.574818503913804
+03/16 10:01:05 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:01:05 - DEBUG - Performing turn of 12.574818503913804
+03/16 10:01:08 - DEBUG - Turn performed. current angle 173.3587116254605,  discrepancy: 1.8841488533029462
+03/16 10:01:08 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 144.62205286884847
+03/16 10:01:08 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:01:09 - INFO - Verifying path is clear before initializing movement
+03/16 10:01:09 - INFO - Current loc: [145.578 -120.833], dest loc : [110 -116]
+03/16 10:01:10 - INFO - Distance from the obstacle : 0.1232427033924139 , smaller that the margin
+03/16 10:01:10 - INFO - Path is clear: False
+03/16 10:01:10 - INFO - Found obstacle on the way
+03/16 10:01:10 - INFO - Rotating the agent to receive environment location
+03/16 10:01:14 - INFO - Obstacle found on the GOTO path. Destination not reached
+03/16 10:01:14 - INFO - Finding a path from [142.116 -119.375] to [0 -100]
+03/16 10:01:14 - INFO - Collision detected, initializing algorithm
+03/16 10:01:19 - INFO - Tree construction completed
+03/16 10:01:19 - INFO - Finding a route
+03/16 10:01:34 - INFO - Path generation successful
+03/16 10:01:34 - INFO - GOTO Target location received : [97 -173]
+03/16 10:01:34 - DEBUG - Current location : [141.897 -119.335]
+03/16 10:01:34 - DEBUG - Current angle: -131.0608193602868
+03/16 10:01:34 - DEBUG - [def goto 1]Calculated:
+	distance : 69.9690848446655
+	angle: -129.9163932953328
+03/16 10:01:34 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 69.9690848446655
+	angle: -129.9163932953328
+03/16 10:01:34 - DEBUG - Performing turn of 1.1444260649540183
+03/16 10:01:37 - DEBUG - Turn performed. current angle -131.10386339239545,  discrepancy: 1.1874700970626577
+03/16 10:01:37 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 69.9690848446655
+03/16 10:01:37 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:01:38 - INFO - Verifying path is clear before initializing movement
+03/16 10:01:38 - INFO - Current loc: [141.523 -119.274], dest loc : [118 -146]
+03/16 10:01:38 - INFO - Path is clear: True
+03/16 10:01:38 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:01:40 - INFO - Verifying path is clear before initializing movement
+03/16 10:01:40 - INFO - Current loc: [116.305 -146.866], dest loc : [93 -171]
+03/16 10:01:40 - INFO - Path is clear: True
+03/16 10:01:40 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:01:41 - DEBUG - STEP FINISHED
+03/16 10:01:41 - DEBUG - Current location : [91.2831 -173.776]
+03/16 10:01:41 - DEBUG - Target location : [97 -173]
+03/16 10:01:41 - DEBUG - [def goto 2]Calculated:
+	distance : 5.769325923364008
+	angle: 7.729965516314129
+03/16 10:01:41 - DEBUG - Distance is less than a margin of 10. GOTO done
+03/16 10:01:41 - DEBUG - 
+GOTO FINISHED
+03/16 10:01:41 - DEBUG - Current location : [91.2831 -173.776]
+03/16 10:01:41 - DEBUG - Target location : [97 -173]
+03/16 10:01:41 - INFO - GOTO Target location received : [0 -100]
+03/16 10:01:41 - DEBUG - Current location : [91.2831 -173.776]
+03/16 10:01:41 - DEBUG - Current angle: -132.34435450755882
+03/16 10:01:41 - DEBUG - [def goto 1]Calculated:
+	distance : 117.36908673756477
+	angle: 141.05447742513522
+03/16 10:01:41 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 117.36908673756477
+	angle: 141.05447742513522
+03/16 10:01:41 - DEBUG - Performing turn of -86.60116806730593
+03/16 10:01:42 - DEBUG - Turn performed. current angle 128.44806892574047,  discrepancy: 12.606408499394746
+03/16 10:01:42 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:01:42 - DEBUG - Performing turn of 12.606408499394746
+03/16 10:01:45 - DEBUG - Turn performed. current angle 143.46800024362446,  discrepancy: 2.413522818489241
+03/16 10:01:45 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 117.36908673756477
+03/16 10:01:45 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:01:46 - INFO - Verifying path is clear before initializing movement
+03/16 10:01:46 - INFO - Current loc: [90.9986 -175.153], dest loc : [62 -153]
+03/16 10:01:47 - INFO - Path is clear: True
+03/16 10:01:47 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:01:49 - INFO - Verifying path is clear before initializing movement
+03/16 10:01:49 - INFO - Current loc: [59.6515 -153.243], dest loc : [33 -134]
+03/16 10:01:49 - INFO - Path is clear: True
+03/16 10:01:49 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:01:51 - INFO - Verifying path is clear before initializing movement
+03/16 10:01:51 - INFO - Current loc: [29.9774 -132.417], dest loc : [1 -113]
+03/16 10:01:51 - INFO - Path is clear: True
+03/16 10:01:51 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:01:52 - DEBUG - STEP FINISHED
+03/16 10:01:52 - DEBUG - Current location : [2.23028 -118.587]
+03/16 10:01:52 - DEBUG - Target location : [0 -100]
+03/16 10:01:52 - DEBUG - [def goto 2]Calculated:
+	distance : 18.720329000271338
+	angle: 96.84228720192453
+03/16 10:01:52 - DEBUG - Distance is larger than a margin of 10. Performing additional steps
+03/16 10:01:52 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 18.720329000271338
+	angle: 96.84228720192453
+03/16 10:01:52 - DEBUG - Performing turn of -58.391159902443064
+03/16 10:01:53 - DEBUG - Turn performed. current angle 85.49379913682124,  discrepancy: 11.348488065103297
+03/16 10:01:53 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:01:53 - DEBUG - Performing turn of 11.348488065103297
+03/16 10:01:56 - DEBUG - Turn performed. current angle 101.8408596199224,  discrepancy: 4.998572417997863
+03/16 10:01:56 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 18.720329000271338
+03/16 10:01:56 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:01:57 - INFO - Verifying path is clear before initializing movement
+03/16 10:01:57 - INFO - Current loc: [2.77402 -120.141], dest loc : [-1 -97]
+03/16 10:01:57 - INFO - Path is clear: True
+03/16 10:01:57 - DEBUG - [def drive_distance_short] Distance required: 18.720329000271338, Command to the motors: 604
+03/16 10:01:58 - DEBUG - STEP FINISHED
+03/16 10:01:58 - DEBUG - Current location : [-2.66025 -96.2639]
+03/16 10:01:58 - DEBUG - Target location : [0 -100]
+03/16 10:01:58 - DEBUG - [def goto 2]Calculated:
+	distance : 4.586433611478525
+	angle: -54.547640016722376
+03/16 10:01:58 - DEBUG - Distance is less than a margin of 10. GOTO done
+03/16 10:01:58 - DEBUG - 
+GOTO FINISHED
+03/16 10:01:58 - DEBUG - Current location : [-2.66025 -96.2639]
+03/16 10:01:58 - DEBUG - Target location : [0 -100]
+03/16 10:01:58 - INFO - Algorithm completed
+03/16 10:01:58 - INFO - Reached the destination
+03/16 10:02:52 - INFO - Sense data is erroneous. Retrying
+03/16 10:02:52 - INFO - Sense data is -9999
+03/16 10:02:54 - INFO - Sense data is erroneous. Retrying
+03/16 10:02:54 - INFO - Sense data is -9999
+03/16 10:02:55 - INFO - Sense data is erroneous. Retrying
+03/16 10:02:55 - INFO - Sense data is -9999
+03/16 10:02:58 - INFO - Sense data is erroneous. Retrying
+03/16 10:02:58 - INFO - Sense data is -9999
+03/16 10:02:58 - INFO - Sense data is erroneous. Retrying
+03/16 10:02:58 - INFO - Sense data is -9999
+03/16 10:03:12 - INFO - Sense data is erroneous. Retrying
+03/16 10:03:12 - INFO - Sense data is -9999
+03/16 10:03:12 - INFO - Sense data is erroneous. Retrying
+03/16 10:03:12 - INFO - Sense data is -9999
+03/16 10:03:13 - INFO - Sense data is erroneous. Retrying
+03/16 10:03:13 - INFO - Sense data is -9999
+03/16 10:03:13 - INFO - Sense data is erroneous. Retrying
+03/16 10:03:13 - INFO - Sense data is -9999
+03/16 10:03:17 - INFO - Sense data is erroneous. Retrying
+03/16 10:03:17 - INFO - Sense data is -9999
+03/16 10:03:18 - INFO - Sense data is erroneous. Retrying
+03/16 10:03:18 - INFO - Sense data is -9999
+03/16 10:03:19 - INFO - Sense data is erroneous. Retrying
+03/16 10:03:19 - INFO - Sense data is -9999
+03/16 10:03:21 - INFO - Sense data is erroneous. Retrying
+03/16 10:03:21 - INFO - Sense data is -9999
+03/16 10:03:26 - INFO - Sense data is erroneous. Retrying
+03/16 10:03:26 - INFO - Sense data is -9999
+03/16 10:03:26 - INFO - Sense data is erroneous. Retrying
+03/16 10:03:26 - INFO - Sense data is -9999
+03/16 10:03:27 - INFO - Sense data is erroneous. Retrying
+03/16 10:03:27 - INFO - Sense data is -9999
+03/16 10:03:27 - INFO - Sense data is erroneous. Retrying
+03/16 10:03:27 - INFO - Sense data is -9999
+. Retrying
+2020-03-16 22:02:58,796 - INFO - Sense data is -9999
+2020-03-16 22:03:12,462 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:03:12,462 - INFO - Sense data is -9999
+2020-03-16 22:03:12,486 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:03:12,486 - INFO - Sense data is -9999
+2020-03-16 22:03:13,469 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:03:13,473 - INFO - Sense data is -9999
+2020-03-16 22:03:13,494 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:03:13,497 - INFO - Sense data is -9999
+2020-03-16 22:03:17,704 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:03:17,704 - INFO - Sense data is -9999
+2020-03-16 22:03:18,060 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:03:18,060 - INFO - Sense data is -9999
+2020-03-16 22:03:19,988 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:03:19,988 - INFO - Sense data is -9999
+2020-03-16 22:03:21,312 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:03:21,312 - INFO - Sense data is -9999
+2020-03-16 22:03:26,426 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:03:26,426 - INFO - Sense data is -9999
+2020-03-16 22:03:26,670 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:03:26,670 - INFO - Sense data is -9999
+2020-03-16 22:03:27,646 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:03:27,646 - INFO - Sense data is -9999
+2020-03-16 22:03:27,678 - INFO - Sense data is erroneous. Retrying
+2020-03-16 22:03:27,682 - INFO - Sense data is -9999

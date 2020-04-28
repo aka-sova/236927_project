@@ -193,6 +193,8 @@ class Main_Gui(tk.Tk):
                         map_output_temp_loc = self.args.map_output_temp_loc,
                         map_inflated_output_loc = self.args.map_inflated_output_loc,
                         map_inflated_output_temp_loc = self.args.map_inflated_output_temp_loc,
+                        path_data_file_loc = self.args.path_data_file_loc,
+                        updated_path_file_loc = self.args.updated_path_file_loc,
                         artifacts_loc = self.args.artifacts_loc,
                         main_gui = self)
 
@@ -257,6 +259,9 @@ if __name__ == '__main__':
 
     args.map_inflated_output_loc = os.path.join(cur_loc, 'output','map_inflated.p')
     args.map_inflated_output_temp_loc = os.path.join(cur_loc, 'output','map_inflated_temp.p')
+
+    args.updated_path_file_loc  =  os.path.join(cur_loc, 'output', 'updated_path.txt')
+    args.path_data_file_loc  =  os.path.join(cur_loc, 'output', 'path_data.ini')
 
     now = datetime.now() # current date and time
     folder_name = now.strftime("%m_%d_%H_%M_%S")

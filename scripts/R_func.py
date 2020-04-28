@@ -22,6 +22,8 @@ import csv
 import socket
 from datetime import datetime
 
+import configparser
+
 global logger
 
 def normalize_angle(angle):
@@ -77,7 +79,7 @@ class Obstacle_Interference(Exception):
       
 
 class R_Client_Extend(RClient):
-    def __init__(self, host, calib_folder, angles : list, logger, map_output_loc, map_output_temp_loc, map_inflated_output_loc, map_inflated_output_temp_loc, artifacts_loc, port, main_gui, user_deprecate='',id_deprecate=''):
+    def __init__(self, host, calib_folder, angles : list, logger, map_output_loc, map_output_temp_loc, map_inflated_output_loc, map_inflated_output_temp_loc, artifacts_loc, port, main_gui, user_deprecate='',id_deprecate='', updated_path_file_loc = '',  path_data_file_loc=''):
         super().__init__(host,port,user_deprecate='',id_deprecate='')
         self.goto_margin = 10  # margin to know we have arrived 
         self.angle_margin = 5 # [deg] 
@@ -93,6 +95,8 @@ class R_Client_Extend(RClient):
         self.artifacts_loc = artifacts_loc
         self.gui = main_gui
 
+        self.updated_path_file_loc = updated_path_file_loc
+        self.path_data_file_loc = path_data_file_loc
 
 
         self.map = Map(logger = self.logger,
@@ -473,6 +477,7 @@ class R_Client_Extend(RClient):
             self.gui.lbl_status.set("Calculating path")
             goto_list = self.planner.find_path(self.cur_loc, target = target, map = self.map)
 
+
             success_code = self.follow_goto_list(goto_list)   # 0 is success
             
             self.logger.info('Algorithm completed')
@@ -487,15 +492,18 @@ class R_Client_Extend(RClient):
     def reach_destination_thread(self):
         """The main function which will look for a path to find to reach the goal"""
 
+        # The flag which is triggered by the user. Check every 0.5 seconds
         while self.reach_destination_flag == False:
             time.sleep(0.5)
 
+        # if location is invalid, wait
         target = self.current_destination
         while self.cur_loc == [-9999, -9999]:
             self.logger.info("Current location is invalid. Retry")
             time.sleep(1.0)
 
-        # get the map. Rotate 360 degrees with a small pace
+        # If the target is first target, get the map around the robot to see if there are obstacles
+        # Rotate 360 degrees with a small pace
         if self.first_destination : 
             self.gui.lbl_status.set("Get env. data")
             self.rotate_around(rotate_step = 45)
@@ -504,17 +512,27 @@ class R_Client_Extend(RClient):
         self.logger.info('Initializing the Algorithm')
         self.dest_reached = False
 
+
+        # will stay inside the loop until reached destination
         while not self.dest_reached:
 
+            # Employ the RRT* algorith. Give as input current [X,Y], target [X,Y], and the map of obstacles
+            # output is the list the GOTO points which robot has to path to reach destination
             self.gui.lbl_status.set("Calculating path")
             goto_list = self.planner.find_path(self.cur_loc, target = target, map = self.map)
 
+            # Save the current target and the goto_list inside a file for the vizualiser (second program)
+            # GOTO_LIST is a list of targets, each has X, Y coordinates
+            self.update_path_file(goto_list)
+
+            # Follow the list of the GOTO points. Return '0' if finished and didn't meet any obstacle on the way
             success_code = self.follow_goto_list(goto_list)   # 0 is success
             
             
             if success_code == 0:
                 self.logger.info('Algorithm completed')
                 # check that the destination was indeed reached
+                # 'calc_metrics' calculates distance and angle between robot and the target
                 distance, _ = self.calc_metrics(target)
                 if distance < C_CONSTANTS.REACH_MARGIN:
                     self.dest_reached = True
@@ -528,6 +546,7 @@ class R_Client_Extend(RClient):
                     self.reach_dest_thread.start()
                     break
             else:
+                # this will return to the beginning of 'while' loop and calculate the new path
                 self.logger.info('Obstacle found on the GOTO path. Destination not reached')
 
     def rotate_around(self, rotate_step):
@@ -830,3 +849,34 @@ class R_Client_Extend(RClient):
                 return False
 
         return True                 
+
+
+    def update_path_file(self, goto_list):
+        """Save the current target and the goto_list inside a file for the vizualiser
+        GOTO_LIST is a list of targets, each has X, Y coordinates"""
+
+        goto_string = []
+        for goto_target in goto_list:
+            goto_string.append([goto_target.x, goto_target.y])
+
+        final_dest = [ self.current_destination.x, self.current_destination.y ]
+
+
+        # 1. Use the configparser 
+
+        config = configparser.ConfigParser()
+
+        config.add_section("General")
+        config.set("General", "Final_destination", str(final_dest))
+        config.set("General", "Goto_list", str(goto_string))
+
+        with open(self.path_data_file_loc, 'w') as configfile:
+            config.write(configfile)
+
+
+        # 2. Create the updated_path.txt file so that vizualizer will update
+        output_fd = open(self.updated_path_file_loc, 'w')
+        output_fd.close()
+
+        pass
+

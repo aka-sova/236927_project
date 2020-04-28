@@ -1,0 +1,453 @@
+03/16 10:37:43 - INFO - Creating MENUS
+03/16 10:37:43 - INFO - Creating FRAMES
+03/16 10:37:45 - INFO - Conneting to 192.168.1.158 - 2777
+03/16 10:37:45 - INFO - Sense data is erroneous. Retrying
+03/16 10:37:45 - INFO - Sense data is empty
+03/16 10:37:57 - INFO - Initializing the Algorithm
+03/16 10:37:57 - INFO - Finding a path from [83.7854 -126.535] to [0 0]
+03/16 10:37:58 - INFO - No collision spotted, path is free
+03/16 10:37:58 - INFO - GOTO Target location received : [0 0]
+03/16 10:37:58 - DEBUG - Current location : [83.7854 -126.535]
+03/16 10:37:58 - DEBUG - Current angle: -127.25972977717053
+03/16 10:37:58 - DEBUG - [def goto 1]Calculated:
+	distance : 151.76000618792818
+	angle: 123.45869151892003
+03/16 10:37:58 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 151.75656083820562
+	angle: 123.45869151892003
+03/16 10:37:58 - DEBUG - Performing turn of -110.57573625053186
+03/16 10:37:59 - DEBUG - Turn performed. current angle 109.33221440016692,  discrepancy: 14.126477118753115
+03/16 10:37:59 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:37:59 - DEBUG - Performing turn of 14.126477118753115
+03/16 10:38:02 - DEBUG - Turn performed. current angle 125.24352229033491,  discrepancy: 1.7848307714148746
+03/16 10:38:02 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 151.76000618792818
+03/16 10:38:02 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:38:03 - INFO - Verifying path is clear before initializing movement
+03/16 10:38:03 - INFO - Current loc: [84.2718 -126.704], dest loc : [65 -99]
+03/16 10:38:03 - INFO - Path is clear: True
+03/16 10:38:03 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:38:05 - INFO - Verifying path is clear before initializing movement
+03/16 10:38:05 - INFO - Current loc: [62.0077 -95.3191], dest loc : [44 -70]
+03/16 10:38:05 - INFO - Path is clear: True
+03/16 10:38:05 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:38:07 - INFO - Verifying path is clear before initializing movement
+03/16 10:38:07 - INFO - Current loc: [38.2615 -65.4287], dest loc : [19 -41]
+03/16 10:38:07 - INFO - Distance from the obstacle : 0.0904755707297447 , smaller that the margin
+03/16 10:38:07 - INFO - Path is clear: False
+03/16 10:38:07 - INFO - Found obstacle on the way
+03/16 10:38:07 - INFO - Rotating the agent to receive environment location
+03/16 10:38:11 - INFO - Obstacle found on the GOTO path. Destination not reached
+03/16 10:38:11 - INFO - Finding a path from [38.5445 -66.2777] to [0 0]
+03/16 10:38:11 - INFO - Collision detected, initializing algorithm
+03/16 10:38:23 - INFO - Tree construction completed
+03/16 10:38:23 - INFO - Finding a route. Finding best node
+03/16 10:38:23 - INFO - Best node found. Generating final course
+03/16 10:38:23 - INFO - Route found. Optimizing
+03/16 10:38:44 - DEBUG - findfont: Matching :family=sans-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=10.0 to DejaVu Sans ('C:\\Users\\alex_ander_student\\AppData\\Local\\conda\\conda\\envs\\py36\\lib\\site-packages\\matplotlib\\mpl-data\\fonts\\ttf\\DejaVuSans.ttf') with score of 0.050000
+03/16 10:38:46 - INFO - Path generation successful
+03/16 10:38:46 - INFO - GOTO Target location received : [84 -14]
+03/16 10:38:46 - DEBUG - Current location : [35.9925 -65.901]
+03/16 10:38:46 - DEBUG - Current angle: -169.20567824789939
+03/16 10:38:46 - DEBUG - [def goto 1]Calculated:
+	distance : 70.69960294973374
+	angle: 47.23172491154126
+03/16 10:38:46 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 70.69960294973374
+	angle: 47.23172491154126
+03/16 10:38:46 - DEBUG - Performing turn of -143.56259684055937
+03/16 10:38:49 - DEBUG - Turn performed. current angle 26.827641285949685,  discrepancy: 20.40408362559157
+03/16 10:38:49 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:38:49 - DEBUG - Performing turn of 20.40408362559157
+03/16 10:38:50 - DEBUG - Turn performed. current angle 49.294436739163324,  discrepancy: 2.062711827622067
+03/16 10:38:50 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 70.69960294973374
+03/16 10:38:50 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:38:51 - INFO - Verifying path is clear before initializing movement
+03/16 10:38:51 - INFO - Current loc: [35.0238 -67.5988], dest loc : [56 -42]
+03/16 10:38:51 - INFO - Path is clear: True
+03/16 10:38:51 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:38:53 - INFO - Verifying path is clear before initializing movement
+03/16 10:38:53 - INFO - Current loc: [35.0238 -67.5988], dest loc : [56 -42]
+03/16 10:38:53 - INFO - Path is clear: True
+03/16 10:38:53 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:38:54 - DEBUG - STEP FINISHED
+03/16 10:38:54 - DEBUG - Current location : [35.0238 -67.5988]
+03/16 10:38:54 - DEBUG - Target location : [84 -14]
+03/16 10:38:54 - DEBUG - [def goto 2]Calculated:
+	distance : 72.6050929885776
+	angle: 47.58032064138493
+03/16 10:38:54 - DEBUG - Distance is larger than a margin of 10. Performing additional steps
+03/16 10:38:54 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 72.6050929885776
+	angle: 47.58032064138493
+03/16 10:38:54 - DEBUG - Performing turn of -1.714116097778394
+03/16 10:38:57 - DEBUG - Turn performed. current angle 43.174444141005274,  discrepancy: 4.405876500379655
+03/16 10:38:57 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 72.6050929885776
+03/16 10:38:57 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:38:58 - INFO - Verifying path is clear before initializing movement
+03/16 10:38:58 - INFO - Current loc: [34.4563 -67.6185], dest loc : [58 -45]
+03/16 10:38:58 - INFO - Path is clear: True
+03/16 10:38:58 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:39:00 - INFO - Verifying path is clear before initializing movement
+03/16 10:39:00 - INFO - Current loc: [62.2747 -41.557], dest loc : [85 -19]
+03/16 10:39:00 - INFO - Path is clear: True
+03/16 10:39:00 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:39:01 - DEBUG - STEP FINISHED
+03/16 10:39:01 - DEBUG - Current location : [87.8122 -15.3775]
+03/16 10:39:01 - DEBUG - Target location : [84 -14]
+03/16 10:39:01 - DEBUG - [def goto 2]Calculated:
+	distance : 4.053439908275442
+	angle: 160.13318958995012
+03/16 10:39:01 - DEBUG - Distance is less than a margin of 10. GOTO done
+03/16 10:39:01 - DEBUG - 
+GOTO FINISHED
+03/16 10:39:01 - DEBUG - Current location : [87.8122 -15.3775]
+03/16 10:39:01 - DEBUG - Target location : [84 -14]
+03/16 10:39:01 - INFO - GOTO Target location received : [0 0]
+03/16 10:39:01 - DEBUG - Current location : [87.8122 -15.3775]
+03/16 10:39:01 - DEBUG - Current angle: 47.21360055113732
+03/16 10:39:01 - DEBUG - [def goto 1]Calculated:
+	distance : 89.14847152413776
+	angle: 170.0671926221444
+03/16 10:39:01 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 89.14847152413776
+	angle: 170.0671926221444
+03/16 10:39:01 - DEBUG - Performing turn of 122.85359207100709
+03/16 10:39:05 - DEBUG - Turn performed. current angle -170.4484481087022,  discrepancy: 19.4843592691534
+03/16 10:39:05 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:39:05 - DEBUG - Performing turn of -19.4843592691534
+03/16 10:39:08 - DEBUG - Turn performed. current angle 165.96183884637608,  discrepancy: 4.105353775768322
+03/16 10:39:08 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 89.14847152413776
+03/16 10:39:08 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:39:09 - INFO - Verifying path is clear before initializing movement
+03/16 10:39:09 - INFO - Current loc: [88.0219 -12.9313], dest loc : [56 -4]
+03/16 10:39:09 - INFO - Path is clear: True
+03/16 10:39:09 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:39:11 - INFO - Verifying path is clear before initializing movement
+03/16 10:39:11 - INFO - Current loc: [48.7368 -11.3453], dest loc : [20 0]
+03/16 10:39:11 - INFO - Path is clear: True
+03/16 10:39:11 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:39:12 - DEBUG - STEP FINISHED
+03/16 10:39:12 - DEBUG - Current location : [15.089 1.08487]
+03/16 10:39:12 - DEBUG - Target location : [0 0]
+03/16 10:39:12 - DEBUG - [def goto 2]Calculated:
+	distance : 15.127949759200684
+	angle: -175.88762029573238
+03/16 10:39:12 - DEBUG - Distance is larger than a margin of 10. Performing additional steps
+03/16 10:39:12 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 15.127949759200684
+	angle: -175.88762029573238
+03/16 10:39:12 - DEBUG - Performing turn of 15.870703057179753
+03/16 10:39:15 - DEBUG - Turn performed. current angle -174.6799953563128,  discrepancy: 1.2076249394195884
+03/16 10:39:15 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 15.127949759200684
+03/16 10:39:15 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:39:16 - INFO - Verifying path is clear before initializing movement
+03/16 10:39:16 - INFO - Current loc: [13.5361 3.27764], dest loc : [-3 1]
+03/16 10:39:16 - INFO - Path is clear: True
+03/16 10:39:16 - DEBUG - [def drive_distance_short] Distance required: 15.127949759200684, Command to the motors: 455
+03/16 10:39:17 - DEBUG - STEP FINISHED
+03/16 10:39:17 - DEBUG - Current location : [-2.40406 1.89353]
+03/16 10:39:17 - DEBUG - Target location : [0 0]
+03/16 10:39:17 - DEBUG - [def goto 2]Calculated:
+	distance : 3.0602222704404984
+	angle: -38.22532656547357
+03/16 10:39:17 - DEBUG - Distance is less than a margin of 10. GOTO done
+03/16 10:39:17 - DEBUG - 
+GOTO FINISHED
+03/16 10:39:17 - DEBUG - Current location : [-2.40406 1.89353]
+03/16 10:39:17 - DEBUG - Target location : [0 0]
+03/16 10:39:17 - INFO - Algorithm completed
+03/16 10:39:17 - INFO - Reached the destination
+03/16 10:39:26 - INFO - Initializing the Algorithm
+03/16 10:39:26 - INFO - Finding a path from [-2.48191 1.93626] to [0 -200]
+03/16 10:39:26 - INFO - Collision detected, initializing algorithm
+03/16 10:39:41 - INFO - Tree construction completed
+03/16 10:39:41 - INFO - Finding a route. Finding best node
+03/16 10:39:41 - INFO - Best node found. Generating final course
+03/16 10:39:41 - INFO - Route found. Optimizing
+03/16 10:40:34 - INFO - Path generation successful
+03/16 10:40:34 - INFO - GOTO Target location received : [-67 11]
+03/16 10:40:34 - DEBUG - Current location : [-2.51427 1.91763]
+03/16 10:40:34 - DEBUG - Current angle: -175.83661731567742
+03/16 10:40:34 - DEBUG - [def goto 1]Calculated:
+	distance : 65.12218376597794
+	angle: 171.9830177309026
+03/16 10:40:34 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 65.12218376597794
+	angle: 171.9830177309026
+03/16 10:40:34 - DEBUG - Performing turn of -12.180364953419996
+03/16 10:40:37 - DEBUG - Turn performed. current angle 171.4341465076554,  discrepancy: 0.5488712232471755
+03/16 10:40:37 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 65.12218376597794
+03/16 10:40:37 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:40:38 - INFO - Verifying path is clear before initializing movement
+03/16 10:40:38 - INFO - Current loc: [-3.24644 1.96012], dest loc : [-35 6]
+03/16 10:40:38 - INFO - Path is clear: True
+03/16 10:40:38 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:40:40 - INFO - Verifying path is clear before initializing movement
+03/16 10:40:40 - INFO - Current loc: [-41.3555 4.64939], dest loc : [-72 6]
+03/16 10:40:40 - INFO - Path is clear: True
+03/16 10:40:40 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:40:41 - DEBUG - STEP FINISHED
+03/16 10:40:41 - DEBUG - Current location : [-78.0792 6.30244]
+03/16 10:40:41 - DEBUG - Target location : [-67 11]
+03/16 10:40:41 - DEBUG - [def goto 2]Calculated:
+	distance : 12.03394127431242
+	angle: 22.976853327657818
+03/16 10:40:41 - DEBUG - Distance is larger than a margin of 10. Performing additional steps
+03/16 10:40:41 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 12.03394127431242
+	angle: 22.976853327657818
+03/16 10:40:41 - DEBUG - Performing turn of -153.3173821670537
+03/16 10:40:44 - DEBUG - Turn performed. current angle -10.147154501045009,  discrepancy: 33.12400782870283
+03/16 10:40:44 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:40:44 - DEBUG - Performing turn of 33.12400782870283
+03/16 10:40:45 - DEBUG - Turn performed. current angle 29.242703448013792,  discrepancy: 6.265850120355974
+03/16 10:40:45 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:40:45 - DEBUG - Performing turn of -6.265850120355974
+03/16 10:40:48 - DEBUG - Turn performed. current angle 20.661731258660488,  discrepancy: 2.3151220689973293
+03/16 10:40:48 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 12.03394127431242
+03/16 10:40:48 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:40:49 - INFO - Verifying path is clear before initializing movement
+03/16 10:40:49 - INFO - Current loc: [-80.6305 4.85738], dest loc : [-68 9]
+03/16 10:40:50 - INFO - Path is clear: True
+03/16 10:40:50 - DEBUG - [def drive_distance_short] Distance required: 12.03394127431242, Command to the motors: 482
+03/16 10:40:51 - DEBUG - STEP FINISHED
+03/16 10:40:51 - DEBUG - Current location : [-63.8518 10.6925]
+03/16 10:40:51 - DEBUG - Target location : [-67 11]
+03/16 10:40:51 - DEBUG - [def goto 2]Calculated:
+	distance : 3.163181861670305
+	angle: 174.42133858988956
+03/16 10:40:51 - DEBUG - Distance is less than a margin of 10. GOTO done
+03/16 10:40:51 - DEBUG - 
+GOTO FINISHED
+03/16 10:40:51 - DEBUG - Current location : [-63.8518 10.6925]
+03/16 10:40:51 - DEBUG - Target location : [-67 11]
+03/16 10:40:51 - INFO - GOTO Target location received : [-67 -110]
+03/16 10:40:51 - DEBUG - Current location : [-63.8518 10.6925]
+03/16 10:40:51 - DEBUG - Current angle: 22.39692663447667
+03/16 10:40:51 - DEBUG - [def goto 1]Calculated:
+	distance : 120.73355258373705
+	angle: -91.49419127053008
+03/16 10:40:51 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 120.73355258373705
+	angle: -91.49419127053008
+03/16 10:40:51 - DEBUG - Performing turn of -113.89111790500675
+03/16 10:40:52 - DEBUG - Turn performed. current angle -110.73315677123557,  discrepancy: 19.23896550070549
+03/16 10:40:52 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:40:52 - DEBUG - Performing turn of 19.23896550070549
+03/16 10:40:55 - DEBUG - Turn performed. current angle -87.98847672611433,  discrepancy: 3.5057145444157527
+03/16 10:40:55 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 120.73355258373705
+03/16 10:40:55 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:40:56 - INFO - Verifying path is clear before initializing movement
+03/16 10:40:56 - INFO - Current loc: [-64.0353 12.8181], dest loc : [-62 -19]
+03/16 10:40:56 - INFO - Distance from the obstacle : 0.0 , smaller that the margin
+03/16 10:40:56 - INFO - Path is clear: False
+03/16 10:40:56 - INFO - Found obstacle on the way
+03/16 10:40:56 - INFO - Rotating the agent to receive environment location
+03/16 10:41:00 - INFO - Obstacle found on the GOTO path. Destination not reached
+03/16 10:41:00 - INFO - Finding a path from [-63.7378 10.0917] to [0 -200]
+03/16 10:41:00 - INFO - Collision detected, initializing algorithm
+03/16 10:41:18 - INFO - Tree construction completed
+03/16 10:41:18 - INFO - Finding a route. Finding best node
+03/16 10:41:18 - INFO - Best node found. Generating final course
+03/16 10:41:18 - INFO - Route found. Optimizing
+03/16 10:42:36 - INFO - Path generation successful
+03/16 10:42:36 - INFO - GOTO Target location received : [47 7]
+03/16 10:42:36 - DEBUG - Current location : [-63.5228 10.3256]
+03/16 10:42:36 - DEBUG - Current angle: -21.0946160136729
+03/16 10:42:36 - DEBUG - [def goto 1]Calculated:
+	distance : 110.57282186504963
+	angle: -1.723493888106132
+03/16 10:42:36 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 110.57282186504963
+	angle: -1.723493888106132
+03/16 10:42:36 - DEBUG - Performing turn of 19.37112212556677
+03/16 10:42:39 - DEBUG - Turn performed. current angle -0.23572226824014036,  discrepancy: 1.4877716198659916
+03/16 10:42:39 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 110.57282186504963
+03/16 10:42:39 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:42:40 - INFO - Verifying path is clear before initializing movement
+03/16 10:42:40 - INFO - Current loc: [-65.9769 10.4839], dest loc : [-33 10]
+03/16 10:42:40 - INFO - Path is clear: True
+03/16 10:42:40 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:42:42 - INFO - Verifying path is clear before initializing movement
+03/16 10:42:42 - INFO - Current loc: [-28.6693 7.78546], dest loc : [2 7]
+03/16 10:42:42 - INFO - Path is clear: True
+03/16 10:42:42 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:42:44 - INFO - Verifying path is clear before initializing movement
+03/16 10:42:44 - INFO - Current loc: [10.2887 4.80099], dest loc : [27 4]
+03/16 10:42:45 - INFO - Path is clear: True
+03/16 10:42:45 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:42:46 - DEBUG - STEP FINISHED
+03/16 10:42:46 - DEBUG - Current location : [48.8001 2.65538]
+03/16 10:42:46 - DEBUG - Target location : [47 7]
+03/16 10:42:46 - DEBUG - [def goto 2]Calculated:
+	distance : 4.70277396377925
+	angle: 112.50562206133986
+03/16 10:42:46 - DEBUG - Distance is less than a margin of 10. GOTO done
+03/16 10:42:46 - DEBUG - 
+GOTO FINISHED
+03/16 10:42:46 - DEBUG - Current location : [48.8001 2.65538]
+03/16 10:42:46 - DEBUG - Target location : [47 7]
+03/16 10:42:46 - INFO - GOTO Target location received : [77 -195]
+03/16 10:42:46 - DEBUG - Current location : [48.8001 2.65538]
+03/16 10:42:46 - DEBUG - Current angle: -0.6364032383406057
+03/16 10:42:46 - DEBUG - [def goto 1]Calculated:
+	distance : 199.65691473864462
+	angle: -81.88029035893523
+03/16 10:42:46 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 199.65691473864462
+	angle: -81.88029035893523
+03/16 10:42:46 - DEBUG - Performing turn of -81.24388712059462
+03/16 10:42:47 - DEBUG - Turn performed. current angle -88.87138350586535,  discrepancy: 6.991093146930126
+03/16 10:42:47 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:42:47 - DEBUG - Performing turn of 6.991093146930126
+03/16 10:42:50 - DEBUG - Turn performed. current angle -90.6523896869409,  discrepancy: 8.772099328005666
+03/16 10:42:50 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:42:50 - DEBUG - Performing turn of 8.772099328005666
+03/16 10:42:53 - DEBUG - Turn performed. current angle -81.00704995693819,  discrepancy: 0.8732404019970375
+03/16 10:42:53 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 199.65691473864462
+03/16 10:42:53 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:42:54 - INFO - Verifying path is clear before initializing movement
+03/16 10:42:54 - INFO - Current loc: [47.5142 3.32245], dest loc : [52 -29]
+03/16 10:42:54 - INFO - Path is clear: True
+03/16 10:42:54 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:42:56 - INFO - Verifying path is clear before initializing movement
+03/16 10:42:56 - INFO - Current loc: [51.1983 -31.5178], dest loc : [51 -57]
+03/16 10:42:56 - INFO - Path is clear: True
+03/16 10:42:56 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:42:58 - INFO - Verifying path is clear before initializing movement
+03/16 10:42:58 - INFO - Current loc: [55.6406 -67.7968], dest loc : [60 -98]
+03/16 10:42:58 - INFO - Path is clear: True
+03/16 10:42:58 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:43:00 - INFO - Verifying path is clear before initializing movement
+03/16 10:43:00 - INFO - Current loc: [61.7512 -104.495], dest loc : [67 -135]
+03/16 10:43:00 - INFO - Path is clear: True
+03/16 10:43:00 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:43:02 - INFO - Verifying path is clear before initializing movement
+03/16 10:43:02 - INFO - Current loc: [66.496 -141.642], dest loc : [71 -171]
+03/16 10:43:03 - INFO - Path is clear: True
+03/16 10:43:03 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:43:05 - INFO - Verifying path is clear before initializing movement
+03/16 10:43:05 - INFO - Current loc: [71.7154 -178.174], dest loc : [76 -209]
+03/16 10:43:05 - INFO - Path is clear: True
+03/16 10:43:05 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:43:06 - DEBUG - STEP FINISHED
+03/16 10:43:06 - DEBUG - Current location : [77.0608 -214.745]
+03/16 10:43:06 - DEBUG - Target location : [77 -195]
+03/16 10:43:06 - DEBUG - [def goto 2]Calculated:
+	distance : 19.745093609299506
+	angle: 90.17642807719379
+03/16 10:43:06 - DEBUG - Distance is larger than a margin of 10. Performing additional steps
+03/16 10:43:06 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 19.745093609299506
+	angle: 90.17642807719379
+03/16 10:43:06 - DEBUG - Performing turn of 170.1977289908945
+03/16 10:43:09 - DEBUG - Turn performed. current angle 117.07360624676981,  discrepancy: 26.897178169576023
+03/16 10:43:09 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:43:09 - DEBUG - Performing turn of -26.897178169576023
+03/16 10:43:10 - DEBUG - Turn performed. current angle 79.51774154159752,  discrepancy: 10.658686535596274
+03/16 10:43:10 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:43:10 - DEBUG - Performing turn of 10.658686535596274
+03/16 10:43:13 - DEBUG - Turn performed. current angle 97.48548304444277,  discrepancy: 7.309054967248983
+03/16 10:43:13 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:43:13 - DEBUG - Performing turn of -7.309054967248983
+03/16 10:43:16 - DEBUG - Turn performed. current angle 85.09486780112866,  discrepancy: 5.081560276065133
+03/16 10:43:16 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:43:16 - DEBUG - Performing turn of 5.081560276065133
+03/16 10:43:19 - DEBUG - Turn performed. current angle 94.84321619409134,  discrepancy: 4.66678811689755
+03/16 10:43:19 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 19.745093609299506
+03/16 10:43:19 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:43:20 - INFO - Verifying path is clear before initializing movement
+03/16 10:43:20 - INFO - Current loc: [77.8521 -216.04], dest loc : [76 -194]
+03/16 10:43:20 - INFO - Path is clear: True
+03/16 10:43:20 - DEBUG - [def drive_distance_short] Distance required: 19.745093609299506, Command to the motors: 569
+03/16 10:43:21 - DEBUG - STEP FINISHED
+03/16 10:43:21 - DEBUG - Current location : [75.8899 -193.106]
+03/16 10:43:21 - DEBUG - Target location : [77 -195]
+03/16 10:43:21 - DEBUG - [def goto 2]Calculated:
+	distance : 2.1953491772381053
+	angle: -59.62483357646504
+03/16 10:43:21 - DEBUG - Distance is less than a margin of 10. GOTO done
+03/16 10:43:21 - DEBUG - 
+GOTO FINISHED
+03/16 10:43:21 - DEBUG - Current location : [75.8899 -193.106]
+03/16 10:43:21 - DEBUG - Target location : [77 -195]
+03/16 10:43:21 - INFO - GOTO Target location received : [0 -200]
+03/16 10:43:21 - DEBUG - Current location : [75.8899 -193.106]
+03/16 10:43:21 - DEBUG - Current angle: 95.00943171180599
+03/16 10:43:21 - DEBUG - [def goto 1]Calculated:
+	distance : 76.20238945079085
+	angle: -174.80937636628235
+03/16 10:43:21 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 76.20238945079085
+	angle: -174.80937636628235
+03/16 10:43:21 - DEBUG - Performing turn of 90.18119192191165
+03/16 10:43:22 - DEBUG - Turn performed. current angle -161.687351273003,  discrepancy: 13.122025093279348
+03/16 10:43:22 - DEBUG - Turn has too big discrepancy. Trying again
+03/16 10:43:22 - DEBUG - Performing turn of -13.122025093279348
+03/16 10:43:25 - DEBUG - Turn performed. current angle -175.93533610049207,  discrepancy: 1.1259597342097152
+03/16 10:43:25 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 76.20238945079085
+03/16 10:43:25 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+03/16 10:43:26 - INFO - Verifying path is clear before initializing movement
+03/16 10:43:26 - INFO - Current loc: [75.1817 -191.347], dest loc : [42 -193]
+03/16 10:43:26 - INFO - Path is clear: True
+03/16 10:43:26 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:43:28 - INFO - Verifying path is clear before initializing movement
+03/16 10:43:28 - INFO - Current loc: [34.9303 -195.363], dest loc : [4 -198]
+03/16 10:43:28 - INFO - Path is clear: True
+03/16 10:43:28 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+03/16 10:43:29 - DEBUG - STEP FINISHED
+03/16 10:43:29 - DEBUG - Current location : [-4.55068 -198.227]
+03/16 10:43:29 - DEBUG - Target location : [0 -200]
+03/16 10:43:29 - DEBUG - [def goto 2]Calculated:
+	distance : 4.8838732029404675
+	angle: -21.28649029234704
+03/16 10:43:29 - DEBUG - Distance is less than a margin of 10. GOTO done
+03/16 10:43:29 - DEBUG - 
+GOTO FINISHED
+03/16 10:43:29 - DEBUG - Current location : [-4.55068 -198.227]
+03/16 10:43:29 - DEBUG - Target location : [0 -200]
+03/16 10:43:29 - INFO - Algorithm completed
+03/16 10:43:29 - INFO - Reached the destination
+04
+2020-03-16 22:43:21,401 - DEBUG - Distance is less than a margin of 10. GOTO done
+2020-03-16 22:43:21,403 - DEBUG - 
+GOTO FINISHED
+2020-03-16 22:43:21,403 - DEBUG - Current location : [75.8899 -193.106]
+2020-03-16 22:43:21,403 - DEBUG - Target location : [77 -195]
+2020-03-16 22:43:21,405 - INFO - GOTO Target location received : [0 -200]
+2020-03-16 22:43:21,405 - DEBUG - Current location : [75.8899 -193.106]
+2020-03-16 22:43:21,405 - DEBUG - Current angle: 95.00943171180599
+2020-03-16 22:43:21,406 - DEBUG - [def goto 1]Calculated:
+	distance : 76.20238945079085
+	angle: -174.80937636628235
+2020-03-16 22:43:21,406 - DEBUG - [def correct_robot_angle] Calculated:
+	distance : 76.20238945079085
+	angle: -174.80937636628235
+2020-03-16 22:43:21,406 - DEBUG - Performing turn of 90.18119192191165
+2020-03-16 22:43:22,409 - DEBUG - Turn performed. current angle -161.687351273003,  discrepancy: 13.122025093279348
+2020-03-16 22:43:22,409 - DEBUG - Turn has too big discrepancy. Trying again
+2020-03-16 22:43:22,409 - DEBUG - Performing turn of -13.122025093279348
+2020-03-16 22:43:25,414 - DEBUG - Turn performed. current angle -175.93533610049207,  discrepancy: 1.1259597342097152
+2020-03-16 22:43:25,414 - DEBUG - [def drive_distance_long] NEED TO DRIVE THIS DISTANCE : 76.20238945079085
+2020-03-16 22:43:25,414 - DEBUG - [def drive_distance_long] max driving dist : 29.73
+2020-03-16 22:43:26,415 - INFO - Verifying path is clear before initializing movement
+2020-03-16 22:43:26,415 - INFO - Current loc: [75.1817 -191.347], dest loc : [42 -193]
+2020-03-16 22:43:26,577 - INFO - Path is clear: True
+2020-03-16 22:43:26,577 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+2020-03-16 22:43:28,582 - INFO - Verifying path is clear before initializing movement
+2020-03-16 22:43:28,582 - INFO - Current loc: [34.9303 -195.363], dest loc : [4 -198]
+2020-03-16 22:43:28,775 - INFO - Path is clear: True
+2020-03-16 22:43:28,776 - DEBUG - [def drive_distance_short] Distance required: 29.73, Command to the motors: 1000
+2020-03-16 22:43:29,780 - DEBUG - STEP FINISHED
+2020-03-16 22:43:29,780 - DEBUG - Current location : [-4.55068 -198.227]
+2020-03-16 22:43:29,780 - DEBUG - Target location : [0 -200]
+2020-03-16 22:43:29,780 - DEBUG - [def goto 2]Calculated:
+	distance : 4.8838732029404675
+	angle: -21.28649029234704
+2020-03-16 22:43:29,780 - DEBUG - Distance is less than a margin of 10. GOTO done
+2020-03-16 22:43:29,783 - DEBUG - 
+GOTO FINISHED
+2020-03-16 22:43:29,784 - DEBUG - Current location : [-4.55068 -198.227]
+2020-03-16 22:43:29,784 - DEBUG - Target location : [0 -200]
+2020-03-16 22:43:29,784 - INFO - Algorithm completed
+2020-03-16 22:43:29,784 - INFO - Reached the destination
